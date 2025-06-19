@@ -1,32 +1,30 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(BoxCollider))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private DynamicJoystick _joystick;
     [SerializeField] private float _moveSpeed;
 
-    private Rigidbody _rigidbody;
+    private CharacterController _characterController;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         HandleMovement();
     }
 
     private void HandleMovement()
     {
-        _rigidbody.linearVelocity = new Vector3(_joystick.Horizontal * _moveSpeed, _rigidbody.linearVelocity.y,
-            _joystick.Vertical * _moveSpeed);
+        Vector3 moveDirection = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
+        _characterController.Move(moveDirection * (_moveSpeed * Time.deltaTime));
 
         if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
         {
-            transform.rotation = Quaternion.LookRotation(_rigidbody.linearVelocity);
+            transform.rotation = Quaternion.LookRotation(moveDirection);
         }
     }
 }

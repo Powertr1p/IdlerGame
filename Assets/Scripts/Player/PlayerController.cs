@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private FixedJoystick _fixedJoystick;
+    [SerializeField] private DynamicJoystick _joystick;
     [SerializeField] private float _moveSpeed;
 
     private Rigidbody _rigidbody;
@@ -21,10 +21,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        _rigidbody.linearVelocity = new Vector3(_fixedJoystick.Horizontal * _moveSpeed, _rigidbody.linearVelocity.y,
-            _fixedJoystick.Vertical * _moveSpeed);
+        _rigidbody.linearVelocity = new Vector3(_joystick.Horizontal * _moveSpeed, _rigidbody.linearVelocity.y,
+            _joystick.Vertical * _moveSpeed);
 
-        if (_fixedJoystick.Horizontal != 0 || _fixedJoystick.Vertical != 0)
+        if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
         {
             transform.rotation = Quaternion.LookRotation(_rigidbody.linearVelocity);
         }

@@ -4,6 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private DynamicJoystick _joystick;
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _rotationSpeed;
 
     private CharacterController _characterController;
 
@@ -22,9 +23,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
         _characterController.Move(moveDirection * (_moveSpeed * Time.deltaTime));
 
-        if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
-        {
-            transform.rotation = Quaternion.LookRotation(moveDirection);
-        }
+        if (moveDirection == Vector3.zero) return;
+        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
     }
 }

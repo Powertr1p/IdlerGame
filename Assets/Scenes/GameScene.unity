@@ -574,6 +574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _joystick: {fileID: 699766606}
   _moveSpeed: 4
+  _rotationSpeed: 5
 --- !u!143 &651039705
 CharacterController:
   m_ObjectHideFlags: 0

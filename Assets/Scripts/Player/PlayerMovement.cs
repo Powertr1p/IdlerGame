@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private DynamicJoystick _joystick;
+    [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
 

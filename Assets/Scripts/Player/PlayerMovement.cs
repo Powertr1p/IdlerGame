@@ -27,4 +27,6 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
     }
+
+    public bool IsRunning() => _joystick.Horizontal != 0 || _joystick.Vertical != 0;
 }

@@ -5,6 +5,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
+    
+    public bool IsRunning => _joystick.Horizontal != 0 || _joystick.Vertical != 0;
 
     private CharacterController _characterController;
 
@@ -27,6 +29,4 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
     }
-
-    public bool IsRunning() => _joystick.Horizontal != 0 || _joystick.Vertical != 0;
 }

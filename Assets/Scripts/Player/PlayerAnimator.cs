@@ -3,11 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimator : MonoBehaviour
 {
-    private const string IsRunning = "IsRunning";
-    
     [SerializeField] private PlayerMovement _playerMovement;
-    
+
     private Animator _animator;
+    private readonly int _isRunning = Animator.StringToHash("IsRunning");
 
     private void Awake()
     {
@@ -16,6 +15,6 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Update()
     {
-        _animator.SetBool(IsRunning, _playerMovement.IsRunning());
+        _animator.SetBool(_isRunning, _playerMovement.IsRunning);
     }
 }

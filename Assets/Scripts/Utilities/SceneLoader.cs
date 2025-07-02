@@ -8,7 +8,7 @@ namespace Utilities
 {
     public class SceneLoader : MonoBehaviour
     {
-        [CanBeNull] private string _additivelyLoadedSceneName;
+        [CanBeNull] private string _additivelyLoadedSceneName = null;
 
         private bool _isSceneLoading;
 

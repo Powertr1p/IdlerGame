@@ -3,67 +3,79 @@ using System.Collections.Generic;
 using System.Linq;
 using Inventory.Core;
 using UnityEngine;
+using Utilities.SaveSystem;
 
 namespace Inventory
 {
     public class PlayerInventory : MonoBehaviour
     {
-        [SerializeField] private ItemData _testItem;
+        public event Action<InventoryItem> OnResourceChanged;
 
-        public event Action OnInitialized;
-        public event Action<ItemData, int> OnResourceChanged;
-        public Dictionary<ItemData, InventoryItem> Items => _items;
+        public Dictionary<ResourceType, InventoryItem> Items => _items;
         
-        private Dictionary<ItemData, InventoryItem> _items = new();
+        private Dictionary<ResourceType, InventoryItem> _items = new();
+        
+        private PlayerInventorySaveBox _saveBox;
 
         private void Start()
         {
-            //todo: тестирую, что спрайт подтягивается верно и количетсво
-            
-            OnInitialized?.Invoke();
-            
-            AddResource(_testItem, 15);
+            _saveBox = new PlayerInventorySaveBox();
+            LoadInventory();
         }
         
-        private void Update()
+        private void SaveInventory()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (_saveBox != null)
             {
-                AddResource(_testItem, 5);
+                _saveBox.SaveInventory(_items);
+            }
+        }
+
+        private void LoadInventory()
+        {
+            if (_saveBox != null)
+            {
+                var loadedItems = _saveBox.LoadInventory();
                 
-                //todo: тестирую, что спрайт подтягивается верно и количетсво
+                foreach (var item in loadedItems)
+                { 
+                    Add(item.Key, item.Value);
+                }
             }
-        }
-
-        public void AddResource(ItemData item, int amount)
-        {
-            if (!_items.ContainsKey(item))
-            {
-                _items[item] = new InventoryItem(item, 0);
-            }
-            
-            _items[item].Add(amount);
-            
-            OnResourceChanged?.Invoke(item, _items[item].Amount);
-        }
-
-        public bool RemoveResource(ItemData item, int amount)
-        {
-            if (!IsEnough(item, amount)) return false;
-            
-            _items[item].Remove(amount);
-            OnResourceChanged?.Invoke(item, _items[item].Amount);
-            return true;
         }
         
-        public List<InventoryItem> GetAllItems()
+
+        public int GetAmount(ResourceType type)
+        { 
+            return _items.TryGetValue(type, out var item) ? item.Amount : 0; 
+        }
+
+        public void Add(ResourceType type, int amount)
+        {
+            InventoryItem updatedItem;
+            
+            if (!_items.TryGetValue(type, out var item))
+            {
+                updatedItem = new InventoryItem(type, amount);
+                _items[type] = updatedItem;
+            }
+            else
+            {
+                item.Add(amount);
+                updatedItem = item;
+            }
+            
+            OnResourceChanged?.Invoke(updatedItem);
+        }
+
+        public bool TrySpend(ResourceType type, int amount)
+        {
+            return _items.TryGetValue(type, out var item) && item.TrySpend(amount);
+        }
+
+        public IReadOnlyList<InventoryItem> GetAll()
         {
             return _items.Values.ToList();
-        }
-        
-        private bool IsEnough(ItemData resource, int required)
-        {
-            return _items.ContainsKey(resource) && _items[resource].Amount >= required;
         }
     }
 }

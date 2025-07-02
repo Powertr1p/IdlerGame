@@ -3,26 +3,26 @@
     [System.Serializable]
     public class InventoryItem
     {
-        public ItemData Item => _item;
-        public int Amount => _amount;
-        
-        private ItemData _item;
-        private int _amount;
+        public ResourceType Type { get; }
+        public int Amount { get; private set; }
 
-        public InventoryItem(ItemData item, int amount)
+        public InventoryItem(ResourceType type, int amount)
         {
-            _item = item;
-            _amount = amount;
+            Type = type;
+            Amount = amount;
         }
 
-        public void Add(int amount)
+        public void Add(int value)
         {
-            _amount += amount;
+            Amount += value;
         }
 
-        public void Remove(int amount)
+        public bool TrySpend(int value)
         {
-            _amount -= amount;
+            if (Amount < value) return false;
+            
+            Amount -= value;
+            return true;
         }
     }
 }

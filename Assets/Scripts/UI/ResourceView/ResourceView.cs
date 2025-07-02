@@ -7,47 +7,40 @@ namespace UI.ResourceView
 {
     public class ResourceView : MonoBehaviour
     {
+        [SerializeField] private ResourceConfig _resourceConfig;
         [SerializeField] private ResourceElementDisplayer _resourceElementPrefab;
         [SerializeField] private PlayerInventory _inventory;
 
-        private Dictionary<ItemData, ResourceElementDisplayer> _displayItems = new Dictionary<ItemData, ResourceElementDisplayer>();
+        private Dictionary<ResourceType, ResourceElementDisplayer> _displayItems = new Dictionary<ResourceType, ResourceElementDisplayer>();
 
         private void OnEnable()
         {
-            _inventory.OnInitialized += Initialize;
             _inventory.OnResourceChanged += UpdateView;
         }
 
         private void OnDisable()
         {
-            _inventory.OnInitialized -= Initialize;
             _inventory.OnResourceChanged -= UpdateView;
         }
-
-        private void Initialize()
+        
+        private void UpdateView(InventoryItem item)
         {
-            foreach (var item in _inventory.Items)
+            if (!_displayItems.ContainsKey(item.Type))
             {
-                InstantiateElement(item.Key);
-            }
-        }
-
-        private void UpdateView(ItemData itemData, int amount)
-        {
-            if (!_displayItems.ContainsKey(itemData))
-            {
-                InstantiateElement(itemData);
+                InstantiateElement(item);
             }
             
-            _displayItems[itemData].SetAmount(amount);
+            _displayItems[item.Type].SetAmount(item.Amount);
         }
 
-        private void InstantiateElement(ItemData itemData)
+        private void InstantiateElement(InventoryItem item)
         {
-            var instance = Instantiate(_resourceElementPrefab, transform);
-            instance.SetAmount(0);
-            instance.SetIcon(itemData.Icon);
-            _displayItems.Add(itemData, instance);
+            ResourceViewData data = _resourceConfig.Get(item.Type);
+            ResourceElementDisplayer instance = Instantiate(_resourceElementPrefab, transform);
+            
+            instance.SetAmount(item.Amount);
+            instance.SetIcon(data.Icon);
+            _displayItems.Add(item.Type, instance);
         }
     }
 }

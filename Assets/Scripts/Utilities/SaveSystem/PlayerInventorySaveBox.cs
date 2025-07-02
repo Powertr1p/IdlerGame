@@ -1,107 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
-using Inventory;
+using System.Linq;
 using Inventory.Core;
+using Newtonsoft.Json;
 using SaveSystem;
 using UnityEngine;
 using Utilities.SaveBox;
-using VContainer;
 
 namespace Utilities.SaveSystem
 {
-    public class PlayerInventorySaveBox : IDisposable
+    public class PlayerInventorySaveBox
     {
         private const string PREFIX = "inventory";
-        
-        [PlayerPrefs(PREFIX, "items")]
+
+        [PlayerPrefs(PREFIX, "items")] 
         public string InventoryItemsJson { get; set; }
-        
-        private PlayerInventory _playerInventory;
-        private bool _isInitialized = false;
-        
-        [Inject] 
-        public PlayerInventorySaveBox(PlayerInventory playerInventory)
-        {
-            _playerInventory = playerInventory;
-        }
-        
-        public void Dispose()
-        {
-            SaveInventory();
-        }
-        
-        private void OnInventoryInitialized()
-        {
-            if (!_isInitialized)
-            {
-                LoadInventory();
-                _isInitialized = true;
-            }
-        }
-        
-        public void LoadInventory()
+
+        public PlayerInventorySaveBox()
         {
             PlayerPrefsUtility.LoadAll(this);
-            
-            if (!string.IsNullOrEmpty(InventoryItemsJson))
+        }
+
+        public Dictionary<ResourceType, int> LoadInventory()
+        {
+            if (string.IsNullOrEmpty(InventoryItemsJson))
             {
-                try
-                {
-                    var inventoryData = JsonUtility.FromJson<InventoryData>(InventoryItemsJson);
-                    
-                    if (inventoryData != null && inventoryData.Items != null)
-                    {
-                        foreach (var itemData in inventoryData.Items)
-                        {
-                            var item = Resources.Load<ItemData>($"Items/{itemData.ItemId}");
-                            
-                            if (item != null)
-                            {
-                                _playerInventory.AddResource(item, itemData.Amount);
-                            }
-                            else
-                            {
-                                Debug.LogWarning($"Не удалось найти предмет с ID: {itemData.ItemId}");
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"Ошибка при загрузке инвентаря: {e.Message}");
-                }
+                return new Dictionary<ResourceType, int>();
             }
-            else
+
+            try
             {
-                Debug.Log("Сохраненный инвентарь не найден");
+                var inventoryData = JsonConvert.DeserializeObject<InventoryData>(InventoryItemsJson);
+
+                if (inventoryData != null && inventoryData.Items != null && inventoryData.Items.Length > 0)
+                {
+                    Dictionary<ResourceType, int> loadedResources = new Dictionary<ResourceType, int>();
+
+                    foreach (var itemDto in inventoryData.Items)
+                    {
+                        loadedResources[itemDto.Type] = itemDto.Amount;
+                    }
+                    
+                    return loadedResources;
+                }
+
+                return new Dictionary<ResourceType, int>();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Ошибка при загрузке инвентаря: {e.Message}");
+                return new Dictionary<ResourceType, int>();
             }
         }
-        
-        public void SaveInventory()
+
+        public void SaveInventory(Dictionary<ResourceType, InventoryItem> items)
         {
             try
             {
-                var items = _playerInventory.GetAllItems();
-                
-                var saveItems = new List<SavedItemData>();
-                
-                foreach (var item in items)
+                if (items == null || items.Count == 0)
                 {
-                    var savedItem = new SavedItemData
-                    {
-                        ItemId = item.Item.name,
-                        Amount = item.Amount
-                    };
-                    
-                    saveItems.Add(savedItem);
+                    InventoryItemsJson = JsonConvert.SerializeObject(new InventoryData { Items = Array.Empty<InventoryItemDto>() });
+                    PlayerPrefsUtility.SaveAll(this);
+                    return;
                 }
                 
+                var itemDtos = items.Values
+                    .Where(item => item.Amount > 0)
+                    .Select(item => new InventoryItemDto(item.Type, item.Amount))
+                    .ToArray();
+
                 var inventoryData = new InventoryData
                 {
-                    Items = saveItems.ToArray()
+                    Items = itemDtos
                 };
-                
-                InventoryItemsJson = JsonUtility.ToJson(inventoryData);
+
+                InventoryItemsJson = JsonConvert.SerializeObject(inventoryData);
                 
                 PlayerPrefsUtility.SaveAll(this);
             }
@@ -111,17 +84,10 @@ namespace Utilities.SaveSystem
             }
         }
     }
-    
+
     [Serializable]
     public class InventoryData
     {
-        public SavedItemData[] Items;
-    }
-    
-    [Serializable]
-    public class SavedItemData
-    {
-        public string ItemId;
-        public int Amount;
+        public InventoryItemDto[] Items;
     }
 }

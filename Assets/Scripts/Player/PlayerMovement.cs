@@ -5,6 +5,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
+    
+    public bool IsRunning => _joystick.Horizontal != 0 || _joystick.Vertical != 0;
 
     private CharacterController _characterController;
 

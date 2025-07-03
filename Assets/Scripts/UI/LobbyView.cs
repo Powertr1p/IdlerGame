@@ -26,6 +26,5 @@ namespace UI
         {
             gameObject.SetActive(false);
         }
-       
     }
 }

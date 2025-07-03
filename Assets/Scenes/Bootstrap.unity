@@ -290,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8eb8072f2d48c4842a71d3ec3da1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playButton: {fileID: 867644401}
   _lobbyMediator: {fileID: 2018599831}
 --- !u!1 &280168579
 GameObject:
@@ -2585,7 +2584,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4592844818227183371}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: e3d87ee1c81bc554d9a4ccb3f40ab158, type: 3}
   m_Controller: {fileID: 9100000, guid: 60770d62ddac74949ba4a69e590955ff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

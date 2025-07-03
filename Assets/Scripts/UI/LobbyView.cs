@@ -5,18 +5,17 @@ namespace UI
 {
     public class LobbyView : MonoBehaviour
     {
-        [SerializeField] private RaidStartHandler _playButton;
+        [SerializeField] private LobbyMediator _lobbyMediator;
 
         private void OnEnable()
         {
-            _playButton.OnPlayClicked += Hide;
+            _lobbyMediator.RaidSceneLoaded += Hide;
         }
 
         private void OnDisable()
         {
-            _playButton.OnPlayClicked -= Hide;
+            _lobbyMediator.RaidSceneLoaded -= Hide;
         }
-
 
         private void Show()
         {

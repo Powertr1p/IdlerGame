@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
@@ -9,6 +10,8 @@ namespace Utilities
     public class SceneLoader : MonoBehaviour
     {
         [CanBeNull] private string _additivelyLoadedSceneName = null;
+
+        public event Action OnSceneLoaded;
 
         private bool _isSceneLoading;
 
@@ -39,12 +42,14 @@ namespace Utilities
         private IEnumerator LoadScene()
         {
             var asyncLoad = SceneManager.LoadSceneAsync(_additivelyLoadedSceneName, LoadSceneMode.Additive);
-
+            
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
 
+            OnSceneLoaded?.Invoke();
+            
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(_additivelyLoadedSceneName));
         }
 

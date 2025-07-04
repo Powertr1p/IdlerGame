@@ -1,3 +1,6 @@
+using System;
+using DefaultNamespace.Animations;
+using Inventory.Core;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -5,24 +8,23 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _playerMovement;
 
+    public event Action OnAnimationHit;
+    
     private Animator _animator;
+    private GatheringAnimationMapper _mapper;
     
     private readonly int _isRunning = Animator.StringToHash("IsRunning");
-    private readonly int _isMining = Animator.StringToHash("IsMining");
-
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _mapper = new GatheringAnimationMapper(GetComponent<Animator>());
     }
 
-    private void OnEnable()
+    //используется ключем анимации
+    public void OnMiningHit()
     {
-        _playerMovement.CollidedWithResource += MiningAnimation;
-    }
-
-    private void OnDisable()
-    {
-        _playerMovement.CollidedWithResource -= MiningAnimation;
+        OnAnimationHit?.Invoke();
     }
 
     private void Update()
@@ -30,8 +32,13 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_isRunning, _playerMovement.IsRunning);
     }
 
-    private void MiningAnimation()
+    public void PlayGatheringAnimationByType(ItemType type)
     {
-        _animator.SetBool(_isMining, !_playerMovement.IsRunning);
+        _mapper.PlayAnimation(type);
+    }
+
+    public void StopCurrentGatheringAnimation()
+    {
+       _mapper.StopCurrentAnimation();
     }
 }

@@ -3,10 +3,10 @@
     [System.Serializable]
     public class InventoryItem
     {
-        public ResourceType Type { get; }
+        public ItemType Type { get; }
         public int Amount { get; private set; }
 
-        public InventoryItem(ResourceType type, int amount)
+        public InventoryItem(ItemType type, int amount)
         {
             Type = type;
             Amount = amount;

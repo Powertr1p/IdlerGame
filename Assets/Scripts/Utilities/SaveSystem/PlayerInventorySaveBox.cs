@@ -21,11 +21,11 @@ namespace Utilities.SaveSystem
             PlayerPrefsUtility.LoadAll(this);
         }
 
-        public Dictionary<ResourceType, int> LoadInventory()
+        public Dictionary<ItemType, int> LoadInventory()
         {
             if (string.IsNullOrEmpty(InventoryItemsJson))
             {
-                return new Dictionary<ResourceType, int>();
+                return new Dictionary<ItemType, int>();
             }
 
             try
@@ -34,7 +34,7 @@ namespace Utilities.SaveSystem
 
                 if (inventoryData != null && inventoryData.Items != null && inventoryData.Items.Length > 0)
                 {
-                    Dictionary<ResourceType, int> loadedResources = new Dictionary<ResourceType, int>();
+                    Dictionary<ItemType, int> loadedResources = new Dictionary<ItemType, int>();
 
                     foreach (var itemDto in inventoryData.Items)
                     {
@@ -44,16 +44,16 @@ namespace Utilities.SaveSystem
                     return loadedResources;
                 }
 
-                return new Dictionary<ResourceType, int>();
+                return new Dictionary<ItemType, int>();
             }
             catch (Exception e)
             {
                 Debug.LogError($"Ошибка при загрузке инвентаря: {e.Message}");
-                return new Dictionary<ResourceType, int>();
+                return new Dictionary<ItemType, int>();
             }
         }
 
-        public void SaveInventory(Dictionary<ResourceType, InventoryItem> items)
+        public void SaveInventory(Dictionary<ItemType, InventoryItem> items)
         {
             try
             {

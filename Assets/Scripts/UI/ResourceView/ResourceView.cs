@@ -2,16 +2,18 @@
 using Inventory;
 using Inventory.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI.ResourceView
 {
     public class ResourceView : MonoBehaviour
     {
-        [SerializeField] private ResourceConfig _resourceConfig;
+        [FormerlySerializedAs("_resourceConfig")] 
+        [SerializeField] private ItemConfig _itemConfig;
         [SerializeField] private ResourceElementDisplayer _resourceElementPrefab;
         [SerializeField] private PlayerInventory _inventory;
 
-        private Dictionary<ResourceType, ResourceElementDisplayer> _displayItems = new Dictionary<ResourceType, ResourceElementDisplayer>();
+        private Dictionary<ItemType, ResourceElementDisplayer> _displayItems = new Dictionary<ItemType, ResourceElementDisplayer>();
 
         private void OnEnable()
         {
@@ -35,7 +37,7 @@ namespace UI.ResourceView
 
         private void InstantiateElement(InventoryItem item)
         {
-            ResourceViewData data = _resourceConfig.Get(item.Type);
+            ItemViewData data = _itemConfig.Get(item.Type);
             ResourceElementDisplayer instance = Instantiate(_resourceElementPrefab, transform);
             
             instance.SetAmount(item.Amount);

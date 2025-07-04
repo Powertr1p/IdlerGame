@@ -6,13 +6,13 @@ using UnityEngine;
 namespace Inventory.Core
 {
     [CreateAssetMenu(menuName = "Inventory/ResourceConfig")]
-    public class ResourceConfig : ScriptableObject
+    public class ItemConfig : ScriptableObject
     {
-        [SerializeField] private List<ResourceViewData> _resources;
+        [SerializeField] private List<ItemViewData> _resources;
 
-        private Dictionary<ResourceType, ResourceViewData> _lookup;
+        private Dictionary<ItemType, ItemViewData> _lookup;
 
-        public ResourceViewData Get(ResourceType type)
+        public ItemViewData Get(ItemType type)
         {
             _lookup ??= _resources.ToDictionary(r => r.Type, r => r);
             return _lookup.GetValueOrDefault(type);
@@ -20,9 +20,9 @@ namespace Inventory.Core
     }
     
     [Serializable]
-    public class ResourceViewData
+    public class ItemViewData
     {
-        public ResourceType Type;
+        public ItemType Type;
         public Sprite Icon;
         public string DisplayName;
     }

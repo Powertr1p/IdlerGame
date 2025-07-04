@@ -11,9 +11,9 @@ namespace Inventory
     {
         public event Action<InventoryItem> OnResourceChanged;
 
-        public Dictionary<ResourceType, InventoryItem> Items => _items;
+        public Dictionary<ItemType, InventoryItem> Items => _items;
         
-        private Dictionary<ResourceType, InventoryItem> _items = new();
+        private Dictionary<ItemType, InventoryItem> _items = new();
         
         private PlayerInventorySaveBox _saveBox;
 
@@ -45,12 +45,12 @@ namespace Inventory
         }
         
 
-        public int GetAmount(ResourceType type)
+        public int GetAmount(ItemType type)
         { 
             return _items.TryGetValue(type, out var item) ? item.Amount : 0; 
         }
 
-        public void Add(ResourceType type, int amount)
+        public void Add(ItemType type, int amount)
         {
             InventoryItem updatedItem;
             
@@ -68,7 +68,7 @@ namespace Inventory
             OnResourceChanged?.Invoke(updatedItem);
         }
 
-        public bool TrySpend(ResourceType type, int amount)
+        public bool TrySpend(ItemType type, int amount)
         {
             return _items.TryGetValue(type, out var item) && item.TrySpend(amount);
         }

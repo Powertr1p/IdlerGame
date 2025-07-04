@@ -1,7 +1,8 @@
 ﻿namespace Inventory.Core
 {
-    public enum ResourceType
+    public enum ItemType
     {
         Rock,
+        Tree,
     }
 }

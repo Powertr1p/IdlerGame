@@ -1,4 +1,5 @@
-using System;
+using DefaultNamespace;
+using GameItems;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,18 +7,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
-
-    public event Action CollidedWithResource;
+    [SerializeField] private PlayerGathering _playerGathering;
     
     public bool IsRunning => _joystick.Horizontal != 0 || _joystick.Vertical != 0;
 
     private CharacterController _characterController;
-    private Transform _lookTarget;
     
-
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+    }
+
+    private void OnEnable()
+    {
+        _playerGathering.CollidedWithResource += LookAtResource;
+    }
+
+    private void OnDisable()
+    {
+        _playerGathering.CollidedWithResource -= LookAtResource;
     }
 
     private void Update()
@@ -25,14 +33,12 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
     }
 
-    private void OnTriggerStay(Collider other)
-    {
+    private void LookAtResource(IGatherable resource)
+    { 
         if (!IsRunning)
         {
-            transform.LookAt(other.transform);
+            transform.LookAt(resource.Transform); 
         }
-        
-        CollidedWithResource?.Invoke();
     }
 
     private void HandleMovement()

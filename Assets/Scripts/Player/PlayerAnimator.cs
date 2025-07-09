@@ -26,6 +26,11 @@ public class PlayerAnimator : MonoBehaviour
     {
         OnAnimationHit?.Invoke();
     }
+    
+    public void OnChoppingHit()
+    {
+        OnAnimationHit?.Invoke();
+    }
 
     private void Update()
     {

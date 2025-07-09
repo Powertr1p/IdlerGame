@@ -57,7 +57,7 @@ ModelImporter:
       events:
       - time: 0.40410957
         functionName: OnHit
-        data: Mining
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

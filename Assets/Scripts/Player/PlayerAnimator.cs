@@ -22,7 +22,7 @@ public class PlayerAnimator : MonoBehaviour
     }
     
     //используется ключем анимации
-    public void OnHit(string animationName)
+    public void OnHit()
     {
         OnAnimationHit?.Invoke();
     }

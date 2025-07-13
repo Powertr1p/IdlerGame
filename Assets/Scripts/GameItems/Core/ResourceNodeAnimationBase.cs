@@ -3,30 +3,27 @@ using UnityEngine;
 
 namespace GameItems
 {
-    public class ResourceNodeAnimation : MonoBehaviour
+    [RequireComponent(typeof(ResourceNodeBase))]
+    public class ResourceNodeAnimationBase : MonoBehaviour
     {
         [Header("Animation")]
-        [SerializeField] private float _pulseScale = 0.9f;
-        [SerializeField] private float _pulseDuration = 0.2f;
+        [SerializeField] protected float _pulseScale = 0.9f;
+        [SerializeField] protected float _pulseDuration = 0.2f;
         
-        private Sequence _currentPulseSequence;
+        private Sequence _currentPulseSequence; 
         private Vector3 _originalScale;
 
-        private void Awake()
+        protected virtual void Awake() 
         {
             _originalScale = transform.localScale;
         }
         
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
-            if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
-            {
-                _currentPulseSequence.Kill();
-                _currentPulseSequence = null;
-            }
+            KillSequence();
         }
         
-        public void AnimateResourcePulse()
+        public virtual void AnimateResourcePulse() 
         {
             if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
             {
@@ -46,7 +43,7 @@ namespace GameItems
             );
         }
 
-        public void KillSequence()
+        public virtual void KillSequence()
         {
             if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
             {

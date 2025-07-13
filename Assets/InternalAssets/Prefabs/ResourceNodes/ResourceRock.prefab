@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resourceData: {fileID: 11400000, guid: 740b44fd9c1727042a93b83490f9c016, type: 2}
   _spreadRadius: 3
+  _animation: {fileID: 7835732315513419287}
 --- !u!114 &7835732315513419287
 MonoBehaviour:
   m_ObjectHideFlags: 0

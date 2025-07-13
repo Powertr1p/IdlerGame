@@ -8,11 +8,11 @@ using Random = UnityEngine.Random;
 
 namespace GameItems
 {
-    [RequireComponent(typeof(ResourceNodeAnimation))]
     public class ResourceNodeBase : MonoBehaviour, IGatherable
     { 
         [SerializeField] private ResourceData _resourceData;
         [SerializeField] private float _spreadRadius = 3f;
+        [SerializeField] private ResourceNodeAnimationBase _animation;
         
         [CanBeNull] private Transform _droppedItemsAttractor = null;
         
@@ -21,7 +21,7 @@ namespace GameItems
         public Transform Transform { get; private set; }
         public ItemType Type { get; private set; }
         
-        private ResourceNodeAnimation _animation;
+        //private ResourceNodeAnimation _animation;
         
         private int _currentHits;
         private int _spawnedCount;
@@ -29,7 +29,7 @@ namespace GameItems
         private void Awake()
         {
             Type = _resourceData.ItemType;
-            _animation = GetComponent<ResourceNodeAnimation>();
+            //_animation = GetComponent<ResourceNodeAnimation>();
             
             Transform = transform;
         }

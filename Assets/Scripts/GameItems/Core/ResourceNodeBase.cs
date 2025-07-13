@@ -21,15 +21,12 @@ namespace GameItems
         public Transform Transform { get; private set; }
         public ItemType Type { get; private set; }
         
-        //private ResourceNodeAnimation _animation;
-        
         private int _currentHits;
         private int _spawnedCount;
         
         private void Awake()
         {
             Type = _resourceData.ItemType;
-            //_animation = GetComponent<ResourceNodeAnimation>();
             
             Transform = transform;
         }

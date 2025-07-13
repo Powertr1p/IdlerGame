@@ -10,7 +10,7 @@ namespace GameItems
         [SerializeField] protected float _pulseScale = 0.9f;
         [SerializeField] protected float _pulseDuration = 0.2f;
         
-        private Sequence _currentPulseSequence; 
+        private Sequence _currentPulseSequence;
         private Vector3 _originalScale;
 
         protected virtual void Awake() 

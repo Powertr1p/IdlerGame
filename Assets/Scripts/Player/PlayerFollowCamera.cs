@@ -5,10 +5,17 @@ public class PlayerFollowCamera : MonoBehaviour
     [Header("Player")] 
     [SerializeField] private Transform _target;
 
-    [Header("Follow Settings")] 
-    [SerializeField] private float _smoothSpeed;
-    [SerializeField] private Vector3 _offset;
+    [Header("Smoothing")] 
+    [SerializeField, Range(0f, 25f)] private float _smoothSpeed;
+    
+    [Header("Camera Offset")] 
+    [SerializeField, Range(1f, 25f)] private float _offsetY;
+    [SerializeField, Range(-25f, 25f)] private float _offsetZ;
 
+    private float _offsetX;
+    
+    private Vector3 _offset => new (_offsetX, _offsetY, _offsetZ);
+    
     private void LateUpdate()
     {
         FollowTarget();

@@ -1114,7 +1114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 651039703}
   _smoothSpeed: 10
-  _offset: {x: 0, y: 8, z: -8}
+  _offsetX: 0
+  _offsetY: 8
+  _offsetZ: -8
 --- !u!23 &7549564184287254231
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerFollowCamera : MonoBehaviour
@@ -15,10 +16,21 @@ public class PlayerFollowCamera : MonoBehaviour
     private float _offsetX;
     
     private Vector3 _offset => new (_offsetX, _offsetY, _offsetZ);
-    
+    private Vector3 _initialPosition;
+
+    private void Awake()
+    {
+        _initialPosition = transform.position;
+    }
+
     private void LateUpdate()
     {
         FollowTarget();
+    }
+
+    private void OnValidate()
+    {
+        transform.position = _initialPosition + new Vector3(0, _offsetY, _offsetZ);
     }
 
     private void FollowTarget()

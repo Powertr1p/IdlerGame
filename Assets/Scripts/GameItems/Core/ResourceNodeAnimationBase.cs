@@ -31,7 +31,7 @@ namespace GameItems
             }
             
             _currentPulseSequence = DOTween.Sequence();
-            
+
             _currentPulseSequence.Append(
                 transform.DOScale(_originalScale * _pulseScale, _pulseDuration / 2)
                     .SetEase(Ease.OutQuad)

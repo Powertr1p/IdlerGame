@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace GameItems
 {
-    public class ResourceNodeBase : MonoBehaviour, IGatherable
+    public class ResourceNode : MonoBehaviour, IGatherable
     { 
         [SerializeField] private ResourceData _resourceData;
         [SerializeField] private float _spreadRadius = 3f;

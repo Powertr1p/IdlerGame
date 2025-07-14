@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameItems
 {
-    [RequireComponent(typeof(ResourceNodeBase))]
+    [RequireComponent(typeof(ResourceNode))]
     public class ResourceNodeAnimationBase : MonoBehaviour
     {
         [Header("Animation")]

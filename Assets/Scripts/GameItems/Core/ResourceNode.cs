@@ -1,5 +1,4 @@
 ﻿using System;
-using DG.Tweening;
 using Inventory.Core;
 using JetBrains.Annotations;
 using Scriptable;
@@ -36,7 +35,7 @@ namespace GameItems
             if (!CanGather(toolType)) return false;
 
             _droppedItemsAttractor = attractor;
-            _animation.AnimateResourcePulse();
+            _animation.AnimateOnHit();
 
             _currentHits++;
 

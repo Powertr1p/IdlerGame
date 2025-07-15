@@ -12,10 +12,10 @@ public class PlayerFollowCamera : MonoBehaviour
     [SerializeField, Range(1f, 25f)] private float _offsetY;
     [SerializeField, Range(-25f, 25f)] private float _offsetZ;
 
-    private float _offsetX;
+    private float _offsetX;    
+    private Vector3 _initialPosition;
     
     private Vector3 _offset => new (_offsetX, _offsetY, _offsetZ);
-    private Vector3 _initialPosition;
 
     private void Awake()
     {

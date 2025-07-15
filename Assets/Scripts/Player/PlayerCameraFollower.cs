@@ -1,18 +1,26 @@
 using UnityEngine;
 
-public class PlayerCameraFollower : MonoBehaviour
+public class PlayerFollowCamera : MonoBehaviour
 {
     [Header("Player")] 
     [SerializeField] private Transform _target;
 
     [Header("Smoothing")] 
-    [SerializeField, Range(0f, 15f)] private float _smoothSpeed;
+    [SerializeField, Range(0f, 25f)] private float _smoothSpeed;
     
     [Header("Camera Offset")] 
     [SerializeField, Range(1f, 25f)] private float _offsetY;
     [SerializeField, Range(-25f, 25f)] private float _offsetZ;
+
+    private float _offsetX;
     
-    private Vector3 _offset => new (0, _offsetY, _offsetZ);
+    private Vector3 _offset => new (_offsetX, _offsetY, _offsetZ);
+    private Vector3 _initialPosition;
+
+    private void Awake()
+    {
+        _initialPosition = transform.position;
+    }
 
     private void LateUpdate()
     {
@@ -21,18 +29,13 @@ public class PlayerCameraFollower : MonoBehaviour
 
     private void OnValidate()
     {
-        transform.position = CalculateDesiredPosition();
+        transform.position = _initialPosition + new Vector3(0, _offsetY, _offsetZ);
     }
 
     private void FollowTarget()
     {
-        Vector3 desiredPosition = CalculateDesiredPosition();
+        Vector3 desiredPosition = _target.position + _offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed * Time.deltaTime);
         transform.position = smoothedPosition;
-    }
-    
-    private Vector3 CalculateDesiredPosition()
-    {
-        return _target.position + _offset;
     }
 }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7226131848461165911}
-  - component: {fileID: 3147748813043716552}
   - component: {fileID: 1498276410957819174}
   m_Layer: 0
   m_Name: PhysicalCollider
@@ -33,27 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7779114702451019009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3147748813043716552
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2859060708164681532}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.83
-  m_Center: {x: -0.1020993, y: 0.03584683, z: 0.08352536}
 --- !u!135 &1498276410957819174
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -87,7 +65,7 @@ GameObject:
   - component: {fileID: 4741027730395555774}
   - component: {fileID: 4648983216440408078}
   - component: {fileID: 280471200043550151}
-  - component: {fileID: 7835732315513419287}
+  - component: {fileID: 5526057084506588494}
   - component: {fileID: 2703713786780913879}
   m_Layer: 0
   m_Name: ResourceRock
@@ -179,7 +157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resourceData: {fileID: 11400000, guid: 740b44fd9c1727042a93b83490f9c016, type: 2}
   _spreadRadius: 3
---- !u!114 &7835732315513419287
+  _animation: {fileID: 5526057084506588494}
+--- !u!114 &5526057084506588494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,7 +167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5028213378151203559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0fa73e879ed4a62be4561f36e6616a9, type: 3}
+  m_Script: {fileID: 11500000, guid: e9c144de54590334684d0129c34ed796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _pulseScale: 0.9

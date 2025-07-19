@@ -20,9 +20,9 @@ public class PlayerAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
         _mapper = new GatheringAnimationMapper(GetComponent<Animator>());
     }
-
+    
     //используется ключем анимации
-    public void OnMiningHit()
+    public void OnHit()
     {
         OnAnimationHit?.Invoke();
     }

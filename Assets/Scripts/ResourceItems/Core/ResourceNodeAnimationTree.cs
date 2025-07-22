@@ -4,6 +4,10 @@ namespace GameItems.Core
 {
     public class ResourceNodeAnimationTree : ResourceNodeAnimationBase
     {
+        protected override void OnAwake()
+        {
+        }
+
         public override void AnimateOnHit()
         {
             if (_currentPulseSequence != null && _currentPulseSequence.IsActive())

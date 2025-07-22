@@ -6,18 +6,20 @@ namespace GameItems
     [RequireComponent(typeof(ResourceNode))]
     public abstract class ResourceNodeAnimationBase : MonoBehaviour
     {
-        [Header("Animation")]
-        [SerializeField] protected float _pulseScale = 0.9f;
+        [Header("Animation")] [SerializeField] protected float _pulseScale = 0.9f;
         [SerializeField] protected float _pulseDuration = 0.2f;
 
         protected Sequence _currentPulseSequence;
         protected Vector3 _originalScale;
 
-        protected void Awake() 
+        private void Awake()
         {
             _originalScale = transform.localScale;
+            OnAwake();
         }
         
+        protected abstract void OnAwake();
+
         protected void OnDestroy()
         {
             KillSequence();

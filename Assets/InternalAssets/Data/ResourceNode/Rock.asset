@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemType: 0
   _resourcePrefab: {fileID: 3830553122932442759, guid: 4dc5c9fbe538f384f8645d1c72a044b9, type: 3}
-  _maxQuantity: 10
+  _maxQuantity: 5
   _hitsToGather: 2
   _toolType: 1

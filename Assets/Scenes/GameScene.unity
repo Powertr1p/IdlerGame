@@ -1749,6 +1749,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResourceRock
       objectReference: {fileID: 0}
+    - target: {fileID: 5526057084506588494, guid: a887ef8739b14ff498fb7d07d85c3c1c, type: 3}
+      propertyPath: _pulseScale
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526057084506588494, guid: a887ef8739b14ff498fb7d07d85c3c1c, type: 3}
+      propertyPath: _pulseDuration
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7779114702451019009, guid: a887ef8739b14ff498fb7d07d85c3c1c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.03

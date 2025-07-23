@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameItems
 {
@@ -7,7 +8,7 @@ namespace GameItems
     public abstract class ResourceNodeAnimationBase : MonoBehaviour
     {
         [Header("Pulse Animation")] 
-        [SerializeField] protected float _pulseScale = 0.9f;
+        [SerializeField] protected float _pulsePower = 0.9f;
         [SerializeField] protected float _pulseDuration = 0.2f;
 
         protected Sequence _currentPulseSequence;
@@ -16,10 +17,7 @@ namespace GameItems
         private void Awake()
         {
             _originalScale = transform.localScale;
-            OnAwake();
         }
-        
-        protected abstract void OnAwake();
 
         protected void OnDestroy()
         {

@@ -51,7 +51,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.45, z: 1}
+  m_Size: {x: 0.5, y: 0.45, z: 0.6}
   m_Center: {x: 0, y: 0.22, z: 0}
 --- !u!1 &7724390713943551362
 GameObject:
@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df02079c14ecbc643ba8eea6c11336ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pulseScale: 0.9
-  _pulseDuration: 0.2
+  _pulsePower: 0.2
+  _pulseDuration: 0.3
 --- !u!65 &1738873883541667588
 BoxCollider:
   m_ObjectHideFlags: 0

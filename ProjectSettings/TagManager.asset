@@ -6,6 +6,7 @@ TagManager:
   tags:
   - IgnoreTheme
   - Button
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX

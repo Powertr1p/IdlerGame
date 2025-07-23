@@ -8,7 +8,6 @@ namespace GameItems.Core
         public override void AnimateOnHit()
         {
             transform.DOPunchPosition(Vector3.forward * _pulsePower, _pulseDuration);
-            //test
         }
     }
 }

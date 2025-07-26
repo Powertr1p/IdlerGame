@@ -1,13 +1,31 @@
 using DG.Tweening;
-using UnityEngine;
 
 namespace GameItems.Core
 {
     public class ResourceNodeAnimationTree : ResourceNodeAnimationBase
     {
+        protected override void OnAwake()
+        {
+        }
+
         public override void AnimateOnHit()
         {
-            transform.DOPunchPosition(Vector3.forward * _pulsePower, _pulseDuration);
+            if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
+            {
+                _currentPulseSequence.Kill();
+            }
+
+            _currentPulseSequence = DOTween.Sequence();
+
+            _currentPulseSequence.Append(
+                transform.DOScale(_originalScale * _pulseScale, _pulseDuration / 2)
+                    .SetEase(Ease.OutQuad)
+            );
+
+            _currentPulseSequence.Append(
+                transform.DOScale(_originalScale, _pulseDuration / 2)
+                    .SetEase(Ease.OutElastic, 1, 0.5f)
+            );
         }
     }
 }

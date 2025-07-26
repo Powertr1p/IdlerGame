@@ -5,7 +5,6 @@ namespace GameItems.Core
 {
     public class ResourceNodeAnimationRock : ResourceNodeAnimationBase
     {
-        [Header("Reduction Settings")]
         [SerializeField] private float _scaleReduction = 0.1f;
         [SerializeField] private float _minScale = 0.1f;
         [SerializeField] private float _yOffsetPerHit;

@@ -6,8 +6,7 @@ namespace GameItems
     [RequireComponent(typeof(ResourceNode))]
     public abstract class ResourceNodeAnimationBase : MonoBehaviour
     {
-        [Header("Pulse Animation")] 
-        [SerializeField] protected float _pulseScale = 0.9f;
+        [Header("Animation")] [SerializeField] protected float _pulseScale = 0.9f;
         [SerializeField] protected float _pulseDuration = 0.2f;
 
         protected Sequence _currentPulseSequence;

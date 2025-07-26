@@ -6,20 +6,17 @@ namespace GameItems.Core
     {
         public override void AnimateOnHit()
         {
-            if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
-            {
-                _currentPulseSequence.Kill();
-            }
+            KillSequence();
 
-            _currentPulseSequence = DOTween.Sequence();
+            CurrentPulseSequence = DOTween.Sequence();
 
-            _currentPulseSequence.Append(
-                transform.DOScale(_originalScale * _pulsePower, _pulseDuration / 2)
+            CurrentPulseSequence.Append(
+                transform.DOScale(OriginalScale * PulsePower, PulseDuration / 2)
                     .SetEase(Ease.OutQuad)
             );
 
-            _currentPulseSequence.Append(
-                transform.DOScale(_originalScale, _pulseDuration / 2)
+            CurrentPulseSequence.Append(
+                transform.DOScale(OriginalScale, PulseDuration / 2)
                     .SetEase(Ease.OutElastic, 1, 0.5f)
             );
         }

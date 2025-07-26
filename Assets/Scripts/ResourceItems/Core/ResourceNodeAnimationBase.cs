@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GameItems
 {
@@ -8,30 +7,48 @@ namespace GameItems
     public abstract class ResourceNodeAnimationBase : MonoBehaviour
     {
         [Header("Pulse Animation")] 
-        [SerializeField] protected float _pulsePower = 0.9f;
-        [SerializeField] protected float _pulseDuration = 0.2f;
+        [SerializeField] protected float PulsePower = 0.9f;
+        [SerializeField] protected float PulseDuration = 0.2f;
 
-        protected Sequence _currentPulseSequence;
-        protected Vector3 _originalScale;
+        [Header("Particles")] 
+        [SerializeField] protected ParticleSystem Particles;
+        [SerializeField] protected Transform ParticlesPivot;
+
+        protected Sequence CurrentPulseSequence;
+        protected Vector3 OriginalScale;
 
         private void Awake()
         {
-            _originalScale = transform.localScale;
+            OriginalScale = transform.localScale;
         }
 
-        protected void OnDestroy()
+        private void OnDestroy()
         {
             KillSequence();
         }
-
+        
         public abstract void AnimateOnHit();
 
         public void KillSequence()
         {
-            if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
+            if (CurrentPulseSequence != null && CurrentPulseSequence.IsActive())
             {
-                _currentPulseSequence.Kill();
-                _currentPulseSequence = null;
+                CurrentPulseSequence.Kill();
+                CurrentPulseSequence = null;
+            }
+        }
+
+        protected void PlayParticles()
+        {
+            if (Particles != null)
+            {
+                ParticleSystem particles = Instantiate(
+                    Particles,
+                    ParticlesPivot.transform.position,
+                    Quaternion.identity,
+                    ParticlesPivot.transform);
+                
+                particles.Play();
             }
         }
     }

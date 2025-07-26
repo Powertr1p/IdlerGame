@@ -170,12 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c144de54590334684d0129c34ed796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pulseScale: 1.15
-  _pulseDuration: 0.2
-  _scaleReduction: 0.1
-  _minScale: 0.1
-  _yOffsetPerHit: 0.1
-  _hitCollider: {fileID: 3659245517373064065}
+  PulsePower: 0.9
+  PulseDuration: 0.2
 --- !u!135 &3659245517373064065
 SphereCollider:
   m_ObjectHideFlags: 0

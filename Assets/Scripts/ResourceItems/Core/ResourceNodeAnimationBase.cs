@@ -40,13 +40,15 @@ namespace GameItems
 
         protected void PlayParticles()
         {
-            if (Particles != null)
+            if (!ReferenceEquals(Particles, null))
             {
+                Transform particlesPivotTransform = ParticlesPivot.transform;
+                
                 ParticleSystem particles = Instantiate(
                     Particles,
-                    ParticlesPivot.transform.position,
+                    particlesPivotTransform.position,
                     Quaternion.identity,
-                    ParticlesPivot.transform);
+                    particlesPivotTransform);
                 
                 particles.Play();
             }

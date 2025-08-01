@@ -9,7 +9,7 @@ namespace GameItems.Core
         {
             KillSequence();
 
-            CurrentPulseSequence = DOTween.Sequence()
+            Sequence = DOTween.Sequence()
                 .Append(transform.DOPunchPosition(Vector3.forward * PulsePower, PulseDuration))
                 .OnStart(PlayParticles);
         }

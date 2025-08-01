@@ -14,13 +14,7 @@ namespace GameItems
         [SerializeField] protected ParticleSystem Particles;
         [SerializeField] protected Transform ParticlesPivot;
 
-        protected Sequence CurrentPulseSequence;
-        protected Vector3 OriginalScale;
-
-        private void Awake()
-        {
-            OriginalScale = transform.localScale;
-        }
+        protected Sequence Sequence;
 
         private void OnDestroy()
         {
@@ -31,10 +25,10 @@ namespace GameItems
 
         public void KillSequence()
         {
-            if (CurrentPulseSequence != null && CurrentPulseSequence.IsActive())
+            if (Sequence != null && Sequence.IsActive())
             {
-                CurrentPulseSequence.Kill();
-                CurrentPulseSequence = null;
+                Sequence.Kill();
+                Sequence = null;
             }
         }
 

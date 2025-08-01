@@ -1,22 +1,30 @@
 using DG.Tweening;
+using UnityEngine;
 
 namespace GameItems.Core
 {
     public class ResourceNodeAnimationRock : ResourceNodeAnimationBase
     {
+        private Vector3 _originalScale;
+        
+        private void Awake()
+        {
+            _originalScale = transform.localScale;
+        }
+        
         public override void AnimateOnHit()
         {
             KillSequence();
 
-            CurrentPulseSequence = DOTween.Sequence();
+            Sequence = DOTween.Sequence();
 
-            CurrentPulseSequence.Append(
-                transform.DOScale(OriginalScale * PulsePower, PulseDuration / 2)
+            Sequence.Append(
+                transform.DOScale(_originalScale * PulsePower, PulseDuration / 2)
                     .SetEase(Ease.OutQuad)
             );
 
-            CurrentPulseSequence.Append(
-                transform.DOScale(OriginalScale, PulseDuration / 2)
+            Sequence.Append(
+                transform.DOScale(_originalScale, PulseDuration / 2)
                     .SetEase(Ease.OutElastic, 1, 0.5f)
             );
         }

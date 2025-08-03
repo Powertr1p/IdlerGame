@@ -28,6 +28,7 @@ public class PlayerCameraFollower : MonoBehaviour
     {
         Vector3 desiredPosition = CalculateDesiredPosition();
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed * Time.deltaTime);
+        //todo: в апдейте получается постоянно GetComponent<Transform>();
         transform.position = smoothedPosition;
     }
     

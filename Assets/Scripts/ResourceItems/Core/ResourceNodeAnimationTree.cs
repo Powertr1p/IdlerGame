@@ -10,6 +10,7 @@ namespace GameItems.Core
             KillSequence();
 
             Sequence = DOTween.Sequence()
+                //todo: дергает ротейшн (панч\либо ручками)
                 .Append(transform.DOPunchPosition(Vector3.forward * PulsePower, PulseDuration))
                 .OnStart(PlayParticles);
         }

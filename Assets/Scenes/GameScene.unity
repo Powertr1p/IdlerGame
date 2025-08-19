@@ -689,6 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gravityForce: 20
+  _groundedVerticalVelocity: -0.5
 --- !u!1 &1052145247
 GameObject:
   m_ObjectHideFlags: 0

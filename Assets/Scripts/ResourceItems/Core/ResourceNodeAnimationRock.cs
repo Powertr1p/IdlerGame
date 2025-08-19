@@ -19,12 +19,12 @@ namespace GameItems.Core
             Sequence = DOTween.Sequence();
 
             Sequence.Append(
-                transform.DOScale(_originalScale * PulsePower, PulseDuration / 2)
+                transform.DOScale(_originalScale * AnimationPower, AnimationDuration / 2)
                     .SetEase(Ease.OutQuad)
             );
 
             Sequence.Append(
-                transform.DOScale(_originalScale, PulseDuration / 2)
+                transform.DOScale(_originalScale, AnimationDuration / 2)
                     .SetEase(Ease.OutElastic, 1, 0.5f)
             );
         }

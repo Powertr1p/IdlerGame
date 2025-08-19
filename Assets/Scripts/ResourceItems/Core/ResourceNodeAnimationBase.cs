@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameItems
 {
@@ -7,8 +8,8 @@ namespace GameItems
     public abstract class ResourceNodeAnimationBase : MonoBehaviour
     {
         [Header("Pulse Animation")] 
-        [SerializeField] protected float PulsePower = 0.9f;
-        [SerializeField] protected float PulseDuration = 0.2f;
+        [SerializeField] protected float AnimationPower = 0.9f;
+        [SerializeField] protected float AnimationDuration = 0.2f;
 
         [Header("Particles")] 
         [SerializeField] protected ParticleSystem Particles;

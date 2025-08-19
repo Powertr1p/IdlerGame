@@ -202,8 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df02079c14ecbc643ba8eea6c11336ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PulsePower: 0.9
-  PulseDuration: 0.2
+  AnimationPower: 0.9
+  AnimationDuration: 0.2
   Particles: {fileID: 5634522611406161292, guid: f1932c9a786b87642a868b3396ae4d91, type: 3}
   ParticlesPivot: {fileID: 8466552921574233971}
 --- !u!65 &1738873883541667588
@@ -226,4 +226,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.75, y: 5.5617986, z: 1.75}
-  m_Center: {x: 0, y: 2.7809107, z: 0}
+  m_Center: {x: 0, y: 2.4, z: 0}

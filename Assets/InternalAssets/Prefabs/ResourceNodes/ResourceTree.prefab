@@ -203,9 +203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationPower: 0.9
-  AnimationDuration: 0.2
+  AnimationDuration: 0.3
   Particles: {fileID: 5634522611406161292, guid: f1932c9a786b87642a868b3396ae4d91, type: 3}
   ParticlesPivot: {fileID: 8466552921574233971}
+  _animationType: 0
 --- !u!65 &1738873883541667588
 BoxCollider:
   m_ObjectHideFlags: 0

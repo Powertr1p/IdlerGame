@@ -4,6 +4,7 @@ using UnityEngine;
 public class GravityHandler : MonoBehaviour
 {
     [SerializeField] private float _gravityForce;
+    [SerializeField] private float _groundedVerticalVelocity = -0.5f; 
     
     private CharacterController _characterController;
     private Vector3 _velocityVector;
@@ -26,7 +27,7 @@ public class GravityHandler : MonoBehaviour
         }
         else
         {
-            _velocityVector.y = -0.5f;
+            _velocityVector.y = _groundedVerticalVelocity;
         }
 
         _characterController.Move(_velocityVector * Time.deltaTime);

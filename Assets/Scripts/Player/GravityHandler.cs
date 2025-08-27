@@ -21,14 +21,9 @@ public class GravityHandler : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (!_characterController.isGrounded)
-        {
-            _velocityVector.y -= _gravityForce * Time.deltaTime;
-        }
-        else
-        {
-            _velocityVector.y = _groundedVerticalVelocity;
-        }
+        _velocityVector.y = !_characterController.isGrounded
+            ? _velocityVector.y - _gravityForce * Time.deltaTime
+            : _groundedVerticalVelocity;
 
         _characterController.Move(_velocityVector * Time.deltaTime);
     }

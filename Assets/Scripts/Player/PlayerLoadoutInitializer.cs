@@ -1,5 +1,6 @@
 ﻿using Inventory;
 using UnityEngine;
+using Zenject;
 
 namespace DefaultNamespace
 {
@@ -9,15 +10,20 @@ namespace DefaultNamespace
 
         private IPlayerLoadout _loadout;
         
-        //todo: register 
+        [Inject]
         public void Construct(IPlayerLoadout loadout)
         {
             _loadout = loadout;
         }
 
-        public void SpawnTool()
+        private void Start()
         {
-            var instance = Instantiate(_loadout.LoadoutData.ToolData, _toolContainer);
+            SpawnTool();
+        }
+
+        private void SpawnTool()
+        {
+            var instance = Instantiate(_loadout.LoadoutData.ToolData.ToolLevelPrefab, _toolContainer);
         }
     }
 }

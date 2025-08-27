@@ -7,6 +7,7 @@ using Inventory.EquipmentItems;
 using Scriptable;
 using UnityEngine;
 using Utilities.SaveSystem;
+using Zenject;
 
 namespace Inventory
 {
@@ -31,7 +32,7 @@ namespace Inventory
             LoadInventory();
         }
         
-        //todo: inject
+        [Inject]
         public void Construct(IPlayerLoadout loadout)
         {
             _loadout = loadout;
@@ -48,6 +49,7 @@ namespace Inventory
             };
             
             var equipment = _equipmentRepository.GetEquipment(_equippedToolId);
+            
             _loadout.SetTool(equipment);
             
             Equip(equipment);

@@ -18,6 +18,8 @@ namespace Inventory
         public event Action<InventoryItem> OnResourceChanged;
         public Dictionary<ItemType, InventoryItem> Resources => _resources;
         
+        private IPlayerLoadout _loadout;
+        
         private Dictionary<ItemType, InventoryItem> _resources = new();
         private int _equippedToolId = -1;
         
@@ -27,6 +29,12 @@ namespace Inventory
         {
             _saveBox = new PlayerInventorySaveBox();
             LoadInventory();
+        }
+        
+        //todo: inject
+        public void Construct(IPlayerLoadout loadout)
+        {
+            _loadout = loadout;
         }
 
         public void ChangeTool()
@@ -40,6 +48,8 @@ namespace Inventory
             };
             
             var equipment = _equipmentRepository.GetEquipment(_equippedToolId);
+            _loadout.SetTool(equipment);
+            
             Equip(equipment);
         }
 

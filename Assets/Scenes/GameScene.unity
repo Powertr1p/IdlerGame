@@ -624,6 +624,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gravityForce: 20
   _groundedVerticalVelocity: -0.5
+--- !u!114 &824199631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824199626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91044e9f82144fc9b9ff16192dac7a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolContainer: {fileID: 7304289070272870949}
 --- !u!1 &1052145247
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,51 +745,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052145247}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1539829187
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1539829188}
-  - component: {fileID: 1539829189}
-  m_Layer: 0
-  m_Name: GameSceneInitializer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1539829188
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1539829187}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1539829189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1539829187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee718595ee333594aaf7357a276b2ce2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _toolContainer: {fileID: 7304289070272870949}
 --- !u!1 &1699513664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,6 +1563,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8066120688882072039, guid: 15ad35108fe21ee4c8ae8612e0f46cb2, type: 3}
       insertIndex: 2
       addedObject: {fileID: 824199630}
+    - targetCorrespondingSourceObject: {fileID: 8066120688882072039, guid: 15ad35108fe21ee4c8ae8612e0f46cb2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 824199631}
   m_SourcePrefab: {fileID: 100100000, guid: 15ad35108fe21ee4c8ae8612e0f46cb2, type: 3}
 --- !u!4 &7304289070272870949 stripped
 Transform:
@@ -1828,4 +1799,3 @@ SceneRoots:
   - {fileID: 5059307889955139705}
   - {fileID: 8490833613735106905}
   - {fileID: 417376953}
-  - {fileID: 1539829188}

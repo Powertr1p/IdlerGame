@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UnityEngine;
 
 namespace GameItems.Core
 {
@@ -6,22 +7,19 @@ namespace GameItems.Core
     {
         public override void AnimateOnHit()
         {
-            if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
-            {
-                _currentPulseSequence.Kill();
-            }
+            KillSequence();
+            DoRotate();
+        }
 
-            _currentPulseSequence = DOTween.Sequence();
+        private void DoRotate()
+        {
+            Quaternion originalRotation = transform.rotation;
 
-            _currentPulseSequence.Append(
-                transform.DOScale(_originalScale * _pulseScale, _pulseDuration / 2)
-                    .SetEase(Ease.OutQuad)
-            );
-
-            _currentPulseSequence.Append(
-                transform.DOScale(_originalScale, _pulseDuration / 2)
-                    .SetEase(Ease.OutElastic, 1, 0.5f)
-            );
+            Sequence = DOTween.Sequence()
+                .Append(transform.DORotate(new Vector3(0, 30, 0), AnimationDuration, RotateMode.LocalAxisAdd))
+                .Append(transform.DORotate(originalRotation.eulerAngles, AnimationDuration))
+                .SetEase(Ease.OutBack)
+                .OnStart(PlayParticles);
         }
     }
 }

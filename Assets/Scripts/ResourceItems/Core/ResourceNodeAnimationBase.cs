@@ -6,31 +6,45 @@ namespace GameItems
     [RequireComponent(typeof(ResourceNode))]
     public abstract class ResourceNodeAnimationBase : MonoBehaviour
     {
-        [Header("Animation")]
-        [SerializeField] protected float _pulseScale = 0.9f;
-        [SerializeField] protected float _pulseDuration = 0.2f;
+        [Header("Pulse Animation")] 
+        [SerializeField] protected float AnimationPower = 0.9f;
+        [SerializeField] protected float AnimationDuration = 0.2f;
 
-        protected Sequence _currentPulseSequence;
-        protected Vector3 _originalScale;
+        [Header("Particles")] 
+        [SerializeField] protected ParticleSystem Particles;
+        [SerializeField] protected Transform ParticlesPivot;
 
-        protected void Awake() 
-        {
-            _originalScale = transform.localScale;
-        }
-        
-        protected void OnDestroy()
+        protected Sequence Sequence;
+
+        private void OnDestroy()
         {
             KillSequence();
         }
-
+        
         public abstract void AnimateOnHit();
 
         public void KillSequence()
         {
-            if (_currentPulseSequence != null && _currentPulseSequence.IsActive())
+            if (Sequence != null && Sequence.IsActive())
             {
-                _currentPulseSequence.Kill();
-                _currentPulseSequence = null;
+                Sequence.Kill();
+                Sequence = null;
+            }
+        }
+
+        protected void PlayParticles()
+        {
+            if (!ReferenceEquals(Particles, null))
+            {
+                Transform particlesPivotTransform = ParticlesPivot.transform;
+                
+                ParticleSystem particles = Instantiate(
+                    Particles,
+                    particlesPivotTransform.position,
+                    Quaternion.identity,
+                    particlesPivotTransform);
+                
+                particles.Play();
             }
         }
     }

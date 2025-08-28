@@ -23,7 +23,10 @@ namespace DefaultNamespace
 
         private void SpawnTool()
         {
-            var instance = Instantiate(_loadout.LoadoutData.ToolData.ToolLevelPrefab, _toolContainer);
+            if (_loadout != null)
+            {
+                var instance = Instantiate(_loadout.LoadoutData.ToolData.ToolLevelPrefab, _toolContainer);
+            }
         }
     }
 }

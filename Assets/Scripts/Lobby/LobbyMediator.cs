@@ -12,6 +12,8 @@ namespace Core
 
         public event Action RaidSceneLoaded;
 
+        private const string GAME_SCENE_NAME = "GameScene";
+
         private void OnEnable()
         {
             _raidStartHandler.OnPlayClicked += HandleStartRaid;
@@ -26,7 +28,7 @@ namespace Core
 
         private void HandleStartRaid()
         {
-            _sceneLoader.LoadSceneAsync("GameScene");
+            _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
         }
 
         private void OnSceneWasLoaded()

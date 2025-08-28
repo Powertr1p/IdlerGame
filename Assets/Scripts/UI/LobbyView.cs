@@ -1,39 +1,32 @@
-﻿using Core;
-using Inventory;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
     public class LobbyView : MonoBehaviour
     {
-        [SerializeField] private LobbyMediator _lobbyMediator;
         [SerializeField] private Button _changeToolButton;
-        [SerializeField] private PlayerInventory _playerInventory;
-
+        [SerializeField] private Button _inventoryButton;
+        
         private void OnEnable()
         {
-            _changeToolButton.onClick.AddListener(ChangeTool);
-            _lobbyMediator.RaidSceneLoaded += Hide;
-        }
-
-        private void ChangeTool()
-        {
-            _playerInventory.ChangeTool();
+            _changeToolButton.onClick.AddListener(LobbyUIEventBus.ChangeTool);
+            _inventoryButton.onClick.AddListener(LobbyUIEventBus.RequestInventoryOpen);
         }
 
         private void OnDisable()
         {
             _changeToolButton.onClick.RemoveAllListeners();
-            _lobbyMediator.RaidSceneLoaded -= Hide;
+            _inventoryButton.onClick.RemoveAllListeners();
         }
 
-        private void Show()
+        public void Show()
         {
             gameObject.SetActive(true);
         }
         
-        private void Hide()
+        public void Hide()
         {
             gameObject.SetActive(false);
         }

@@ -1,16 +1,15 @@
-﻿using System;
+﻿using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace Core
 {
-    public class LobbyMediator : MonoBehaviour
+    public class LobbyNavigator : MonoBehaviour
     {
         [SerializeField] private RaidStartHandler _raidStartHandler;
         [SerializeField] private SceneLoader _sceneLoader;
-
-        public event Action RaidSceneLoaded;
+        [SerializeField] private InventoryView _inventoryView;
+        [SerializeField] private LobbyView _lobbyView;
 
         private const string GAME_SCENE_NAME = "GameScene";
 
@@ -18,12 +17,18 @@ namespace Core
         {
             _raidStartHandler.OnPlayClicked += HandleStartRaid;
             _sceneLoader.OnSceneLoaded += OnSceneWasLoaded;
+
+            LobbyUIEventBus.OnInventoryOpenRequested += ShowInventory;
+            LobbyUIEventBus.OnLobbyShowRequested += ShowLobby;
         }
 
         private void OnDisable()
         {
             _raidStartHandler.OnPlayClicked -= HandleStartRaid;
             _sceneLoader.OnSceneLoaded -= OnSceneWasLoaded;
+            
+            LobbyUIEventBus.OnInventoryOpenRequested -= ShowInventory;
+            LobbyUIEventBus.OnLobbyShowRequested -= ShowLobby;
         }
 
         private void HandleStartRaid()
@@ -31,9 +36,21 @@ namespace Core
             _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
         }
 
+        private void ShowInventory()
+        {
+            _lobbyView.Hide();
+            _inventoryView.Show();
+        }
+
+        private void ShowLobby()
+        {
+            _inventoryView.Hide();
+            _lobbyView.Show();
+        }
+
         private void OnSceneWasLoaded()
         {
-            RaidSceneLoaded?.Invoke();
+            LobbyUIEventBus.RaidStarted();
         }
     }
 }

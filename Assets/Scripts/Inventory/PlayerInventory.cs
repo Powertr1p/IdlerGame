@@ -5,7 +5,9 @@ using DefaultNamespace;
 using Inventory.Core;
 using Inventory.EquipmentItems;
 using Scriptable;
+using Unity.VisualScripting;
 using UnityEngine;
+using Utilities;
 using Utilities.SaveSystem;
 using Zenject;
 
@@ -26,6 +28,16 @@ namespace Inventory
         
         private PlayerInventorySaveBox _saveBox;
 
+        private void OnEnable()
+        {
+            LobbyUIEventBus.OnChangeToolRequested += ChangeTool;
+        }
+
+        private void OnDisable()
+        {
+            LobbyUIEventBus.OnChangeToolRequested -= ChangeTool;
+        }
+        
         private void Start()
         {
             _saveBox = new PlayerInventorySaveBox();
@@ -38,8 +50,9 @@ namespace Inventory
             _loadout = loadout;
         }
 
-        public void ChangeTool()
+        private void ChangeTool()
         {
+            //temp
             _equippedToolId = _equippedToolId switch
             {
                 -1 => 1,

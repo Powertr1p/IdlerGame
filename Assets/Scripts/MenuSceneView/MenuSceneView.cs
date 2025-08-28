@@ -1,23 +1,26 @@
-﻿using Core;
-using UnityEngine;
+﻿using UnityEngine;
+using Utilities;
 
 namespace MenuSceneView
 {
     public class MenuSceneView : MonoBehaviour
     {
-        [SerializeField] private LobbyMediator _lobbyMediator;
-
         private void OnEnable()
         {
-            _lobbyMediator.RaidSceneLoaded += Hide;
+            LobbyUIEventBus.OnRaidStarted += Hide;
         }
 
         private void OnDisable()
         {
-            _lobbyMediator.RaidSceneLoaded -= Hide;
+            LobbyUIEventBus.OnRaidStarted -= Hide;
         }
 
-        private void Hide()
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+        
+        public void Hide()
         {
             gameObject.SetActive(false);
         }

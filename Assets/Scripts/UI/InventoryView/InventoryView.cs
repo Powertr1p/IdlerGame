@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using Zenject;
 
 namespace UI
 {
@@ -11,6 +12,14 @@ namespace UI
         [SerializeField] private Transform _inventoryContent;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _inventoryButton;
+
+        private PlayerInventory _playerInventory;
+        
+        [Inject]
+        public void Construct(PlayerInventory playerInventory)
+        {
+            _playerInventory = playerInventory;
+        }
         
         private void OnEnable()
         {

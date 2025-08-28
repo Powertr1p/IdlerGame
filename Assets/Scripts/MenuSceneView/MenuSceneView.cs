@@ -1,28 +1,8 @@
 ﻿using UnityEngine;
-using Utilities;
 
-namespace MenuSceneView
+namespace UI
 {
-    public class MenuSceneView : MonoBehaviour
+    public class MenuSceneView : BaseView
     {
-        private void OnEnable()
-        {
-            LobbyUIEventBus.OnRaidStarted += Hide;
-        }
-
-        private void OnDisable()
-        {
-            LobbyUIEventBus.OnRaidStarted -= Hide;
-        }
-
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
-        
-        public void Hide()
-        {
-            gameObject.SetActive(false);
-        }
     }
 }

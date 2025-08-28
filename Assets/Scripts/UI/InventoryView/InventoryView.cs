@@ -5,7 +5,7 @@ using Utilities;
 
 namespace UI
 {
-    public class InventoryView : MonoBehaviour
+    public class InventoryView : BaseView
     {
         [SerializeField] private InventorySlot _inventorySlotPrefab;
         [SerializeField] private Transform _inventoryContent;
@@ -20,16 +20,6 @@ namespace UI
         private void OnDisable()
         {
             _backButton.onClick.RemoveAllListeners();
-        }
-
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
         }
         
         private void BackToLobby()

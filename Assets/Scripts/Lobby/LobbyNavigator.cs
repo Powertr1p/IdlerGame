@@ -10,6 +10,7 @@ namespace Core
         [SerializeField] private SceneLoader _sceneLoader;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private LobbyView _lobbyView;
+        [SerializeField] private MenuSceneView _menuSceneView;
 
         private const string GAME_SCENE_NAME = "GameScene";
 
@@ -50,7 +51,7 @@ namespace Core
 
         private void OnSceneWasLoaded()
         {
-            LobbyUIEventBus.RaidStarted();
+            _menuSceneView.Hide();
         }
     }
 }

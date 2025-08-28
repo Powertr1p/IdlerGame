@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace UI.ResourceView
 {
-    public class ResourceView : MonoBehaviour
+    public class ResourceDisplayer : MonoBehaviour
     {
         [FormerlySerializedAs("_resourceConfig")] 
         [SerializeField] private ItemConfig _itemConfig;

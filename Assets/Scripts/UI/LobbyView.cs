@@ -4,7 +4,7 @@ using Utilities;
 
 namespace UI
 {
-    public class LobbyView : MonoBehaviour
+    public class LobbyView : BaseView
     {
         [SerializeField] private Button _changeToolButton;
         [SerializeField] private Button _inventoryButton;
@@ -19,16 +19,6 @@ namespace UI
         {
             _changeToolButton.onClick.RemoveAllListeners();
             _inventoryButton.onClick.RemoveAllListeners();
-        }
-
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
-        
-        public void Hide()
-        {
-            gameObject.SetActive(false);
         }
     }
 }

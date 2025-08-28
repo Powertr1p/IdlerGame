@@ -4546,7 +4546,7 @@ GameObject:
   - component: {fileID: 2018599830}
   - component: {fileID: 2018599831}
   m_Layer: 0
-  m_Name: LobbyMediator
+  m_Name: LobbyNavigator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4583,6 +4583,7 @@ MonoBehaviour:
   _sceneLoader: {fileID: 1406599668}
   _inventoryView: {fileID: 122882925}
   _lobbyView: {fileID: 167985507}
+  _menuSceneView: {fileID: 994083816}
 --- !u!1 &2031752137
 GameObject:
   m_ObjectHideFlags: 0

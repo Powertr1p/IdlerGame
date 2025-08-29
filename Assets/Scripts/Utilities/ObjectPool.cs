@@ -16,7 +16,7 @@ namespace Utilities
 
             for (int i = 0; i < initialSize; i++)
             {
-                var instance = Object.Instantiate(_prefab, _parent);
+                var instance = CreateObject();
                 instance.gameObject.SetActive(false);
                 _pool.Enqueue(instance);
             }
@@ -32,7 +32,7 @@ namespace Utilities
             }
             else
             {
-                var obj = Object.Instantiate(_prefab, _parent);
+                var obj = CreateObject();
                 return obj;
             }
         }
@@ -41,6 +41,11 @@ namespace Utilities
         {
             obj.gameObject.SetActive(false);
             _pool.Enqueue(obj);
+        }
+
+        private T CreateObject()
+        {
+            return Object.Instantiate(_prefab, _parent);
         }
     }
 }

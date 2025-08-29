@@ -1,4 +1,6 @@
-﻿using Inventory;
+﻿using System.Collections.Generic;
+using Inventory;
+using Inventory.Core;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -14,19 +16,21 @@ namespace UI
         [SerializeField] private Button _inventoryButton;
 
         private PlayerInventory _playerInventory;
+        private ItemsViewDatabase _itemsViewDatabase;
         
         private ObjectPool<InventorySlot> _slotPool;
         private int _initialPoolSize = 10;
         
-        private void Start()
+        private void Awake()
         {
             _slotPool = new ObjectPool<InventorySlot>(_initialPoolSize, _inventorySlotPrefab, _inventoryContent);
         }
         
         [Inject]
-        public void Construct(PlayerInventory playerInventory)
+        public void Construct(PlayerInventory playerInventory, ItemsViewDatabase itemsViewDatabase)
         {
             _playerInventory = playerInventory;
+            _itemsViewDatabase = itemsViewDatabase;
         }
         
         private void OnEnable()
@@ -42,6 +46,24 @@ namespace UI
         public override void Show()
         {
             base.Show();
+            CreateInventorySlots();
+        }
+
+        private void CreateInventorySlots()
+        {
+            IReadOnlyList<InventoryItem> items = _playerInventory.GetAll();
+            
+            int resourceQty;
+            Sprite resourceSpr;
+            
+            for (int i = 0; i < items.Count; i++)
+            {
+                resourceSpr = _itemsViewDatabase.Get(items[i].Type).Icon;
+                resourceQty = items[i].Amount;
+
+                var instance = _slotPool.Get();
+                instance.Bind(resourceSpr, resourceQty);
+            }
         }
         
         private void BackToLobby()

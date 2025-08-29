@@ -9,7 +9,7 @@ namespace UI.ResourceView
     public class ResourceDisplayer : MonoBehaviour
     {
         [FormerlySerializedAs("_resourceConfig")] 
-        [SerializeField] private ItemConfig _itemConfig;
+        [SerializeField] private ItemsViewDatabase _itemsViewDatabase;
         [SerializeField] private ResourceElementDisplayer _resourceElementPrefab;
         [SerializeField] private PlayerInventory _inventory;
 
@@ -37,7 +37,7 @@ namespace UI.ResourceView
 
         private void InstantiateElement(InventoryItem item)
         {
-            ItemViewData data = _itemConfig.Get(item.Type);
+            ItemViewData data = _itemsViewDatabase.Get(item.Type);
             ResourceElementDisplayer instance = Instantiate(_resourceElementPrefab, transform);
             
             instance.SetAmount(item.Amount);

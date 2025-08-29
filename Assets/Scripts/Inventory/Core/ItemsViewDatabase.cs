@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Inventory.Core
 {
-    [CreateAssetMenu(menuName = "Inventory/ResourceConfig")]
-    public class ItemConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "Inventory/ResourcesDatabase")]
+    public class ItemsViewDatabase : ScriptableObject
     {
         [SerializeField] private List<ItemViewData> _resources;
 

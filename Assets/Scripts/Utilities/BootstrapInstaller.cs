@@ -1,4 +1,5 @@
 ﻿using Inventory;
+using Inventory.Core;
 using Zenject;
 
 namespace Utilities
@@ -8,6 +9,7 @@ namespace Utilities
         public override void InstallBindings()
         {
             Container.Bind<PlayerInventory>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<ItemsViewDatabase>().FromScriptableObjectResource("ItemsViewDatabase").AsSingle();
         }
     }
 }

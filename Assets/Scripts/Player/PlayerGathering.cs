@@ -1,8 +1,10 @@
 ﻿using System;
 using GameItems;
+using Inventory;
 using Inventory.Core;
 using Inventory.RaidInventory;
 using UnityEngine;
+using Zenject;
 
 namespace DefaultNamespace
 {
@@ -14,10 +16,12 @@ namespace DefaultNamespace
         
         [SerializeField] private RaidInventory _raidInventory;
         
+        [Inject] private IPlayerLoadout _loadout;
+        
         public event Action<IGatherable> CollidedWithResource;
         
         private IGatherable _resourceNode;
-
+        
         private void OnEnable()
         {
             _playerAnimator.OnAnimationHit += HandleHit;
@@ -31,7 +35,7 @@ namespace DefaultNamespace
         private void OnTriggerStay(Collider other)
         {
             if (!other.TryGetComponent<IGatherable>(out var resourceNode)) return;
-            if (!resourceNode.CanGather(ToolType.Pickaxe)) return;
+            if (!resourceNode.CanGather(_loadout.GetToolType())) return;
             
             if (_playerMovement.IsRunning)
             {
@@ -55,7 +59,7 @@ namespace DefaultNamespace
 
         private void TryGatherResource()
         {
-            if (_resourceNode.TryGather(ToolType.Pickaxe, _attractor))
+            if (_resourceNode.TryGather(_loadout.GetToolType(), _attractor))
             {
                 ItemType resourceNode = _resourceNode.Type;
                 _raidInventory.Add(resourceNode);

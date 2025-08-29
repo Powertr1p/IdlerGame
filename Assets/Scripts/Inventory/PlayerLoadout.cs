@@ -1,4 +1,5 @@
-﻿using Scriptable;
+﻿using Inventory.Core;
+using Scriptable;
 
 namespace Inventory
 {
@@ -9,6 +10,11 @@ namespace Inventory
         public void SetTool(ToolData tool)
         {
             LoadoutData.ToolData = tool;
+        }
+
+        public ToolType GetToolType()
+        {
+            return LoadoutData.ToolData.ToolType;
         }
     }
 }

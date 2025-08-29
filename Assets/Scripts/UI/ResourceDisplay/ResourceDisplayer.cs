@@ -3,13 +3,13 @@ using Inventory;
 using Inventory.Core;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 namespace UI.ResourceView
 {
     public class ResourceDisplayer : MonoBehaviour
     {
-        [FormerlySerializedAs("_resourceConfig")] 
-        [SerializeField] private ItemsViewDatabase _itemsViewDatabase;
+        [Inject] private ItemsViewDatabase _itemsViewDatabase;
         [SerializeField] private ResourceElementDisplayer _resourceElementPrefab;
         [SerializeField] private PlayerInventory _inventory;
 

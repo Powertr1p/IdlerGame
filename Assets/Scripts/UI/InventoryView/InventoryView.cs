@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Inventory;
 using Inventory.Core;
 using UnityEngine;
@@ -17,12 +17,14 @@ namespace UI
 
         private PlayerInventory _playerInventory;
         private ItemsViewDatabase _itemsViewDatabase;
+        private List<InventorySlot> _cachedSlots;
         
         private ObjectPool<InventorySlot> _slotPool;
         private int _initialPoolSize = 10;
         
         private void Awake()
         {
+            _cachedSlots = new List<InventorySlot>();
             _slotPool = new ObjectPool<InventorySlot>(_initialPoolSize, _inventorySlotPrefab, _inventoryContent);
         }
         
@@ -46,7 +48,22 @@ namespace UI
         public override void Show()
         {
             base.Show();
-            CreateInventorySlots();
+
+            if (_cachedSlots.Count > 0)
+            {
+                SyncSlotsWithInventory();
+            }
+            else
+            {
+                CreateInventorySlots();
+            }
+        }
+
+        private void SyncSlotsWithInventory()
+        {
+            IReadOnlyList<InventoryItem> items = _playerInventory.GetAll();
+            
+            //todo: придумать простой синк, а дальше будем работать по событию изменения инвентаря
         }
 
         private void CreateInventorySlots()

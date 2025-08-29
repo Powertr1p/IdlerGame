@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using UnityEngine;
 
 namespace GameItems
@@ -17,13 +17,38 @@ namespace GameItems
         [SerializeField] private float _rotationSpeed = 360f;
         [SerializeField] private float _attractionStartDelay = 0.1f;
         [SerializeField] private float _attractionDelay = 0.1f;
+        [SerializeField] private float _finishRadius = 0.1f;
         
         private Transform _attractor;
         private Sequence _attractionSequence;
+        private Transform _cachedTransform;
 
         private bool _isAttracting;
+        private bool _moveActive;
+        private float _attractionSpeed;
+        
         private Vector3 _startPosition;
         private Vector3 _targetPosition;
+
+        private void Awake()
+        {
+            _cachedTransform = transform;
+        }
+        
+        private void Update()
+        {
+            if (!_isAttracting) return;
+
+            var position = _attractor.position;
+            var target = position;
+            
+            _cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, position, 20 * Time.deltaTime);
+
+            if (Vector3.Distance(_cachedTransform.position, target) < 0.1f)
+            {
+                Destroy(gameObject);
+            }
+        }
         
         public void Initialize(Transform attractor, Vector3 startPosition, Vector3 targetPosition)
         {
@@ -54,8 +79,6 @@ namespace GameItems
             if (_isAttracting || ReferenceEquals(_attractor, null)) return;
             
             _isAttracting = true;
-            
-            ConstructAttractionSequence();
         }
 
         private Sequence ConstructJumpSequence()
@@ -63,34 +86,14 @@ namespace GameItems
             Sequence jumpSequence = DOTween.Sequence();
             
             jumpSequence
-                .Append(transform
+                .Append(_cachedTransform
                     .DOJump(_targetPosition, _jumpPower, _numJumps, _jumpDuration)
                     .SetEase(Ease.OutQuint))
-                .Join(transform
+                .Join(_cachedTransform
                     .DORotate(new Vector3(Random.Range(180f, 360f), Random.Range(180f, 360f), 0), _jumpDuration, RotateMode.FastBeyond360)
                     .SetEase(Ease.OutQuad));
             
             return jumpSequence;
-        }
-
-        private void ConstructAttractionSequence()
-        {
-            _attractionSequence = DOTween.Sequence();
-            
-            _attractionSequence
-                .Append(transform.DOLocalMoveY(transform.position.y + _bounceHeight, _attractionDelay)
-                    .SetEase(Ease.OutQuad))
-                .Append(transform.DOMove(_attractor.position, _attractionDuration)
-                    .SetEase(Ease.InCubic))
-                .Join(transform.DORotate(new Vector3(0, _rotationSpeed, 0), _attractionDuration, RotateMode.FastBeyond360)
-                    .SetEase(Ease.Linear))
-                .Join(transform.DOScale(Vector3.zero, _attractionDuration * 0.7f)
-                    .SetEase(Ease.InExpo)
-                    .SetDelay(_attractionDuration * 0.3f))
-                .OnComplete(() => 
-                { 
-                    Destroy(gameObject); 
-                });
         }
 
         private void OnDestroy()

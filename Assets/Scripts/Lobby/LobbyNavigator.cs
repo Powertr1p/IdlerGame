@@ -1,5 +1,7 @@
-﻿using UI;
+﻿using Assets.Scripts.Common;
+using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Utilities;
 
 namespace Core
@@ -52,6 +54,8 @@ namespace Core
         private void OnSceneWasLoaded()
         {
             _menuSceneView.Hide();
+            _lobbyView.Hide();
+            _inventoryView.Hide();
         }
     }
 }

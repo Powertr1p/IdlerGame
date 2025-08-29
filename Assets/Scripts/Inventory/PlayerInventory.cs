@@ -5,7 +5,6 @@ using DefaultNamespace;
 using Inventory.Core;
 using Inventory.EquipmentItems;
 using Scriptable;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
 using Utilities.SaveSystem;

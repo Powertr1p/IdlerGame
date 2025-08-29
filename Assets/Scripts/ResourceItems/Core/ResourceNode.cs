@@ -32,6 +32,7 @@ namespace GameItems
 
         public bool TryGather(ToolType toolType, Transform attractor)
         {
+            //todo: хуета
             if (!CanGather(toolType)) return false;
 
             _droppedItemsAttractor = attractor;
@@ -40,16 +41,16 @@ namespace GameItems
             _currentHits++;
 
             if (_currentHits < _resourceData.HitsToGather) return false;
-
+            
             _currentHits = 0;
             SpawnDropItem();
-
+            
             if (!CanSpawnDropItem())
             {
                 Depleted?.Invoke();
                 Destroy(gameObject);
             }
-
+            
             return true;
         }
 

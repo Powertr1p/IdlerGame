@@ -1,6 +1,7 @@
 ﻿using System;
 using GameItems;
 using Inventory.Core;
+using Inventory.RaidInventory;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -10,6 +11,8 @@ namespace DefaultNamespace
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private Transform _attractor;
+        
+        [SerializeField] private RaidInventory _raidInventory;
         
         public event Action<IGatherable> CollidedWithResource;
         
@@ -52,7 +55,11 @@ namespace DefaultNamespace
 
         private void TryGatherResource()
         {
-            _resourceNode.TryGather(ToolType.Pickaxe, _attractor);
+            if (_resourceNode.TryGather(ToolType.Pickaxe, _attractor))
+            {
+                ItemType resourceNode = _resourceNode.Type;
+                _raidInventory.Add(resourceNode);
+            }
         }
 
         private void TryBindResourceNode(IGatherable resourceNode)

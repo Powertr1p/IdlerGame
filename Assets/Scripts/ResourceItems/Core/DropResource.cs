@@ -1,28 +1,23 @@
 using DG.Tweening;
+using Inventory.Core;
 using UnityEngine;
 
 namespace GameItems
 {
     public class DropResource : MonoBehaviour
     {
-        [SerializeField] private float _attractionDuration = 0.5f;
-       
         [Header("Spawn Animation")]
         [SerializeField] private float _jumpPower = 2f;
         [SerializeField] private float _jumpDuration = 1f;
         [SerializeField] private int _numJumps = 1;
         
         [Header("Attraction Animation")]
-        [SerializeField] private float _bounceHeight = 0.5f;
-        [SerializeField] private float _rotationSpeed = 360f;
         [SerializeField] private float _attractionStartDelay = 0.1f;
-        [SerializeField] private float _attractionDelay = 0.1f;
-        [SerializeField] private float _finishRadius = 0.1f;
         
         private Transform _attractor;
         private Sequence _attractionSequence;
         private Transform _cachedTransform;
-
+        
         private bool _isAttracting;
         private bool _moveActive;
         private float _attractionSpeed;
@@ -55,6 +50,7 @@ namespace GameItems
             _attractor = attractor;
             _startPosition = startPosition;
             _targetPosition = targetPosition;
+            
             
             StartFlying();
         }

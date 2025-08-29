@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Inventory;
 using Inventory.Core;
+using Inventory.RaidInventory;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace UI.ResourceView
@@ -11,38 +10,38 @@ namespace UI.ResourceView
     {
         [Inject] private ItemsViewDatabase _itemsViewDatabase;
         [SerializeField] private ResourceElementDisplayer _resourceElementPrefab;
-        [SerializeField] private PlayerInventory _inventory;
+        [SerializeField] private RaidInventory _raidInventory;
 
         private Dictionary<ItemType, ResourceElementDisplayer> _displayItems = new Dictionary<ItemType, ResourceElementDisplayer>();
 
         private void OnEnable()
         {
-            _inventory.OnResourceChanged += UpdateView;
+            _raidInventory.OnResourceAdded += UpdateView;
         }
 
         private void OnDisable()
         {
-            _inventory.OnResourceChanged -= UpdateView;
+            _raidInventory.OnResourceAdded -= UpdateView;
         }
         
-        private void UpdateView(InventoryItem item)
+        private void UpdateView(ItemType item, int amount)
         {
-            if (!_displayItems.ContainsKey(item.Type))
+            if (!_displayItems.ContainsKey(item))
             {
-                InstantiateElement(item);
+                InstantiateElement(item, amount);
             }
             
-            _displayItems[item.Type].SetAmount(item.Amount);
+            _displayItems[item].SetAmount(amount);
         }
 
-        private void InstantiateElement(InventoryItem item)
+        private void InstantiateElement(ItemType item, int amount)
         {
-            ItemViewData data = _itemsViewDatabase.Get(item.Type);
+            ItemViewData data = _itemsViewDatabase.Get(item);
             ResourceElementDisplayer instance = Instantiate(_resourceElementPrefab, transform);
             
-            instance.SetAmount(item.Amount);
+            instance.SetAmount(amount);
             instance.SetIcon(data.Icon);
-            _displayItems.Add(item.Type, instance);
+            _displayItems.Add(item, instance);
         }
     }
 }

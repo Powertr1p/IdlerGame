@@ -15,6 +15,14 @@ namespace UI
 
         private PlayerInventory _playerInventory;
         
+        private ObjectPool<InventorySlot> _slotPool;
+        private int _initialPoolSize = 10;
+        
+        private void Start()
+        {
+            _slotPool = new ObjectPool<InventorySlot>(_initialPoolSize, _inventorySlotPrefab, _inventoryContent);
+        }
+        
         [Inject]
         public void Construct(PlayerInventory playerInventory)
         {
@@ -29,6 +37,11 @@ namespace UI
         private void OnDisable()
         {
             _backButton.onClick.RemoveAllListeners();
+        }
+
+        public override void Show()
+        {
+            base.Show();
         }
         
         private void BackToLobby()

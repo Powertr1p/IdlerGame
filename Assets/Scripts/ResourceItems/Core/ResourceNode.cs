@@ -45,7 +45,7 @@ namespace GameItems
             _currentHits = 0;
             SpawnDropItem();
             
-            if (!CanSpawnDropItem())
+            if (!IsRemain())
             {
                 Depleted?.Invoke();
                 Destroy(gameObject);
@@ -56,18 +56,16 @@ namespace GameItems
 
         public bool CanGather(ToolType toolType)
         {
-            return toolType == _resourceData.ToolType && CanSpawnDropItem();
+            return toolType == _resourceData.ToolType && IsRemain();
         }
 
-        private bool CanSpawnDropItem()
+        private bool IsRemain()
         {
             return _spawnedCount < _resourceData.MaxQuantity;
         }
 
         private void SpawnDropItem()
         {
-            if (!CanSpawnDropItem()) return;
-
             Vector3 startPosition = transform.position;
             Vector2 randomDirection = Random.insideUnitCircle.normalized;
 

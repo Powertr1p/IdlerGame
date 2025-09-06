@@ -14,7 +14,6 @@ namespace DefaultNamespace
 
         public void ChangeTool(ToolData tool)
         {
-            //визуально вепа меняется, но почему-то не меняется ToolData.ToolType
             _currentToolData = tool;
             
             if (!ReferenceEquals(_equippedTool, null))

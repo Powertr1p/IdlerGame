@@ -27,7 +27,7 @@ namespace Utilities
 
                 if (_additivelyLoadedSceneName.NullIfEmpty() != null)
                 {
-                    yield return UnloadCurrentScene();
+                    yield return UnloadScene();
                     yield return CleanResources();
                 }
 
@@ -37,6 +37,12 @@ namespace Utilities
 
                 _isSceneLoading = false;
             }
+        }
+        
+        public void UnloadCurrentScene()
+        {
+            StartCoroutine(UnloadScene());
+            StartCoroutine(CleanResources());
         }
 
         private IEnumerator LoadScene()
@@ -58,7 +64,7 @@ namespace Utilities
             yield return Resources.UnloadUnusedAssets();
         }
 
-        private IEnumerator UnloadCurrentScene()
+        private IEnumerator UnloadScene()
         {
             var asyncUnLoad = SceneManager.UnloadSceneAsync(_additivelyLoadedSceneName);
             _additivelyLoadedSceneName = null;

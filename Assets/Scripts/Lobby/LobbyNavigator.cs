@@ -3,13 +3,15 @@ using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilities;
+using Zenject;
 
 namespace Core
 {
     public class LobbyNavigator : MonoBehaviour
     {
+        [Inject] private SceneLoader _sceneLoader;
+        
         [SerializeField] private RaidStartHandler _raidStartHandler;
-        [SerializeField] private SceneLoader _sceneLoader;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private LobbyView _lobbyView;
         [SerializeField] private MenuSceneView _menuSceneView;
@@ -49,6 +51,7 @@ namespace Core
         {
             _inventoryView.Hide();
             _lobbyView.Show();
+            _menuSceneView.Show();
         }
 
         private void OnSceneWasLoaded()

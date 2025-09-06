@@ -1,7 +1,5 @@
-﻿using Assets.Scripts.Common;
-using UI;
+﻿using UI;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Utilities;
 using Zenject;
 

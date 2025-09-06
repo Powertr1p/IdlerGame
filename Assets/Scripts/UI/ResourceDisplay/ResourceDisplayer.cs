@@ -41,7 +41,6 @@ namespace UI.ResourceView
             
             instance.SetAmount(amount);
             instance.SetIcon(data.Icon);
-            Debug.Log(instance);
             _displayItems.Add(item, instance);
         }
     }

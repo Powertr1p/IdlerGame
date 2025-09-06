@@ -59,10 +59,14 @@ namespace DefaultNamespace
 
         private void TryGatherResource()
         {
-            if (_resourceNode.TryGather(_loadout.GetToolType(), _attractor))
+            var node = _resourceNode;
+            if (node == null) return;
+
+            var resourceType = node.Type;
+
+            if (node.TryGather(_loadout.GetToolType(), _attractor))
             {
-                ItemType resourceNode = _resourceNode.Type;
-                _raidInventory.Add(resourceNode);
+                _raidInventory.Add(resourceType);
             }
         }
 

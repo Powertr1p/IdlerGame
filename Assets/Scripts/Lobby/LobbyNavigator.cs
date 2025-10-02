@@ -1,24 +1,23 @@
-﻿using Assets.Scripts.Common;
-using UI;
+﻿using UI;
+using UI.NavbarView;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Utilities;
 
 namespace Core
 {
     public class LobbyNavigator : MonoBehaviour
     {
-        [SerializeField] private RaidStartHandler _raidStartHandler;
         [SerializeField] private SceneLoader _sceneLoader;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private LobbyView _lobbyView;
         [SerializeField] private MenuSceneView _menuSceneView;
+        [SerializeField] private NavbarView _navbarView;
 
         private const string GAME_SCENE_NAME = "GameScene";
 
         private void OnEnable()
         {
-            _raidStartHandler.OnPlayClicked += HandleStartRaid;
+            _navbarView.NavbarButtonClicked += ChangeView;
             _sceneLoader.OnSceneLoaded += OnSceneWasLoaded;
 
             LobbyUIEventBus.OnInventoryOpenRequested += ShowInventory;
@@ -27,7 +26,7 @@ namespace Core
 
         private void OnDisable()
         {
-            _raidStartHandler.OnPlayClicked -= HandleStartRaid;
+            _navbarView.NavbarButtonClicked -= ChangeView;
             _sceneLoader.OnSceneLoaded -= OnSceneWasLoaded;
             
             LobbyUIEventBus.OnInventoryOpenRequested -= ShowInventory;
@@ -49,6 +48,14 @@ namespace Core
         {
             _inventoryView.Hide();
             _lobbyView.Show();
+        }
+
+        private void ChangeView(NavbarButtonType type)
+        {
+            if (type == NavbarButtonType.Play)
+            {
+                HandleStartRaid();
+            }
         }
 
         private void OnSceneWasLoaded()

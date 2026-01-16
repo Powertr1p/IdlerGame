@@ -2,6 +2,7 @@
 {
     public enum NavbarButtonType
     {
+        Lobby,
         Play,
         Inventory,
     }

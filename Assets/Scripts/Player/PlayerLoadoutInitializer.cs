@@ -1,4 +1,6 @@
-﻿using Inventory;
+﻿using AssetLoader;
+using Cysharp.Threading.Tasks;
+using Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -9,23 +11,27 @@ namespace DefaultNamespace
         [SerializeField] private Transform _toolContainer;
 
         private IPlayerLoadout _loadout;
+        private AssetsLoader _assetsLoader;
         
         [Inject]
-        public void Construct(IPlayerLoadout loadout)
+        public void Construct(IPlayerLoadout loadout, AssetsLoader loader)
         {
             _loadout = loadout;
+            _assetsLoader = loader;
         }
 
-        private void Start()
+        private async void Start()
         {
-            SpawnTool();
+            await SpawnTool();
         }
 
-        private void SpawnTool()
+        private async UniTask SpawnTool()
         {
             if (_loadout != null)
             {
-                var instance = Instantiate(_loadout.LoadoutData.ToolData.ToolLevelPrefab, _toolContainer);
+                var cancellationToken = this.GetCancellationTokenOnDestroy();
+                var toolInstance = await _assetsLoader.InstantiateGameObject(_loadout.LoadoutData.ToolData.ToolLevelPrefab, cancellationToken);
+                toolInstance.transform.SetParent(_toolContainer, false);
             }
         }
     }

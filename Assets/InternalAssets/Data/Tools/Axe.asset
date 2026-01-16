@@ -12,7 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97de94a8771544b6aea98756bbbf5225, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
-  _toolLevelPrefab: {fileID: 4943157217403924334, guid: 049f43f2dd144e34e8e651e547fb134b, type: 3}
-  _toolLobbyPrefab: {fileID: 6618725628355234377, guid: 42ac2a24f3ee58448916f745ce79c5ee, type: 3}
+  _prefabLevel:
+    m_AssetGUID: 049f43f2dd144e34e8e651e547fb134b
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
+  _toolLobbyPrefab:
+    m_AssetGUID: 42ac2a24f3ee58448916f745ce79c5ee
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
   _itemId: 2
   _toolType: 2

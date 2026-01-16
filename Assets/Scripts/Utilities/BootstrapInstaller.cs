@@ -1,5 +1,5 @@
-﻿using Inventory;
-using Inventory.Core;
+﻿using AssetLoader;
+using Inventory;
 using Zenject;
 
 namespace Utilities

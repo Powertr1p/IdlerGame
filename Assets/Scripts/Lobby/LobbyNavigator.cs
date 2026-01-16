@@ -2,19 +2,26 @@
 using UI.NavbarView;
 using UnityEngine;
 using Utilities;
+using Zenject;
 
 namespace Core
 {
     public class LobbyNavigator : MonoBehaviour
     {
-        [SerializeField] private SceneLoader _sceneLoader;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private LobbyView _lobbyView;
         [SerializeField] private MenuSceneView _menuSceneView;
         [SerializeField] private NavbarView _navbarView;
 
         private const string GAME_SCENE_NAME = "GameScene";
+        private SceneLoader _sceneLoader;
 
+        [Inject]
+        private void Construct(SceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
+        
         private void OnEnable()
         {
             _navbarView.NavbarButtonClicked += ChangeView;
@@ -33,9 +40,9 @@ namespace Core
             LobbyUIEventBus.OnLobbyShowRequested -= ShowLobby;
         }
 
-        private void HandleStartRaid()
+        private async void HandleStartRaid()
         {
-            _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
+            await _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
         }
 
         private void ShowInventory()

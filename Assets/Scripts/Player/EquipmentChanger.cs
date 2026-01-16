@@ -1,5 +1,8 @@
-﻿using Scriptable;
+﻿using AssetLoader;
+using Cysharp.Threading.Tasks;
+using Scriptable;
 using UnityEngine;
+using Zenject;
 
 namespace DefaultNamespace
 {
@@ -11,20 +14,38 @@ namespace DefaultNamespace
 
         private GameObject _equippedTool;
         private ToolData _currentToolData;
-
-        public void ChangeTool(ToolData tool)
+        private AssetsLoader _assetsLoader;
+        
+        [Inject]
+        public void Construct(AssetsLoader loader)
         {
-            //визуально вепа меняется, но почему-то не меняется ToolData.ToolType
+            _assetsLoader = loader;
+        }
+
+        public async void ChangeTool(ToolData tool)
+        {
             _currentToolData = tool;
             
             if (!ReferenceEquals(_equippedTool, null))
             {
                 Destroy(_equippedTool);
             }
+            
+            await ChangeToolAsync(tool);
+        }
 
+        private async UniTask ChangeToolAsync(ToolData tool)
+        {
+            var cancellationToken = this.GetCancellationTokenOnDestroy();
+            
             _equippedTool = _isInGameScene
-                ? Instantiate(tool.ToolLevelPrefab, _toolLevelContainer)
-                : Instantiate(tool.ToolLobbyPrefab, _toolLobbyContainer);
+                ? await _assetsLoader.InstantiateGameObject(tool.ToolLevelPrefab, cancellationToken)
+                : await _assetsLoader.InstantiateGameObject(tool.ToolLobbyPrefab, cancellationToken);
+
+            if (!ReferenceEquals(_equippedTool, null))
+            {
+                _equippedTool.transform.SetParent(_isInGameScene ? _toolLevelContainer : _toolLobbyContainer, false);
+            }
         }
 
         public void SetGameSceneMode(Transform toolContainer)

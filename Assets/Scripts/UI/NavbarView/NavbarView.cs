@@ -31,6 +31,7 @@ namespace UI.NavbarView
 
         private void HandleClick(NavbarButtonType type)
         {
+            //если нажать на то что открыто сейчас, то надо закрыть
             if (_currentOpenedNavbar == type) return;
             
             NavbarButtonClicked?.Invoke(type);

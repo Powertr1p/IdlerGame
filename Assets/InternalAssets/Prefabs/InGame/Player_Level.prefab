@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 8461823230182863989}
   - component: {fileID: 1372939683748778631}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player_Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,6 +147,7 @@ MonoBehaviour:
   _playerMovement: {fileID: 1435209624627610007}
   _playerAnimator: {fileID: 9004887496761246258}
   _attractor: {fileID: 68637708585529777}
+  _raidInventory: {fileID: 1372939683748778631}
 --- !u!143 &7207414469418679915
 CharacterController:
   m_ObjectHideFlags: 0

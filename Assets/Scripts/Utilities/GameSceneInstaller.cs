@@ -1,5 +1,4 @@
 ﻿using DefaultNamespace;
-using Inventory;
 using Zenject;
 
 namespace Utilities

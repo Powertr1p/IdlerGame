@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Tools
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Tools
+  m_GUID: 9e9548b82ae3d914a9e479c89f3d3b40
+  m_SerializeEntries:
+  - m_GUID: 049f43f2dd144e34e8e651e547fb134b
+    m_Address: Assets/InternalAssets/Prefabs/InGame/Tools/Axe_Level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Tools
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42ac2a24f3ee58448916f745ce79c5ee
+    m_Address: Assets/InternalAssets/Prefabs/Lobby/Axe_Lobby.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Tools
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d73ff6cdd9d3f44d8e828b78538c2e2
+    m_Address: Assets/InternalAssets/Prefabs/InGame/Tools/Pickaxe_Level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Tools
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffa24daf7a65cd648be416f4252b317e
+    m_Address: Assets/InternalAssets/Prefabs/Lobby/Pickaxe_Lobby.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Tools
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f0ac5503dba09744d9a5dc529ddb4585, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 566c8a6246f13384880bfac461b34e0a, type: 2}
+    - {fileID: 11400000, guid: 7627308e30cae3e4f92ebc2d05bd1f15, type: 2}

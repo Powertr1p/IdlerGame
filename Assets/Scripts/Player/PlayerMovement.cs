@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private FloatingJoystick _joystick;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private PlayerGathering _playerGathering;
+    [SerializeField] private FloatingJoystick _joystick;
     
     public bool IsRunning => _joystick.Horizontal != 0 || _joystick.Vertical != 0;
 

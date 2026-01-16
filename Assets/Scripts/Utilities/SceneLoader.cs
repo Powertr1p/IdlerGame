@@ -1,71 +1,69 @@
 using System;
-using System.Collections;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace Utilities
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneLoader : IDisposable
     {
-        [CanBeNull] private string _additivelyLoadedSceneName = null;
-
         public event Action OnSceneLoaded;
-
+        
+        private SceneInstance? _currentScene;
         private bool _isSceneLoading;
 
-        public void LoadSceneAsync(string sceneName)
+        public async UniTask LoadSceneAsync(string sceneKey)
         {
             if (_isSceneLoading) return;
+            _isSceneLoading = true;
 
-            StartCoroutine(LoadYourAsyncScene());
-
-            IEnumerator LoadYourAsyncScene()
+            try
             {
-                _isSceneLoading = true;
-
-                if (_additivelyLoadedSceneName.NullIfEmpty() != null)
+                if (_currentScene.HasValue)
                 {
-                    yield return UnloadCurrentScene();
-                    yield return CleanResources();
+                    await UnloadCurrentSceneAsync();
                 }
 
-                _additivelyLoadedSceneName = sceneName;
+                var handle = Addressables.LoadSceneAsync(sceneKey, LoadSceneMode.Additive);
 
-                yield return LoadScene();
+                while (!handle.IsDone)
+                {
+                    await UniTask.Yield();
+                }
 
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    _currentScene = handle.Result;
+                    SceneManager.SetActiveScene(handle.Result.Scene);
+                    OnSceneLoaded?.Invoke();
+                }
+            }
+            finally
+            {
                 _isSceneLoading = false;
             }
         }
 
-        private IEnumerator LoadScene()
+        private async UniTask UnloadCurrentSceneAsync()
         {
-            var asyncLoad = SceneManager.LoadSceneAsync(_additivelyLoadedSceneName, LoadSceneMode.Additive);
+            if (!_currentScene.HasValue) return;
             
-            while (!asyncLoad.isDone)
-            {
-                yield return null;
-            }
-
-            OnSceneLoaded?.Invoke();
+            var unloadHandle = Addressables.UnloadSceneAsync(_currentScene.Value);
+            await unloadHandle.ToUniTask();
             
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(_additivelyLoadedSceneName));
+            await Resources.UnloadUnusedAssets().ToUniTask();
+            
+            _currentScene = null;
         }
 
-        private IEnumerator CleanResources()
+        public void Dispose()
         {
-            yield return Resources.UnloadUnusedAssets();
-        }
-
-        private IEnumerator UnloadCurrentScene()
-        {
-            var asyncUnLoad = SceneManager.UnloadSceneAsync(_additivelyLoadedSceneName);
-            _additivelyLoadedSceneName = null;
-
-            while (!asyncUnLoad.isDone)
+            if (_currentScene.HasValue)
             {
-                yield return null;
+                Addressables.UnloadSceneAsync(_currentScene.Value);
             }
         }
     }

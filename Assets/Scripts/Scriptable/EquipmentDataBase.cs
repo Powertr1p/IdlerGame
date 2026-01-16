@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Scriptable
 {
     public class EquipmentDataBase : ScriptableObject
     {
-        [SerializeField] private GameObject _toolLevelPrefab;
-        [SerializeField] private GameObject _toolLobbyPrefab;
+        [SerializeField] private AssetReferenceGameObject _prefabLevel;
+        [SerializeField] private AssetReferenceGameObject _toolLobbyPrefab;
         [SerializeField] private int _itemId;
         
-        public GameObject ToolLevelPrefab => _toolLevelPrefab;
-        public GameObject ToolLobbyPrefab => _toolLobbyPrefab;
+        public AssetReferenceGameObject ToolLevelPrefab => _prefabLevel;
+        public AssetReferenceGameObject ToolLobbyPrefab => _toolLobbyPrefab;
         public int ItemId => _itemId;
     }
 }

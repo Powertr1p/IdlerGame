@@ -2653,7 +2653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5ac7744bda4b2ba8b2208dfbf88fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _navbarButtonType: 1
+  _navbarButtonType: 2
 --- !u!1 &1700077261
 GameObject:
   m_ObjectHideFlags: 0

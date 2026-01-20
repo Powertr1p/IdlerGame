@@ -1,73 +1,83 @@
-﻿using UI;
-using UI.NavbarView;
+﻿using Core;
+using UI;
+using UI.Factories;
+using UI.Navbar;
+using UI.Presenters;
+using UI.Views;
 using UnityEngine;
 using Utilities;
 using Zenject;
 
-namespace Core
+namespace Lobby
 {
-    public class LobbyNavigator : MonoBehaviour
+    public class LobbyNavigator : MonoBehaviour, INavigationService
     {
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private LobbyView _lobbyView;
-        [SerializeField] private MenuSceneView _menuSceneView;
-        [SerializeField] private NavbarView _navbarView;
 
         private const string GAME_SCENE_NAME = "GameScene";
         private SceneLoader _sceneLoader;
+        
+        private NavbarPresenter _navbarPresenter;
+        private NavbarView _navbarView;
 
         [Inject]
-        private void Construct(SceneLoader sceneLoader)
+        private void Construct(SceneLoader sceneLoader, NavbarPresenter navbarPresenter)
         {
             _sceneLoader = sceneLoader;
+            _navbarPresenter = navbarPresenter;
         }
         
         private void OnEnable()
         {
-            _navbarView.NavbarButtonClicked += ChangeView;
             _sceneLoader.OnSceneLoaded += OnSceneWasLoaded;
-
-            LobbyUIEventBus.OnInventoryOpenRequested += ShowInventory;
-            LobbyUIEventBus.OnLobbyShowRequested += ShowLobby;
         }
 
         private void OnDisable()
         {
-            _navbarView.NavbarButtonClicked -= ChangeView;
             _sceneLoader.OnSceneLoaded -= OnSceneWasLoaded;
-            
-            LobbyUIEventBus.OnInventoryOpenRequested -= ShowInventory;
-            LobbyUIEventBus.OnLobbyShowRequested -= ShowLobby;
         }
 
-        private async void HandleStartRaid()
+        private void Start()
         {
-            await _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
+            _navbarPresenter.Show();
+        }
+        
+        public void Open(NavbarButtonType type)
+        {
+            switch (type)
+            {
+                case NavbarButtonType.Lobby:
+                    ShowLobby();
+                    break;
+                case NavbarButtonType.Inventory:
+                    ShowInventory();
+                    break;
+                case NavbarButtonType.Play:
+                    HandleStartRaid();
+                    break;
+            }
         }
 
-        private void ShowInventory()
+        public void ShowInventory()
         {
             _lobbyView.Hide();
             _inventoryView.Show();
         }
 
-        private void ShowLobby()
+        public void ShowLobby()
         {
             _inventoryView.Hide();
             _lobbyView.Show();
         }
-
-        private void ChangeView(NavbarButtonType type)
+        
+        private async void HandleStartRaid()
         {
-            if (type == NavbarButtonType.Play)
-            {
-                HandleStartRaid();
-            }
+            await _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
         }
 
         private void OnSceneWasLoaded()
         {
-            _menuSceneView.Hide();
             _lobbyView.Hide();
             _inventoryView.Hide();
         }

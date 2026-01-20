@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using UI.Navbar;
 using UnityEngine;
-using Utilities;
 
-namespace UI.NavbarView
+namespace UI.Views
 {
     public class NavbarView : BaseView
     {
         [SerializeField] private List<NavbarButton> _navbarButtons;
-
-        public event Action<NavbarButtonType> NavbarButtonClicked;
-
-        private NavbarButtonType _currentOpenedNavbar;
+        
+        public event Action<NavbarButtonType> ButtonClicked;
         
         private void OnEnable()
         {
@@ -31,17 +29,7 @@ namespace UI.NavbarView
 
         private void HandleClick(NavbarButtonType type)
         {
-            //если нажать на то что открыто сейчас, то надо закрыть
-            if (_currentOpenedNavbar == type) return;
-            
-            NavbarButtonClicked?.Invoke(type);
-
-            _currentOpenedNavbar = type;
-            
-            if (type == NavbarButtonType.Inventory)
-            {
-                LobbyUIEventBus.RequestInventoryOpen();
-            }
+            ButtonClicked?.Invoke(type);
         }
     }
 }

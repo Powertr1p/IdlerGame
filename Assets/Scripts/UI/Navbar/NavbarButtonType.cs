@@ -1,4 +1,4 @@
-﻿namespace UI.NavbarView
+﻿namespace UI.Navbar
 {
     public enum NavbarButtonType
     {

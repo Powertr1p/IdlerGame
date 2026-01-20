@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.NavbarView
+namespace UI.Navbar
 {
     [RequireComponent(typeof(Button))]
     public class NavbarButton : MonoBehaviour

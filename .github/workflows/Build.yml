@@ -1,36 +1,49 @@
 name: Build project
 
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      targetPlatform:
+        description: 'Target platform to build'
+        required: true
+        type: choice
+        options:
+          - Android
 
 jobs:
-  buildForAllSupportedPlatforms:
-    name: Build for ${{ matrix.targetPlatform }}
+  build:
+    name: Build for ${{ github.event.inputs.targetPlatform }}
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - Android # Build an Android .apk standalone app.
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
-      - uses: actions/cache@v3
+
+      - name: Cache Library folder
+        uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ matrix.targetPlatform }}
+          key: Library-${{ github.event.inputs.targetPlatform }}
           restore-keys: Library-
-      - if: matrix.targetPlatform == 'Android'
+
+      - name: Free disk space (Android only)
+        if: github.event.inputs.targetPlatform == 'Android'
         uses: jlumbroso/free-disk-space@v1.3.1
-      - uses: game-ci/unity-builder@v4
+
+      - name: Build project on Unity
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-      - uses: actions/upload-artifact@v4
+          targetPlatform: ${{ github.event.inputs.targetPlatform }}
+
+      - name: Upload build artifact 
+        uses: actions/upload-artifact@v4
         with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+          name: Build-${{ github.event.inputs.targetPlatform }}
+          path: build/${{ github.event.inputs.targetPlatform }}

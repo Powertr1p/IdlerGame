@@ -188,6 +188,165 @@ Assets/Scripts/
 - **Оптимизация памяти** — Object Pool, Addressables
 - **Асинхронность** — UniTask для неблокирующих операций
 
+## 🔄 CI/CD и автоматизация сборки
+
+Проект поддерживает автоматическую сборку через CI/CD пайплайны для различных платформ.
+
+### GitHub Actions
+
+Рекомендуемая конфигурация для автоматической сборки:
+
+```yaml
+# .github/workflows/build.yml
+name: Unity Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+          - StandaloneLinux64
+          - Android
+          - iOS
+          - WebGL
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      
+      - name: Cache Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+      
+      - name: Build Addressables
+        uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildMethod: UnityBuilderAction.BuildScript.BuildAddressables
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildName: IdlerGame
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      
+      - name: Upload Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+```
+
+### Этапы автоматической сборки
+
+1. **Подготовка окружения**
+   - Checkout кода из репозитория
+   - Кэширование Library для ускорения сборки
+   - Настройка Unity лицензии
+
+2. **Сборка Addressables**
+   - Автоматическая сборка Addressables перед основной сборкой
+   - Критично для корректной работы динамической загрузки ассетов
+
+3. **Компиляция проекта**
+   - Сборка для целевой платформы
+   - Валидация кода и зависимостей
+   - Генерация билда
+
+4. **Публикация артефактов**
+   - Загрузка собранных билдов как артефакты
+   - Доступны для скачивания и тестирования
+
+### Локальная автоматизация
+
+Для локальной сборки можно использовать скрипты:
+
+```csharp
+// Editor/BuildScript.cs
+public static class BuildScript
+{
+    [MenuItem("Build/Build All Platforms")]
+    public static void BuildAll()
+    {
+        // Сначала собираем Addressables
+        BuildAddressables();
+        
+        // Затем собираем для каждой платформы
+        BuildForPlatform(BuildTarget.StandaloneWindows64);
+        BuildForPlatform(BuildTarget.Android);
+    }
+    
+    public static void BuildAddressables()
+    {
+        AddressableAssetSettings.BuildPlayerContent();
+    }
+    
+    private static void BuildForPlatform(BuildTarget target)
+    {
+        string path = $"Builds/{target}/IdlerGame";
+        BuildPipeline.BuildPlayer(GetScenes(), path, target, BuildOptions.None);
+    }
+}
+```
+
+### Требования для CI/CD
+
+**Секреты GitHub (Secrets):**
+- `UNITY_LICENSE` — лицензия Unity (Personal/Pro)
+- `UNITY_EMAIL` — email аккаунта Unity
+- `UNITY_PASSWORD` — пароль аккаунта Unity
+
+**Зависимости:**
+- Unity версии 2022 или выше
+- Git LFS для больших файлов
+- Достаточно места для кэша (рекомендуется 5+ GB)
+
+### Оптимизация сборки
+
+- **Кэширование Library** — сокращает время сборки на 70-80%
+- **Параллельная сборка** — одновременная сборка для разных платформ
+- **Инкрементальная сборка** — только измененные ассеты
+- **Addressables** — уменьшение размера основного билда
+
+### Дополнительные возможности
+
+**Автоматическое тестирование:**
+```yaml
+- name: Run Tests
+  uses: game-ci/unity-test-runner@v4
+  with:
+    testMode: EditMode
+```
+
+**Деплой на платформы:**
+- **Google Play** — автоматическая публикация Android билдов
+- **App Store** — публикация iOS билдов
+- **Itch.io / Steam** — деплой desktop версий
+- **WebGL хостинг** — автоматическая публикация на GitHub Pages
+
 ## 🚀 Запуск проекта
 
 1. Откройте проект в Unity 2022 или новее

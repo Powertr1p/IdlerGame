@@ -9,7 +9,7 @@
 - **Factory** — ViewFactory для создания UI через DI
 - **Object Pool** — переиспользование объектов
 - **Observer** — система событий (OnResourceChanged, OnSceneLoaded, LobbyUIEventBus)
-- **Service Locator** — INavigationService, IPlayerLoadout
+- **Service Locator** — INavigationService
 - **Repository** — EquipmentRepository
 - **ScriptableObject** — конфигурационные данные (ToolData, ResourceData, ItemsViewDatabase)
 

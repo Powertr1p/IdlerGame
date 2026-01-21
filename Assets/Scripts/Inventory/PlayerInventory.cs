@@ -41,6 +41,7 @@ namespace Inventory
         {
             _saveBox = new PlayerInventorySaveBox();
             LoadInventory();
+            ChangeTool();
         }
         
         [Inject]

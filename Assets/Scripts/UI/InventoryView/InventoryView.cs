@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using Inventory;
 using Inventory.Core;
 using UnityEngine;
-using UnityEngine.UI;
 using Utilities;
 
 namespace UI

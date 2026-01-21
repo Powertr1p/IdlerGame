@@ -1,4 +1,6 @@
-﻿using Core;
+﻿using System;
+using Core;
+using Cysharp.Threading.Tasks;
 using UI;
 using UI.Factories;
 using UI.Navbar;
@@ -12,20 +14,18 @@ namespace Lobby
 {
     public class LobbyNavigator : MonoBehaviour, INavigationService
     {
-        [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private LobbyView _lobbyView;
-
-        private const string GAME_SCENE_NAME = "GameScene";
-        private SceneLoader _sceneLoader;
         
-        private NavbarPresenter _navbarPresenter;
-        private NavbarView _navbarView;
+        private const string GAME_SCENE_NAME = "GameScene";
+        
+        private SceneLoader _sceneLoader;
+        private InventoryPresenter _inventoryPresenter;
 
         [Inject]
-        private void Construct(SceneLoader sceneLoader, NavbarPresenter navbarPresenter)
+        private void Construct(SceneLoader sceneLoader, InventoryPresenter inventoryPresenter)
         {
             _sceneLoader = sceneLoader;
-            _navbarPresenter = navbarPresenter;
+            _inventoryPresenter = inventoryPresenter;
         }
         
         private void OnEnable()
@@ -36,11 +36,6 @@ namespace Lobby
         private void OnDisable()
         {
             _sceneLoader.OnSceneLoaded -= OnSceneWasLoaded;
-        }
-
-        private void Start()
-        {
-            _navbarPresenter.Show();
         }
         
         public void Open(NavbarButtonType type)
@@ -59,19 +54,19 @@ namespace Lobby
             }
         }
 
-        public void ShowInventory()
+        private void ShowInventory()
         {
             _lobbyView.Hide();
-            _inventoryView.Show();
+            _inventoryPresenter.Show();
         }
 
-        public void ShowLobby()
+        private void ShowLobby()
         {
-            _inventoryView.Hide();
             _lobbyView.Show();
+            _inventoryPresenter.Hide();
         }
         
-        private async void HandleStartRaid()
+        private async UniTaskVoid HandleStartRaid()
         {
             await _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
         }
@@ -79,7 +74,7 @@ namespace Lobby
         private void OnSceneWasLoaded()
         {
             _lobbyView.Hide();
-            _inventoryView.Hide();
+            _inventoryPresenter.Hide();
         }
     }
 }

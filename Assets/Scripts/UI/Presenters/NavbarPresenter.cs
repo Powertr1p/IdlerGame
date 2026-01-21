@@ -8,7 +8,6 @@ namespace UI.Presenters
 {
     public class NavbarPresenter : BasePresenter<NavbarView>
     {
-        private NavbarView _view;
         private NavbarButtonType _currentOpenedNavbar;
         
         private readonly INavigationService _navigationService;

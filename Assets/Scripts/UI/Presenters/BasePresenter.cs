@@ -47,8 +47,8 @@ namespace UI.Presenters
             OnViewCreated();
             _isInitialized = true;
         }
-        
-        protected virtual void OnViewCreated() { }
-        protected virtual void OnViewDestroy() { }
+
+        protected abstract void OnViewCreated();
+        protected abstract void OnViewDestroy();
     }
 }

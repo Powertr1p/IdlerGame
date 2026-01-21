@@ -2,7 +2,7 @@ using Inventory.Core;
 using UnityEngine;
 using Utilities;
 
-namespace UI
+namespace UI.Views
 {
     public class InventoryView : BaseView
     {

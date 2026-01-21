@@ -1,4 +1,5 @@
 ﻿using UI.Model;
+using UI.Views;
 using UnityEngine;
 using Zenject;
 
@@ -8,8 +9,8 @@ namespace UI.Presenters
     {
         private InventoryModel _model;
         
-        private int _initialInventorySlotsCount = 10;
-        private bool _isFirstOpen = true;
+        private readonly int _initialInventorySlotsCount = 10;
+        private bool _isUpdateNeeded = true;
         
         [Inject]
         public InventoryPresenter(
@@ -22,31 +23,35 @@ namespace UI.Presenters
         
         protected override void OnViewCreated()
         {
+            _model.OnInventoryChanged += HandleInventoryChanged;
         }
 
         protected override void OnViewDestroy()
         {
+            _model.OnInventoryChanged -= HandleInventoryChanged;
+            _model.Dispose();
         }
         
         public override void Show()
         {
             base.Show();
+            if (!_isUpdateNeeded) return;
             
-            if (_isFirstOpen)
+            View.CreateInventorySlots(_initialInventorySlotsCount);
+            UpdateView();
+            _isUpdateNeeded = false;
+        }
+        
+        private void HandleInventoryChanged()
+        {
+            if (View.IsVisible)
             {
-                View.CreateInventorySlots(_initialInventorySlotsCount);
                 UpdateView();
-                _isFirstOpen = false;
             }
             else
             {
-                UpdateView();
+                _isUpdateNeeded = true;
             }
-        }
-
-        private void SyncCachedWithInventory()
-        {
-            
         }
 
         private void UpdateView()

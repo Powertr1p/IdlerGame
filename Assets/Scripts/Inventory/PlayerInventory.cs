@@ -17,7 +17,7 @@ namespace Inventory
         [SerializeField] private EquipmentRepository _equipmentRepository;
         [SerializeField] private EquipmentChanger _equipmentChanger;
         
-        public event Action<InventoryItem> OnResourceChanged;
+        public event Action OnResourceChanged;
         public Dictionary<ItemType, InventoryItem> Resources => _resources;
         
         private IPlayerLoadout _loadout;
@@ -116,7 +116,7 @@ namespace Inventory
             }
             
             SaveInventory();
-            OnResourceChanged?.Invoke(updatedItem);
+            OnResourceChanged?.Invoke();
         }
 
         public bool TrySpend(ItemType type, int amount)

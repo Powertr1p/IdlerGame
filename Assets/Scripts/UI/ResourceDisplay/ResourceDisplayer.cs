@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using Inventory.Core;
 using Inventory.RaidInventory;
+using Inventory.ResourceItems;
+using ItemRepository;
+using UI.ResourceView;
 using UnityEngine;
 using Zenject;
 
-namespace UI.ResourceView
+namespace UI.ResourceDisplay
 {
     public class ResourceDisplayer : MonoBehaviour
     {
-        [Inject] private ItemsViewDatabase _itemsViewDatabase;
+        [Inject] private ItemsRepository _itemRepository;
         [SerializeField] private ResourceElementDisplayer _resourceElementPrefab;
         [SerializeField] private RaidInventory _raidInventory;
 
-        private Dictionary<ItemType, ResourceElementDisplayer> _displayItems = new Dictionary<ItemType, ResourceElementDisplayer>();
+        private Dictionary<ResourceType, ResourceElementDisplayer> _displayItems = new Dictionary<ResourceType, ResourceElementDisplayer>();
 
         private void OnEnable()
         {
@@ -24,24 +27,24 @@ namespace UI.ResourceView
             _raidInventory.OnResourceAdded -= UpdateView;
         }
         
-        private void UpdateView(ItemType item, int amount)
+        private void UpdateView(ResourceType resource, int amount)
         {
-            if (!_displayItems.ContainsKey(item))
+            if (!_displayItems.ContainsKey(resource))
             {
-                InstantiateElement(item, amount);
+                InstantiateElement(resource, amount);
             }
             
-            _displayItems[item].SetAmount(amount);
+            _displayItems[resource].SetAmount(amount);
         }
 
-        private void InstantiateElement(ItemType item, int amount)
+        private void InstantiateElement(ResourceType resource, int amount)
         {
-            ItemViewData data = _itemsViewDatabase.Get(item);
+            var data = _itemRepository.GetItem(InventorySlotType.Resource, (int)resource);
             ResourceElementDisplayer instance = Instantiate(_resourceElementPrefab, transform);
             
             instance.SetAmount(amount);
-            instance.SetIcon(data.Icon);
-            _displayItems.Add(item, instance);
+            instance.SetIcon(data.Sprite);
+            _displayItems.Add(resource, instance);
         }
     }
 }

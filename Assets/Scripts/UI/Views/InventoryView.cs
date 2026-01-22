@@ -1,4 +1,5 @@
 using Inventory.Core;
+using Inventory.ResourceItems;
 using UnityEngine;
 using Utilities;
 
@@ -16,15 +17,10 @@ namespace UI.Views
             _slotPool = new ObjectPool<InventorySlot>(amount, _inventorySlotPrefab, _inventoryContent);
         }
         
-        public void DisplayItem(InventoryItem item, Sprite sprite)
+        public void DisplayItem(IInventoryItem item, Sprite sprite)
         {
             var instance = _slotPool.Get();
             instance.Bind(sprite, item.Amount);
-        }
-        
-        private void BackToLobby()
-        {
-            LobbyUIEventBus.RequestLobbyShow();
         }
     }
 }

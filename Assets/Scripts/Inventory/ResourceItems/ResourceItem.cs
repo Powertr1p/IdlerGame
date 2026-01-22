@@ -1,17 +1,21 @@
-﻿namespace Inventory.Core
+﻿using Inventory.Core;
+
+namespace Inventory.ResourceItems
 {
     [System.Serializable]
-    public class InventoryItem
+    public class ResourceItem : IInventoryItem
     {
-        public ItemType Type { get; }
+        public InventorySlotType SlotType => InventorySlotType.Resource;
+        public ResourceType Type { get; }
+        public int Id => (int)Type;
         public int Amount { get; private set; }
-
-        public InventoryItem(ItemType type, int amount)
+        
+        public ResourceItem(ResourceType type, int amount)
         {
             Type = type;
             Amount = amount;
         }
-
+        
         public void Add(int value)
         {
             Amount += value;

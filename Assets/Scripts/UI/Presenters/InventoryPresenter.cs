@@ -60,7 +60,8 @@ namespace UI.Presenters
             
             for (int i = 0; i < items.Count; i++)
             {
-                var sprite = _model.GetSprite(items[i].Type);
+                var sprite = _model.GetSprite(items[i].SlotType, items[i].Id);
+                
                 View.DisplayItem(items[i], sprite);
             }
         }

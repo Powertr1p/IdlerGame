@@ -1,5 +1,7 @@
 ﻿using System;
 using Inventory.Core;
+using Inventory.EquipmentItems;
+using Inventory.ResourceItems;
 using UnityEngine;
 
 namespace GameItems
@@ -8,7 +10,7 @@ namespace GameItems
     {
         event Action Depleted;
         Transform Transform { get; }
-        ItemType Type { get; }
+        ResourceType Type { get; }
         bool CanGather(ToolType toolType);
         bool TryGather(ToolType toolType, Transform attractor);
         void StopGather();

@@ -1,4 +1,4 @@
-﻿using Inventory.Core;
+﻿using Inventory.EquipmentItems;
 using Scriptable;
 
 namespace Inventory

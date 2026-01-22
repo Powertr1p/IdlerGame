@@ -1,8 +1,7 @@
-﻿namespace Inventory.Core
+﻿namespace Inventory.EquipmentItems
 {
     public enum ToolType
     {
-        Empty,
         Pickaxe,
         Axe,
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using Inventory.Core;
+using Inventory.EquipmentItems;
+using Inventory.ResourceItems;
 using JetBrains.Annotations;
 using Scriptable;
 using UnityEngine;
@@ -18,14 +20,14 @@ namespace GameItems
         public event Action Depleted;
         
         public Transform Transform { get; private set; }
-        public ItemType Type { get; private set; }
+        public ResourceType Type { get; private set; }
         
         private int _currentHits;
         private int _spawnedCount;
         
         private void Awake()
         {
-            Type = _resourceData.ItemType;
+            Type = _resourceData.ResourceType;
             
             Transform = transform;
         }

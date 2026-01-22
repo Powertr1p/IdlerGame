@@ -1,6 +1,7 @@
 using System;
 using DefaultNamespace.Animations;
 using Inventory.Core;
+using Inventory.ResourceItems;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -32,7 +33,7 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_isRunning, _playerMovement.IsRunning);
     }
 
-    public void PlayGatheringAnimationByType(ItemType type)
+    public void PlayGatheringAnimationByType(ResourceType type)
     {
         _mapper.PlayAnimation(type);
     }

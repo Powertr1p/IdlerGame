@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DefaultNamespace.Animations.Actions;
 using Inventory.Core;
+using Inventory.ResourceItems;
 using UnityEngine;
 
 namespace DefaultNamespace.Animations
@@ -8,7 +9,7 @@ namespace DefaultNamespace.Animations
     public class GatheringAnimationMapper
     {
         private readonly Animator _animator;
-        private readonly Dictionary<ItemType, IAnimationAction> _animationMap;
+        private readonly Dictionary<ResourceType, IAnimationAction> _animationMap;
         
         private IAnimationAction _currentAnimation;
 
@@ -16,16 +17,16 @@ namespace DefaultNamespace.Animations
         {
             _animator = animator;
             
-            _animationMap = new Dictionary<ItemType, IAnimationAction>
+            _animationMap = new Dictionary<ResourceType, IAnimationAction>
             {
-                { ItemType.Rock, new MiningAnimationAction() },
-                { ItemType.Tree, new ChoppingAnimationAction() },
+                { ResourceType.Rock, new MiningAnimationAction() },
+                { ResourceType.Tree, new ChoppingAnimationAction() },
             };
         }
 
-        public void PlayAnimation(ItemType itemType)
+        public void PlayAnimation(ResourceType resourceType)
         {
-            if (!_animationMap.TryGetValue(itemType, out IAnimationAction animation)) return;
+            if (!_animationMap.TryGetValue(resourceType, out IAnimationAction animation)) return;
             if (_currentAnimation == animation) return;
             
             StopCurrentAnimation();

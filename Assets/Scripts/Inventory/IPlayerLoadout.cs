@@ -1,12 +1,13 @@
 ﻿using Inventory.Core;
+using Inventory.EquipmentItems;
 using Scriptable;
 
 namespace Inventory
 {
     public interface IPlayerLoadout
     {
-        PlayerLoadoutData LoadoutData { get; }
-        void SetTool(ToolData toolId);
-        ToolType GetToolType();
+        public PlayerLoadoutData LoadoutData { get; }
+        public void SetTool(ToolData toolId);
+        public ToolType GetToolType();
     }
 }

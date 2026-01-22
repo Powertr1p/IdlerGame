@@ -1,6 +1,6 @@
 ﻿using AssetLoader;
 using Inventory;
-using Inventory.Core;
+using ItemRepository;
 using Zenject;
 
 namespace Utilities
@@ -10,7 +10,7 @@ namespace Utilities
         public override void InstallBindings()
         {
             Container.Bind<IPlayerLoadout>().To<PlayerLoadout>().AsSingle().NonLazy();
-            Container.Bind<ItemsViewDatabase>().FromScriptableObjectResource("ItemsViewDatabase").AsSingle();
+            Container.Bind<ItemsRepository>().FromScriptableObjectResource("ItemsRepository").AsSingle();
             Container.Bind<AssetsConfig>().FromScriptableObjectResource("AssetsConfig").AsSingle();
             Container.Bind<AssetsLoader>().AsSingle().NonLazy();
             Container.Bind<SceneLoader>().AsSingle().NonLazy();

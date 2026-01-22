@@ -1,0 +1,9 @@
+﻿namespace Inventory.Core
+{
+    public enum InventorySlotType
+    {
+        Resource,
+        Tool,
+        Helmet,
+    }
+}

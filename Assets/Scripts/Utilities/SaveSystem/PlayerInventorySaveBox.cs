@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Inventory.Core;
+using Inventory.EquipmentItems;
+using Inventory.ResourceItems;
 using Newtonsoft.Json;
 using SaveSystem;
 using UnityEngine;
@@ -21,61 +23,48 @@ namespace Utilities.SaveSystem
             PlayerPrefsUtility.LoadAll(this);
         }
 
-        public Dictionary<ItemType, int> LoadInventory()
+        public InventoryData LoadInventory()
         {
             if (string.IsNullOrEmpty(InventoryItemsJson))
             {
-                return new Dictionary<ItemType, int>();
+                return new InventoryData { Items = Array.Empty<InventoryItemDto>() };
             }
 
             try
             {
                 var inventoryData = JsonConvert.DeserializeObject<InventoryData>(InventoryItemsJson);
-
-                if (inventoryData != null && inventoryData.Items != null && inventoryData.Items.Length > 0)
-                {
-                    Dictionary<ItemType, int> loadedResources = new Dictionary<ItemType, int>();
-
-                    foreach (var itemDto in inventoryData.Items)
-                    {
-                        loadedResources[itemDto.Type] = itemDto.Amount;
-                    }
-                    
-                    return loadedResources;
-                }
-
-                return new Dictionary<ItemType, int>();
+                return inventoryData ?? new InventoryData { Items = Array.Empty<InventoryItemDto>() };
             }
             catch (Exception e)
             {
                 Debug.LogError($"Ошибка при загрузке инвентаря: {e.Message}");
-                return new Dictionary<ItemType, int>();
+                return new InventoryData { Items = Array.Empty<InventoryItemDto>() };
             }
         }
 
-        public void SaveInventory(Dictionary<ItemType, InventoryItem> items)
+        public void SaveInventory(List<IInventoryItem> items)
         {
             try
             {
                 if (items == null || items.Count == 0)
                 {
-                    InventoryItemsJson = JsonConvert.SerializeObject(new InventoryData { Items = Array.Empty<InventoryItemDto>() });
+                    InventoryItemsJson = JsonConvert.SerializeObject(
+                        new InventoryData { Items = Array.Empty<InventoryItemDto>() });
                     PlayerPrefsUtility.SaveAll(this);
                     return;
                 }
                 
-                var itemDtos = items.Values
-                    .Where(item => item.Amount > 0)
-                    .Select(item => new InventoryItemDto(item.Type, item.Amount))
-                    .ToArray();
-
-                var inventoryData = new InventoryData
+                var itemDtos = items.Where(items =>
                 {
-                    Items = itemDtos
-                };
-
-                InventoryItemsJson = JsonConvert.SerializeObject(inventoryData);
+                    if (items.SlotType == InventorySlotType.Resource)
+                    {
+                        return items.Amount > 0;
+                    }
+                    return true;
+                }).Select(item => new InventoryItemDto(item.SlotType, item.Id, item.Amount)).ToArray();
                 
+                var inventoryData = new InventoryData { Items = itemDtos };
+                InventoryItemsJson = JsonConvert.SerializeObject(inventoryData);
                 PlayerPrefsUtility.SaveAll(this);
             }
             catch (Exception e)

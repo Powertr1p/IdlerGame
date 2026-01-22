@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811f5e7de7724a789a3014803e0728d2, type: 3}
   m_Name: Rock
   m_EditorClassIdentifier: 
-  _itemType: 0
+  _sprite: {fileID: 21300000, guid: 583675a75bcb2a941ac555b9ccd513a9, type: 3}
+  _displayName: 
+  _resourceType: 0
   _resourcePrefab: {fileID: 3830553122932442759, guid: 4dc5c9fbe538f384f8645d1c72a044b9, type: 3}
   _maxQuantity: 10
   _hitsToGather: 2
-  _toolType: 1
+  _toolType: 0

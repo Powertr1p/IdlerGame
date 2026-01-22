@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97de94a8771544b6aea98756bbbf5225, type: 3}
   m_Name: Pickaxe
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: b54b94da5cee5c046bf327246ac181e6, type: 3}
+  _displayName: 
   _prefabLevel:
     m_AssetGUID: 6d73ff6cdd9d3f44d8e828b78538c2e2
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  _toolLobbyPrefab:
+  _prefabLobby:
     m_AssetGUID: ffa24daf7a65cd648be416f4252b317e
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  _itemId: 1
-  _toolType: 1
+  _toolType: 0

@@ -1,20 +1,24 @@
 ﻿using GameItems;
 using Inventory.Core;
+using Inventory.EquipmentItems;
+using Inventory.ResourceItems;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Scriptable
 {
-    [CreateAssetMenu(menuName = "Resource/Config")]
-    public class ResourceData : ScriptableObject
+    [CreateAssetMenu(menuName = "Data/ResourceData")]
+    public class ResourceData : ItemData
     {
-        [SerializeField] private ItemType _itemType;
+        [SerializeField] private ResourceType _resourceType;
         [SerializeField] private DropResource _resourcePrefab;
         [SerializeField] private int _maxQuantity;
         [SerializeField] private int _hitsToGather;
         [SerializeField] private ToolType _toolType;
 
-        public ItemType ItemType => _itemType;
+        public override InventorySlotType SlotType => InventorySlotType.Resource;
+        public override int Id => (int)_resourceType;
+        
+        public ResourceType ResourceType => _resourceType;
         public DropResource ResourcePrefab => _resourcePrefab;
         public int MaxQuantity => _maxQuantity;
         public float HitsToGather => _hitsToGather;

@@ -4,6 +4,7 @@ using Inventory;
 using Inventory.Core;
 using Inventory.ResourceItems;
 using ItemRepository;
+using Scriptable;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +14,7 @@ namespace UI.Model
     {
         [Inject] private PlayerInventory _playerInventory;
         [Inject] private ItemsRepository _itemRepository;
+        [Inject] private IPlayerLoadout _playerLoadout;
 
         public event Action OnInventoryChanged;
         
@@ -37,11 +39,24 @@ namespace UI.Model
             return _playerInventory.GetResourceAmount(type);
         }
 
-        public IReadOnlyList<IInventoryItem> GetInventoryItems()
+        public IReadOnlyList<InventoryItemDisplay> GetInventoryItems()
         {
             var items =  _playerInventory.GetAll();
+            var displayItems = new List<InventoryItemDisplay>();
             
-            return items;
+            foreach (var item in items)
+            {
+                var itemData = _itemRepository.GetItem(item.SlotType, item.Id);
+                displayItems.Add(new InventoryItemDisplay(itemData, item.Amount));
+            }
+           
+            
+            return displayItems;
+        }
+        
+        public void EquipTool(ToolData tool)
+        {
+            // _playerLoadout.SetTool();
         }
         
         private void InventoryChanged()

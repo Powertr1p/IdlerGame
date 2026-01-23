@@ -1,4 +1,5 @@
-﻿using UI.Model;
+﻿using Inventory.Core;
+using UI.Model;
 using UI.Views;
 using UnityEngine;
 using Zenject;
@@ -57,13 +58,16 @@ namespace UI.Presenters
         private void UpdateView()
         {
             var items = _model.GetInventoryItems();
-            
-            for (int i = 0; i < items.Count; i++)
+
+            foreach (var item in items)
             {
-                var sprite = _model.GetSprite(items[i].SlotType, items[i].Id);
-                
-                View.DisplayItem(items[i], sprite);
+                View.DisplayItem(item);
             }
+        }
+
+        private void EquipTool()
+        {
+            
         }
     }
 }

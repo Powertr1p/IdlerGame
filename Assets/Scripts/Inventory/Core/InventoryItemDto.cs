@@ -6,9 +6,9 @@ namespace Inventory.Core
     [Serializable]
     public class InventoryItemDto
     {
-        public InventorySlotType SlotType { get; private set; }
-        public int Amount { get; private set; }
-        public int Id { get; private set; }
+        public InventorySlotType SlotType { get; set; }
+        public int Amount { get; set; }
+        public int Id { get; set; }
 
         public InventoryItemDto(InventorySlotType type, int id, int amount)
         {

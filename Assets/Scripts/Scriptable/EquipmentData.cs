@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Scriptable
 {
-    public abstract class EquipmentData : ItemData
+    public abstract class EquipmentData : ItemData, IEquippable
     {
         [SerializeField] private AssetReferenceGameObject _prefabLevel;
         [SerializeField] private AssetReferenceGameObject _prefabLobby;

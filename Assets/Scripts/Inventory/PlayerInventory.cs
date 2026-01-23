@@ -44,7 +44,12 @@ namespace Inventory
         {
             _saveBox = new PlayerInventorySaveBox();
             LoadInventory();
-            ChangeTool();
+
+            if (_items.Capacity == 0)
+            {
+                Debug.Log("Item Added");
+                Add(new EquipmentItem(InventorySlotType.Tool, 0, false));
+            }
         }
         
         [Inject]

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 583675a75bcb2a941ac555b9ccd513a9, type: 3}
-  _displayName: 
+  _displayName: Rock
   _resourceType: 0
   _resourcePrefab: {fileID: 3830553122932442759, guid: 4dc5c9fbe538f384f8645d1c72a044b9, type: 3}
   _maxQuantity: 10

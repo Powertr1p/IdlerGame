@@ -25,12 +25,15 @@ namespace UI.Presenters
         protected override void OnViewCreated()
         {
             _model.OnInventoryChanged += HandleInventoryChanged;
+            View.SlotClicked += HandleSlotClicked;
         }
 
         protected override void OnViewDestroy()
         {
             _model.OnInventoryChanged -= HandleInventoryChanged;
+            View.SlotClicked -= HandleSlotClicked;
             _model.Dispose();
+            View.Dispose();
         }
         
         public override void Show()
@@ -57,6 +60,8 @@ namespace UI.Presenters
 
         private void UpdateView()
         {
+            View.Clear();
+            
             var items = _model.GetInventoryItems();
 
             foreach (var item in items)
@@ -68,6 +73,14 @@ namespace UI.Presenters
         private void EquipTool()
         {
             
+        }
+
+        private void HandleSlotClicked(InventoryItemDisplay item)
+        {
+            if (item.ItemData is IEquippable equippable)
+            {
+                Debug.Log("DA!");
+            }
         }
     }
 }

@@ -12,10 +12,10 @@ namespace UI
         [SerializeField] private Image _resourceImage;
         [SerializeField] private TextMeshProUGUI _quantityText;
         [SerializeField] private Button _slotButton;
-
-        private InventoryItemDisplay _item;
         
-        public event Action OnSlotClicked;
+        public event Action<InventoryItemDisplay> OnSlotClicked;
+        
+        private InventoryItemDisplay _item;
         
         private const float SLOPE = 5f / 24f;  
         private const float INTERCEPT = 153.3333f;
@@ -52,7 +52,7 @@ namespace UI
 
         private void SlotClicked()
         {
-            OnSlotClicked?.Invoke();
+            OnSlotClicked?.Invoke(_item);
         }
     }
 }

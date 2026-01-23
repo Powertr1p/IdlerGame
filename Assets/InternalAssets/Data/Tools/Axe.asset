@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   _sprite: {fileID: 6674386295937086461, guid: 7abd59d488ec3484089d5f418816dbdb, type: 3}
-  _displayName: 
+  _displayName: Axe
   _prefabLevel:
     m_AssetGUID: 049f43f2dd144e34e8e651e547fb134b
     m_SubObjectName: 

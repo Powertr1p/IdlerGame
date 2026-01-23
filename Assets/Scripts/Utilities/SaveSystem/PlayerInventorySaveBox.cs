@@ -53,17 +53,19 @@ namespace Utilities.SaveSystem
                     PlayerPrefsUtility.SaveAll(this);
                     return;
                 }
-                
-                var itemDtos = items.Where(items =>
+
+                var itemDtos = new List<InventoryItemDto>(items.Count);
+
+                for (int i = 0; i < items.Count; i++)
                 {
-                    if (items.SlotType == InventorySlotType.Resource)
-                    {
-                        return items.Amount > 0;
-                    }
-                    return true;
-                }).Select(item => new InventoryItemDto(item.SlotType, item.Id, item.Amount)).ToArray();
+                    var item = items[i];
+                    
+                    Debug.Log(item.SlotType);
+                    
+                    itemDtos.Add(new InventoryItemDto(item.SlotType, item.Id, item.Amount));
+                }
                 
-                var inventoryData = new InventoryData { Items = itemDtos };
+                var inventoryData = new InventoryData { Items = itemDtos.ToArray() };
                 InventoryItemsJson = JsonConvert.SerializeObject(inventoryData);
                 PlayerPrefsUtility.SaveAll(this);
             }

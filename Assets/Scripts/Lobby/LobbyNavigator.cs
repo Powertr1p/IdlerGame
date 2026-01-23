@@ -14,8 +14,6 @@ namespace Lobby
 {
     public class LobbyNavigator : MonoBehaviour, INavigationService
     {
-        [SerializeField] private LobbyView _lobbyView;
-        
         private const string GAME_SCENE_NAME = "GameScene";
         
         private SceneLoader _sceneLoader;
@@ -56,13 +54,11 @@ namespace Lobby
 
         private void ShowInventory()
         {
-            _lobbyView.Hide();
             _inventoryPresenter.Show();
         }
 
         private void ShowLobby()
         {
-            _lobbyView.Show();
             _inventoryPresenter.Hide();
         }
         
@@ -73,7 +69,6 @@ namespace Lobby
 
         private void OnSceneWasLoaded()
         {
-            _lobbyView.Hide();
             _inventoryPresenter.Hide();
         }
     }

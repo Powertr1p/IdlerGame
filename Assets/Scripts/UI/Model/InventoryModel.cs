@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Inventory;
 using Inventory.Core;
+using Inventory.EquipmentItems;
 using Inventory.ResourceItems;
 using ItemRepository;
 using Scriptable;
@@ -22,11 +23,13 @@ namespace UI.Model
         private void Initialize()
         {
             _playerInventory.OnInventoryChanged += InventoryChanged;
+            _playerLoadout.OnLoadoutChanged += InventoryChanged;
         }
         
         public void Dispose()
         {
             _playerInventory.OnInventoryChanged -= InventoryChanged;
+            _playerLoadout.OnLoadoutChanged -= InventoryChanged;
         }
         
         public Sprite GetSprite(InventorySlotType slotType, int id)
@@ -46,17 +49,34 @@ namespace UI.Model
             
             foreach (var item in items)
             {
+                if (item is EquipmentItem { IsEquipped: true }) continue;
+                
                 var itemData = _itemRepository.GetItem(item.SlotType, item.Id);
                 displayItems.Add(new InventoryItemDisplay(itemData, item.Amount));
             }
-           
             
             return displayItems;
         }
-        
-        public void EquipTool(ToolData tool)
+
+        public IReadOnlyList<InventoryItemDisplay> GetEquippedItems()
         {
-            // _playerLoadout.SetTool();
+            var equippedItems = _playerLoadout.GetEquippedItems();
+            var displayItems = new List<InventoryItemDisplay>(equippedItems.Count);
+    
+            foreach (var item in equippedItems)
+            {
+                if (item is ItemData itemData)
+                {
+                    displayItems.Add(new InventoryItemDisplay(itemData, 1));
+                }
+            }
+    
+            return displayItems;
+        }
+        
+        public void EquipItem(IEquippable eq)
+        {
+            _playerInventory.EquipItem(eq);
         }
         
         private void InventoryChanged()

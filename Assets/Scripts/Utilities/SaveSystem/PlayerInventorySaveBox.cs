@@ -60,9 +60,8 @@ namespace Utilities.SaveSystem
                 {
                     var item = items[i];
                     
-                    Debug.Log(item.SlotType);
-                    
-                    itemDtos.Add(new InventoryItemDto(item.SlotType, item.Id, item.Amount));
+                    itemDtos.Add(new InventoryItemDto(item.SlotType, item.Id, item.Amount,
+                        item is EquipmentItem eq && eq.IsEquipped));
                 }
                 
                 var inventoryData = new InventoryData { Items = itemDtos.ToArray() };

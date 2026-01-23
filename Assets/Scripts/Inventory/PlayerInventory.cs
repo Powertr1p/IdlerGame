@@ -26,29 +26,17 @@ namespace Inventory
         
         private List<IInventoryItem> _items = new();
         
-        private int _equippedToolId = -1;
-        
         private PlayerInventorySaveBox _saveBox;
-
-        private void OnEnable()
-        {
-            LobbyUIEventBus.OnChangeToolRequested += ChangeTool;
-        }
-
-        private void OnDisable()
-        {
-            LobbyUIEventBus.OnChangeToolRequested -= ChangeTool;
-        }
         
         private void Start()
         {
             _saveBox = new PlayerInventorySaveBox();
             LoadInventory();
 
-            if (_items.Capacity == 0)
+            if (_items.Count == 0)
             {
-                Debug.Log("Item Added");
                 Add(new EquipmentItem(InventorySlotType.Tool, 0, false));
+                Add(new EquipmentItem(InventorySlotType.Tool, 1, false));
             }
         }
         
@@ -89,6 +77,13 @@ namespace Inventory
             OnInventoryChanged?.Invoke();
         }
 
+        public void Remove(IInventoryItem item)
+        {
+            _items.Remove(item);
+            SaveInventory();
+            OnInventoryChanged?.Invoke();
+        }
+
         public bool TrySpendResource(ResourceType type, int amount)
         {
             var resource = _items.OfType<ResourceItem>().FirstOrDefault(r => r.Type == type);
@@ -102,35 +97,30 @@ namespace Inventory
             return false;
         }
 
+        public void EquipItem(IEquippable eq)
+        {
+            UnequipItem(eq.SlotType);
+            
+            var eqItem = _items.OfType<EquipmentItem>().FirstOrDefault(i => i.SlotType == eq.SlotType && i.Id == eq.Id);
+            
+            if (eqItem != null)
+            {
+                eqItem.Equip();
+                _loadout.Equip(eq);
+                
+                SaveInventory();
+                OnInventoryChanged?.Invoke();
+            }
+        }
+        
+        private void UnequipItem(InventorySlotType slotType)
+        {
+            _items.OfType<EquipmentItem>().FirstOrDefault(i => i.SlotType == slotType && i.IsEquipped)?.Unequip();
+        }
+
         public IReadOnlyList<IInventoryItem> GetAll()
         {
             return _items.AsReadOnly();
-        }
-        
-        private void ChangeTool()
-        {
-            //temp
-            _equippedToolId = _equippedToolId switch
-            {
-                -1 => 0,
-                0 => 1,
-                1 => 0,
-                _ => _equippedToolId
-            };
-            
-            var equipment = _itemRepository.GetItem(InventorySlotType.Tool, _equippedToolId);
-            
-            var tool = equipment as ToolData;
-            
-            _loadout.SetTool(tool);
-            Debug.Log($"Equipped tool: {_loadout.GetToolType()}");
-            
-            Equip(tool);
-        }
-
-        private void Equip(ToolData tool)
-        {
-            _equipmentChanger.ChangeTool(tool);
         }
         
         private void SaveInventory()
@@ -143,11 +133,6 @@ namespace Inventory
 
         private void LoadInventory()
         {
-            LoadResources();
-        }
-
-        private void LoadResources()
-        {
             if (_saveBox == null) return;
 
             var loadedData = _saveBox.LoadInventory();
@@ -159,6 +144,15 @@ namespace Inventory
                 if (item != null)
                 {
                     _items.Add(item);
+
+                    if (dto.IsEquipped && item is EquipmentItem eqItem)
+                    {
+                        var itemData = _itemRepository.GetItem(eqItem.SlotType, eqItem.Id);
+                        if (itemData is IEquippable equippable)
+                        {
+                            _loadout.Equip(equippable);
+                        }
+                    }
                 }
             }
         }
@@ -172,7 +166,7 @@ namespace Inventory
         
                 case InventorySlotType.Tool:
                 case InventorySlotType.Helmet:
-                    return new EquipmentItem(dto.SlotType, dto.Id, false);
+                    return new EquipmentItem(dto.SlotType, dto.Id, dto.IsEquipped);
         
                 default:
                     Debug.LogWarning($"Неизвестный SlotType: {dto.SlotType}");

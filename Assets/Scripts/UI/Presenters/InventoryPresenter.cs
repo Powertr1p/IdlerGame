@@ -68,18 +68,20 @@ namespace UI.Presenters
             {
                 View.DisplayItem(item);
             }
-        }
-
-        private void EquipTool()
-        {
             
+            var equippedItems = _model.GetEquippedItems();
+            foreach (var equippedItem in equippedItems)
+            {
+                View.DisplayEquippedItem(equippedItem);
+            }
         }
 
         private void HandleSlotClicked(InventoryItemDisplay item)
         {
-            if (item.ItemData is IEquippable equippable)
+            if (item.ItemData is IEquippable eq)
             {
-                Debug.Log("DA!");
+                _model.EquipItem(eq);
+                View.DisplayEquippedItem(item);
             }
         }
     }

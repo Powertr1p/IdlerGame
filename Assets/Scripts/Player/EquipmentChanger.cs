@@ -12,7 +12,6 @@ public class EquipmentChanger : MonoBehaviour
     [SerializeField] private bool _isInGameScene;
 
     private GameObject _equippedTool;
-    private ToolData _currentToolData;
     private AssetsLoader _assetsLoader;
     private IPlayerLoadout _loadout;
         
@@ -35,8 +34,6 @@ public class EquipmentChanger : MonoBehaviour
 
     public void ChangeTool(ToolData tool)
     {
-        _currentToolData = tool;
-            
         if (!ReferenceEquals(_equippedTool, null))
         {
             Destroy(_equippedTool);

@@ -72,19 +72,19 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6743079902767045181}
-  - component: {fileID: 1435209624627610007}
   - component: {fileID: 6088179853743027902}
   - component: {fileID: 5950777457307517004}
   - component: {fileID: 7207414469418679915}
   - component: {fileID: 8461823230182863989}
   - component: {fileID: 1372939683748778631}
+  - component: {fileID: 4417108761699410591}
   m_Layer: 0
   m_Name: Player_Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6743079902767045181
 Transform:
   m_ObjectHideFlags: 0
@@ -102,22 +102,6 @@ Transform:
   - {fileID: 68637708585529777}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1435209624627610007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8066120688882072039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 552dc013f48d7a44882c378f568f6d6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _joystick: {fileID: 0}
-  _moveSpeed: 4
-  _rotationSpeed: 6
-  _playerGathering: {fileID: 5950777457307517004}
 --- !u!114 &6088179853743027902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b1209bdb1544485bc23b369c6903641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerMovement: {fileID: 1435209624627610007}
+  _playerMovement: {fileID: 0}
   _playerAnimator: {fileID: 9004887496761246258}
   _attractor: {fileID: 68637708585529777}
   _raidInventory: {fileID: 1372939683748778631}
@@ -198,6 +182,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a47636c24d4fcaa65a4bbeef1997dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4417108761699410591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066120688882072039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b436a36d3548cec41b4c5b3a77d3c888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  _moveSpeed: 3
+  _rotationSpeed: 4
+  _playerGathering: {fileID: 5950777457307517004}
+  _joystick: {fileID: 0}
 --- !u!1 &9093996198377288532
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ PrefabInstance:
     - target: {fileID: 225036528497334320, guid: aeb9d68eb2e1fb44f9691848c515a472, type: 3}
       propertyPath: _playerMovement
       value: 
-      objectReference: {fileID: 1435209624627610007}
+      objectReference: {fileID: 4417108761699410591}
     - target: {fileID: 3816449578428420126, guid: aeb9d68eb2e1fb44f9691848c515a472, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

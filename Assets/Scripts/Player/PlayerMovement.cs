@@ -2,7 +2,8 @@ using DefaultNamespace;
 using GameItems;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof(PlayerGathering))]
+public class PlayerMovement : MonoBehaviour, IExitable
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;

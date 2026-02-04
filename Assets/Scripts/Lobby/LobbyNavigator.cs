@@ -1,11 +1,7 @@
-﻿using System;
-using Core;
+﻿using Core;
 using Cysharp.Threading.Tasks;
-using UI;
-using UI.Factories;
 using UI.Navbar;
 using UI.Presenters;
-using UI.Views;
 using UnityEngine;
 using Utilities;
 using Zenject;
@@ -14,6 +10,8 @@ namespace Lobby
 {
     public class LobbyNavigator : MonoBehaviour, INavigationService
     {
+        [SerializeField] private GameObject _lobbyBackground;
+        
         private const string GAME_SCENE_NAME = "GameScene";
         
         private SceneLoader _sceneLoader;
@@ -65,6 +63,7 @@ namespace Lobby
         private async UniTaskVoid HandleStartRaid()
         {
             await _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
+            _lobbyBackground.SetActive(false);
         }
 
         private void OnSceneWasLoaded()

@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 994083815}
   - component: {fileID: 994083816}
   m_Layer: 5
-  m_Name: PersistantView
+  m_Name: LobbyBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1443,6 +1443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b4973abe724cd38171be50c78c9cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lobbyBackground: {fileID: 994083814}
 --- !u!1 &2093144394
 GameObject:
   m_ObjectHideFlags: 0

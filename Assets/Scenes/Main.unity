@@ -979,6 +979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1351190949}
   - component: {fileID: 1351190950}
+  - component: {fileID: 1351190951}
   m_Layer: 0
   m_Name: PlayerInventory
   m_TagString: Untagged
@@ -1014,6 +1015,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipmentChanger: {fileID: 758406075}
+--- !u!114 &1351190951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351190948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09f076b2379b43e0888f9aab7158742a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory.RaidLootApplier
+  _playerInventory: {fileID: 1351190950}
 --- !u!1001 &1458723823
 PrefabInstance:
   m_ObjectHideFlags: 0

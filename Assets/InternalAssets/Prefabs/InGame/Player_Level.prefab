@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b1209bdb1544485bc23b369c6903641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerMovement: {fileID: 0}
+  _playerMovement: {fileID: 4417108761699410591}
   _playerAnimator: {fileID: 9004887496761246258}
   _attractor: {fileID: 68637708585529777}
   _raidInventory: {fileID: 1372939683748778631}

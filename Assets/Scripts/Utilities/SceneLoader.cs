@@ -11,6 +11,7 @@ namespace Utilities
     public class SceneLoader : IDisposable
     {
         public event Action OnSceneLoaded;
+        public event Action OnSceneUnloaded;
         
         private SceneInstance? _currentScene;
         private bool _isSceneLoading;
@@ -46,6 +47,11 @@ namespace Utilities
                 _isSceneLoading = false;
             }
         }
+        
+        public UniTask UnloadCurrentAsync()
+        {
+            return UnloadCurrentSceneAsync();
+        }
 
         private async UniTask UnloadCurrentSceneAsync()
         {
@@ -57,6 +63,7 @@ namespace Utilities
             await Resources.UnloadUnusedAssets().ToUniTask();
             
             _currentScene = null;
+            OnSceneUnloaded?.Invoke();
         }
 
         public void Dispose()

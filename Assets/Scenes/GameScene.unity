@@ -664,6 +664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Extraction.ExtractionSystem
   _exitZone: {fileID: 96272100}
   _view: {fileID: 1254228031}
+  _raidInventory: {fileID: 7304289070272870949}
 --- !u!4 &697419083
 Transform:
   m_ObjectHideFlags: 0

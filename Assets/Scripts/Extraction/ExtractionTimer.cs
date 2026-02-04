@@ -7,7 +7,7 @@ namespace Extraction
     public class ExtractionTimer
     {
         public event Action<float> TimerUpdated;
-        public event Action ExitStrated;
+        public event Action ExitStarted;
         public event Action ExitCanceled;
         public event Action ExitCompleted;
 
@@ -23,7 +23,7 @@ namespace Extraction
         {
             _cts = new CancellationTokenSource();
             RunTimer(_cts.Token).Forget();
-            ExitStrated?.Invoke();
+            ExitStarted?.Invoke();
         }
 
         public void Cancel()

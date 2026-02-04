@@ -11,7 +11,7 @@ namespace Extraction
         
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IExitable exitable))
+            if (other.TryGetComponent(out IExitable _))
             {
                 PlayerEntered?.Invoke();
             }
@@ -19,7 +19,7 @@ namespace Extraction
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out IExitable exitable))
+            if (other.TryGetComponent(out IExitable _))
             {
                 PlayerExited?.Invoke();
             }

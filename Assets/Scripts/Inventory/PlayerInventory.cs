@@ -112,6 +112,22 @@ namespace Inventory
                 OnInventoryChanged?.Invoke();
             }
         }
+
+        public void AddFromDtoList(IEnumerable<InventoryItemDto> dtos)
+        {
+            foreach (var dto in dtos)
+            {
+                AddFromDto(dto);
+            }
+        }
+        
+        private void AddFromDto(InventoryItemDto dto)
+        {
+            var item = CreateItemFromDto(dto);
+            
+            if (item == null) return;
+            Add(item);
+        }
         
         private void UnequipItem(InventorySlotType slotType)
         {

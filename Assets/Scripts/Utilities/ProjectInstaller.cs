@@ -1,5 +1,6 @@
 ﻿using AssetLoader;
 using Inventory;
+using Inventory.RaidInventory;
 using ItemRepository;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace Utilities
             Container.Bind<AssetsConfig>().FromScriptableObjectResource("AssetsConfig").AsSingle();
             Container.Bind<AssetsLoader>().AsSingle().NonLazy();
             Container.Bind<SceneLoader>().AsSingle().NonLazy();
+            Container.Bind<RaidLootBuffer>().AsSingle().NonLazy();
         }
     }
 }

@@ -27,11 +27,13 @@ namespace Lobby
         private void OnEnable()
         {
             _sceneLoader.OnSceneLoaded += OnSceneWasLoaded;
+            _sceneLoader.OnSceneUnloaded += OnSceneWasUnloaded;
         }
 
         private void OnDisable()
         {
             _sceneLoader.OnSceneLoaded -= OnSceneWasLoaded;
+            _sceneLoader.OnSceneUnloaded -= OnSceneWasUnloaded;
         }
         
         public void Open(NavbarButtonType type)
@@ -69,6 +71,11 @@ namespace Lobby
         private void OnSceneWasLoaded()
         {
             _inventoryPresenter.Hide();
+        }
+        
+        private void OnSceneWasUnloaded()
+        {
+            _lobbyBackground.SetActive(true);
         }
     }
 }

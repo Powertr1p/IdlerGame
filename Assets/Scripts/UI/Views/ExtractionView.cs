@@ -7,11 +7,6 @@ namespace UI.Views
     public class ExtractionView : BaseView, IDisposable
     {
         [SerializeField] private TextMeshProUGUI _timerLabel;
-
-        public override void Show()
-        {
-            base.Show();
-        }
         
         public void UpdateTimer(float seconds)
         {

@@ -1,6 +1,5 @@
 using System;
 using Inventory.Core;
-using Scriptable;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,8 +16,6 @@ namespace UI
         
         private InventoryItemDisplay _item;
         
-        private const float SLOPE = 5f / 24f;  
-        private const float INTERCEPT = 153.3333f;
         
         public void Bind(InventoryItemDisplay item)
         {
@@ -39,15 +36,13 @@ namespace UI
 
         private void RescaleIconSize()
         {
-            Vector2 spSizePx = _resourceImage.sprite.rect.size;
-            float maxSide = Mathf.Max(spSizePx.x, spSizePx.y);
-            
-            if (maxSide <= 0.01f) return;
+            var rt = _resourceImage.rectTransform;
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.anchoredPosition = Vector2.zero;
 
-            float desiredSide = SLOPE * maxSide + INTERCEPT;
-            float scale = desiredSide / maxSide;
-            
-            _resourceImage.rectTransform.sizeDelta = spSizePx * scale;
+            rt.offsetMin = new Vector2(10f, 10f);
+            rt.offsetMax = new Vector2(-10f, -10f);
         }
 
         private void SlotClicked()

@@ -12,6 +12,11 @@ namespace UI
         [SerializeField] private TextMeshProUGUI _quantityText;
         [SerializeField] private Button _slotButton;
         
+        [SerializeField] private float _iconLeftOffset = 10f;
+        [SerializeField] private float _iconRightOffset = -10f;
+        [SerializeField] private float _iconTopOffset = -10f;
+        [SerializeField] private float _iconBottomOffset = 10f;
+        
         public event Action<InventoryItemDisplay> OnSlotClicked;
         
         private InventoryItemDisplay _item;
@@ -41,8 +46,8 @@ namespace UI
             rt.anchorMax = Vector2.one;
             rt.anchoredPosition = Vector2.zero;
 
-            rt.offsetMin = new Vector2(10f, 10f);
-            rt.offsetMax = new Vector2(-10f, -10f);
+            rt.offsetMin = new Vector2(_iconLeftOffset, _iconBottomOffset);
+            rt.offsetMax = new Vector2(_iconRightOffset, _iconTopOffset);
         }
 
         private void SlotClicked()

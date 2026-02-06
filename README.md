@@ -2,65 +2,39 @@
 
 Казуальная idle-игра на Unity: сбор ресурсов и обмен на снаряжение.
 
-## 🏗️ Архитектурные паттерны
+## Архитектурные паттерны
 
-- **Dependency Injection** — Zenject (ProjectInstaller, BootstrapInstaller, GameSceneInstaller)
-- **MVP** — Model-View-Presenter для UI (BaseView, BasePresenter)
-- **Factory** — ViewFactory для создания UI через DI
-- **Object Pool** — переиспользование объектов
-- **Observer** — система событий (OnResourceChanged, OnSceneLoaded, LobbyUIEventBus)
-- **Service Locator** — INavigationService
-- **Repository** — EquipmentRepository
-- **ScriptableObject** — конфигурационные данные (ToolData, ResourceData, ItemsViewDatabase)
+- Dependency Injection (Zenject)
+- MVP для UI (BaseView, BasePresenter)
+- Factory для создания UI
+- Object Pool
+- Observer/Event-driven
 
-## 🛠️ Технологический стек
+## Технологический стек
 
-### Основа
-- **Unity 2022+**
-- **C# 9.0+**
-- **Universal Render Pipeline (URP)**
+- Unity 2022+
+- C#
+- URP
+- Zenject
+- UniTask
+- Addressables
+## Требования
 
-### Библиотеки
-- **Zenject** — DI контейнер
-- **UniTask** — асинхронность
-- **Addressables** — динамическая загрузка ассетов
-- **Unity UI (uGUI)** — интерфейс
-- **New Input System** — ввод
-- **Newtonsoft.Json** — сериализация
-- **Unity Timeline** — анимации
+- Unity 2022+
 
-### Графика
-- **Toony Colors Pro** — шейдеры
-- **Cartoon FX Remaster** — эффекты
-- **Kino Bloom** — пост-обработка
-- **Skybox Cubemap Extended** — скайбоксы
+## Как запустить
 
-## 📁 Структура проекта
+1. Открой проект в Unity.
+2. Запусти нужную сцену из Editor.
 
-```
-Assets/Scripts/
-├── AssetLoader/      # Addressables
-├── Inventory/        # Инвентарь и экипировка
-├── Player/           # Логика игрока
-├── ResourceItems/    # Ресурсы
-├── UI/               # MVP интерфейс
-├── Lobby/            # Навигация
-├── Scriptable/       # ScriptableObject данные
-└── Utilities/        # Инсталлеры Zenject
-```
+## Зависимости
 
-## 🔄 CI/CD
+- Zenject
+- UniTask
+- Addressables
+- Unity UI (uGUI)
+- Input System
 
-### GitHub Actions
-- Платформы: Windows, Linux, Android, iOS, WebGL
-- Триггеры: push/PR на main, develop
-- Этапы: checkout → cache → build Addressables → build project → upload artifacts
+## CI/CD
 
-### Требования
-- Unity 2022+, Git LFS
-- Secrets: UNITY_LICENSE, UNITY_EMAIL, UNITY_PASSWORD
-
-### Оптимизация
-- Кэширование Library (-70% времени)
-- Параллельная сборка платформ
-- Инкрементальная сборка
+Используются GitHub Actions для сборок.

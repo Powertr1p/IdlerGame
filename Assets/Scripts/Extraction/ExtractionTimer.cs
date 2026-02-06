@@ -12,12 +12,8 @@ namespace Extraction
         public event Action ExitCompleted;
 
         private CancellationTokenSource _cts;
-        private readonly float _duration;
         
-        public ExtractionTimer(float duration)
-        {
-            _duration = duration;
-        }
+        private readonly float _duration = 10f;
 
         public void StartTimer()
         {

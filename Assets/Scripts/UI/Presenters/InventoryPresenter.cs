@@ -10,7 +10,6 @@ namespace UI.Presenters
     {
         private InventoryModel _model;
         
-        private readonly int _initialInventorySlotsCount = 10;
         private bool _isUpdateNeeded = true;
         
         [Inject]
@@ -41,7 +40,7 @@ namespace UI.Presenters
             base.Show();
             if (!_isUpdateNeeded) return;
             
-            View.CreateInventorySlots(_initialInventorySlotsCount);
+            View.CreateInventorySlots();
             UpdateView();
             _isUpdateNeeded = false;
         }

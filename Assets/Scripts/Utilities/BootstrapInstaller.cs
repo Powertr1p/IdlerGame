@@ -27,7 +27,7 @@ public class BootstrapInstaller : MonoInstaller
         Container.Bind<InventoryModel>().AsSingle();
         
         //Presenters
-        Container.Bind<NavbarPresenter>().AsSingle();
+        Container.Bind<NavbarPresenter>().AsSingle().NonLazy();
         Container.Bind<InventoryPresenter>().AsSingle();
             
         //Views

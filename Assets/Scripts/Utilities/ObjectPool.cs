@@ -1,51 +1,48 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utilities
+public class ObjectPool<T> where T : Component
 {
-    public class ObjectPool<T> where T : Component
+    private readonly Queue<T> _pool = new Queue<T>();
+    private readonly T _prefab;
+    private readonly Transform _parent;
+
+    public ObjectPool(int initialSize, T prefab, Transform parent)
     {
-        private readonly Queue<T> _pool = new Queue<T>();
-        private readonly T _prefab;
-        private readonly Transform _parent;
+        _prefab = prefab;
+        _parent = parent;
 
-        public ObjectPool(int initialSize, T prefab, Transform parent)
+        for (int i = 0; i < initialSize; i++)
         {
-            _prefab = prefab;
-            _parent = parent;
-
-            for (int i = 0; i < initialSize; i++)
-            {
-                var instance = CreateObject();
-                instance.gameObject.SetActive(false);
-                _pool.Enqueue(instance);
-            }
+            var instance = CreateObject();
+            instance.gameObject.SetActive(false);
+            _pool.Enqueue(instance);
         }
+    }
 
-        public T Get()
+    public T Get()
+    {
+        if (_pool.Count > 0)
         {
-            if (_pool.Count > 0)
-            {
-                var obj = _pool.Dequeue();
-                obj.gameObject.SetActive(true);
-                return obj;
-            }
-            else
-            {
-                var obj = CreateObject();
-                return obj;
-            }
+            var obj = _pool.Dequeue();
+            obj.gameObject.SetActive(true);
+            return obj;
         }
-
-        public void Return(T obj)
+        else
         {
-            obj.gameObject.SetActive(false);
-            _pool.Enqueue(obj);
+            var obj = CreateObject();
+            return obj;
         }
+    }
 
-        private T CreateObject()
-        {
-            return Object.Instantiate(_prefab, _parent);
-        }
+    public void Return(T obj)
+    {
+        obj.gameObject.SetActive(false);
+        _pool.Enqueue(obj);
+    }
+
+    private T CreateObject()
+    {
+        return Object.Instantiate(_prefab, _parent);
     }
 }

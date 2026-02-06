@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Inventory;
 using Inventory.Core;
 using UnityEngine;
 using Utilities;
@@ -15,20 +16,26 @@ namespace UI.Views
         
         public event Action<InventoryItemDisplay> SlotClicked;
         
-        private ObjectPool<InventorySlot> _slotPool;
-        private List<InventorySlot> _activeSlots = new();
+        private DisplayItemSlotList _inventorySlotList;
         
-        public void CreateInventorySlots(int amount)
+        private ObjectPool<InventorySlot> _slotPool;
+        
+        private void Awake()
         {
-            _slotPool = new ObjectPool<InventorySlot>(amount, _inventorySlotPrefab, _inventoryContent);
+            _slotPool = new ObjectPool<InventorySlot>(10, _inventorySlotPrefab, _inventoryContent);
+        }
+        
+        public void CreateInventorySlots()
+        {
+            if (_inventorySlotList != null) return;
+            
+            _inventorySlotList = new DisplayItemSlotList(_slotPool);
+            _inventorySlotList.SlotClicked += HandleSlotClicked;
         }
         
         public void DisplayItem(InventoryItemDisplay item)
         {
-            var instance = _slotPool.Get();
-            instance.Bind(item);
-            instance.OnSlotClicked += HandleSlotClicked;
-            _activeSlots.Add(instance);
+            _inventorySlotList.Add(item);
         }
         
         public void DisplayEquippedItem(InventoryItemDisplay item)
@@ -38,25 +45,24 @@ namespace UI.Views
 
         public void Dispose()
         {
+            if (_inventorySlotList != null)
+            {
+                _inventorySlotList.SlotClicked -= HandleSlotClicked;
+                _inventorySlotList.Dispose();
+                _inventorySlotList = null;
+            }
+
             _inventorySlotPrefab?.Dispose();
-            Clear();
         }
 
         public void Clear()
         {
-            foreach (var slot in _activeSlots)
-            {
-                slot.OnSlotClicked -= HandleSlotClicked;
-                slot.Dispose();
-                Destroy(slot.gameObject);
-            }
+            _inventorySlotList.Clear();
             
             foreach (var slot in _equipmentSlots)
             {
                 slot.Clear();
             }
-            
-            _activeSlots.Clear();
         }
         
         private void HandleSlotClicked(InventoryItemDisplay item)

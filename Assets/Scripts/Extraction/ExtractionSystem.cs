@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Inventory.RaidInventory;
 using UI.Presenters;
-using UI.Views;
 using UnityEngine;
 using Utilities;
 using Zenject;
@@ -10,42 +9,59 @@ namespace Extraction
 {
     public class ExtractionSystem : MonoBehaviour
     {
-        [SerializeField] private ExtractionZone _exitZone;
-        [SerializeField] private ExtractionView _view;
         [SerializeField] private RaidInventory _raidInventory;
+        [SerializeField] private ExtractionZone _exitZone;
         
-        [Inject] private RaidLootBuffer _raidLootBuffer;
+        [Inject]private RaidResultPresenter _raidResultPresenter;
+        [Inject] private ExtractionTimer _extractionTimer;
+        
+        [Inject]private RaidLootBuffer _raidLootBuffer;
         [Inject] private SceneLoader _sceneLoader;
         
-        private ExtractionTimer _extractionTimer;
-        private ExtractionPresenter _extractionPresenter;
-
-        private const float ExtractionDuration = 10f;
+        // [Inject]
+        // private void Construct(RaidLootBuffer lootBuffer, SceneLoader sceneLoader, RaidResultPresenter raidResultPresenter, ExtractionTimer extractionTimer)
+        // {
+        //     _raidResultPresenter.OnCloseClicked += ProceedToLobby;
+        // }
         
-        private void Awake()
-        {
-            _extractionTimer = new ExtractionTimer(ExtractionDuration);
-            _extractionPresenter = new ExtractionPresenter(_exitZone, _extractionTimer, _view);
-        }
-
         private void OnEnable()
         {
+            _exitZone.PlayerEntered += _extractionTimer.StartTimer;
+            _exitZone.PlayerExited += _extractionTimer.Cancel;
+            
             _extractionTimer.ExitCompleted += HandleExitCompleted;
+            
+            _raidResultPresenter.OnCloseClicked += ProceedToLobby;
         }
         
         private void OnDisable()
         {
+            _exitZone.PlayerEntered -= _extractionTimer.StartTimer;
+            _exitZone.PlayerExited -= _extractionTimer.Cancel;
+            
             _extractionTimer.ExitCompleted -= HandleExitCompleted;
+            
+            _raidResultPresenter.OnCloseClicked -= ProceedToLobby;
         }
         
         private void HandleExitCompleted()
         {
-            ExitFlow().Forget();
+            StoreLootToBuffer();
+            _raidResultPresenter.Show();
         }
 
-        private async UniTaskVoid ExitFlow()
+        private void ProceedToLobby()
+        {
+            HandleResultViewClose().Forget();
+        }
+
+        private void StoreLootToBuffer()
         {
             _raidLootBuffer.Store(_raidInventory.GetLootDTO());
+        }
+        
+        private async UniTaskVoid HandleResultViewClose()
+        {
             await _sceneLoader.UnloadCurrentAsync();
         }
     }

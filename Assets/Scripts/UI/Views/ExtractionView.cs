@@ -13,16 +13,6 @@ namespace UI.Views
             _timerLabel.text = Mathf.CeilToInt(seconds).ToString();
         }
 
-        public void ShowSuccessExit()
-        {
-            Hide();
-        }
-
-        public void ShowCanceledExit()
-        {
-            Hide();
-        }
-
         public void Dispose()
         {
             // TODO release managed resources here

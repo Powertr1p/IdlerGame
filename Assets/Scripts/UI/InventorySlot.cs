@@ -21,7 +21,6 @@ namespace UI
         
         private InventoryItemDisplay _item;
         
-        
         public void Bind(InventoryItemDisplay item)
         {
             _item = item;

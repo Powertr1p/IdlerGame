@@ -33,6 +33,8 @@ namespace UI.Presenters
         {
             _isInitialized = false;
 
+            if (View == null) return;
+            
             OnViewDestroy();
             Object.Destroy(View.gameObject);
             View = null;

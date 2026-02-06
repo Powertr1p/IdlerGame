@@ -1,43 +1,52 @@
-﻿using Extraction;
+﻿using System;
+using Extraction;
 using UI.Views;
+using UnityEngine;
+using Zenject;
 
 namespace UI.Presenters
 {
-    public class ExtractionPresenter
+    public class ExtractionPresenter : BasePresenter<ExtractionView>, IDisposable
     {
-        private readonly ExtractionView _view;
+        private readonly ExtractionTimer _timer;
         
-        public ExtractionPresenter(ExtractionZone exitZone, ExtractionTimer timer, ExtractionView view)
+        [Inject]
+        public ExtractionPresenter(
+            [Inject(Id = "ExtractionView")] ExtractionView view, 
+            [Inject(Id = "raidUiRoot")] Transform uiRoot, 
+            ExtractionTimer timer) 
+            : base(view, uiRoot)
         {
-            _view = view;
-            
-            exitZone.PlayerEntered += timer.StartTimer;
-            exitZone.PlayerExited += timer.Cancel;
-            
-            timer.TimerUpdated += HandleExtractionTimerUpdated;
-            timer.ExitStarted += HandleExtractionStarted;
-            timer.ExitCanceled += HandleExtractionCanceled;
-            timer.ExitCompleted += HandleExtractionSuccess;
+            _timer = timer;
+            _timer.ExitStarted += Show;
         }
         
-        private void HandleExtractionSuccess()
+        protected override void OnViewCreated()
         {
-            _view.ShowSuccessExit();
+            _timer.TimerUpdated += UpdateTimer;
+            _timer.ExitCanceled += Hide;
+            _timer.ExitCompleted += Hide;
+        }
+
+        protected override void OnViewDestroy()
+        {
+            _timer.TimerUpdated -= UpdateTimer;
+            _timer.ExitCanceled -= Hide;
+            _timer.ExitCompleted -= Hide;
         }
         
-        private void HandleExtractionCanceled()
+        private void UpdateTimer(float seconds)
         {
-            _view.ShowCanceledExit();
+            View.UpdateTimer(seconds);
         }
-        
-        private void HandleExtractionStarted()
+
+        public override void Dispose()
         {
-            _view.Show();
-        }
-        
-        private void HandleExtractionTimerUpdated(float seconds)
-        {
-            _view.UpdateTimer(seconds);
+            base.Dispose();
+            _timer.TimerUpdated -= UpdateTimer;
+            _timer.ExitStarted -= Show;
+            _timer.ExitCanceled -= Hide;
+            _timer.ExitCompleted -= Hide;
         }
     }
 }

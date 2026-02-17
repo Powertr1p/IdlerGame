@@ -28,9 +28,9 @@ namespace UI.Presenters
             View.Show();
         }
 
-        public void Hide()
+        public override void Hide()
         {
-            View.Hide();
+            base.Hide();
         }
 
         protected override void OnViewCreated()

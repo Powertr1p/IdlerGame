@@ -47,7 +47,7 @@ namespace Lobby
                     ShowInventory();
                     break;
                 case NavbarButtonType.Play:
-                    HandleStartRaid();
+                    _ = HandleStartRaid();
                     break;
             }
         }

@@ -1,16 +1,35 @@
+using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+namespace ShareComponents
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+   public class Health : MonoBehaviour
+   {
+      [SerializeField] private int _maxHealth;
+      private int _currentHealth;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+      public event Action OnDie;
+      public event Action OnTakeDamage;
+
+      private void Start()
+      {
+         _currentHealth = _maxHealth;
+      }
+
+      public void DealDamage(int damage)
+      {
+         _currentHealth = Mathf.Min(0, _currentHealth - damage);
+         OnTakeDamage?.Invoke();
+
+         if (_currentHealth == 0)
+         {
+            Die();
+         }
+      }
+      
+      private void Die()
+      {
+         OnDie?.Invoke();
+      }
+   }
 }

@@ -4,9 +4,7 @@
     {
         void IEnemyState.Enter(EnemyBase enemy)
         {
-            enemy.StopMoving();
-            enemy.PlayAttack();
-            enemy.ResetAttackTimer();
+            enemy.StartAttack();
         }
 
         void IEnemyState.Tick(EnemyBase enemy, float deltaTime)
@@ -26,7 +24,6 @@
             if (!enemy.IsInAttackRange())
             {
                 enemy.ChangeState(enemy.IsInAggroRange() ? EnemyStates.Chase : EnemyStates.Idle);
-
                 return;
             }
 

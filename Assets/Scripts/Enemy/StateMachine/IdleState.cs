@@ -4,8 +4,7 @@
     {
         void IEnemyState.Enter(EnemyBase enemy)
         {
-            enemy.StopMoving();
-            enemy.PlayIdle();
+            enemy.StartIdle();
         }
 
         void IEnemyState.Tick(EnemyBase enemy, float deltaTime)

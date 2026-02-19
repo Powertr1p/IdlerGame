@@ -1,7 +1,6 @@
 using Enemy.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.XR;
 
 namespace Enemy
 {
@@ -24,6 +23,8 @@ namespace Enemy
 
         public bool IsAlive { get; private set; } = true;
         public bool HasTarget => !ReferenceEquals(_player, null);
+        
+        protected bool IsRunning {get; private set;}
         
         private NavMeshAgent _navMeshAgent;
         private IEnemyState _state;
@@ -93,33 +94,25 @@ namespace Enemy
             _navMeshAgent.SetDestination(_player.position);
         }
         
-        public void StopMoving()
+        public void StartChase()
         {
-            if (!_navMeshAgent.enabled) return;
-            if (!_navMeshAgent.isOnNavMesh) return;
-            
-            _navMeshAgent.isStopped = true;
-            _navMeshAgent.ResetPath();
-            _navMeshAgent.velocity = Vector3.zero;
-            _navMeshAgent.nextPosition = transform.position;
+            IsRunning = true;
+            PlayMovementAnimation();
+            ResetRepathTimer();
+            TryRepathToTarget();
         }
 
-        public void DisableAgent()
+        public void StartIdle()
         {
-            if (_navMeshAgent != null)
-            {
-                _navMeshAgent.enabled = false;
-            }
+            StopChase();
+            PlayIdleAnimation();
         }
 
-        public void ResetRepathTimer()
+        public void StartAttack()
         {
-            _repathTimer = 0f;
-        }
-
-        public void ResetAttackTimer()
-        {
-            _attackTimer = 0f;
+            StopChase();
+            PlayAttackAnimation();
+            ResetAttackTimer();
         }
 
         public void TickRepath(float dt)
@@ -137,7 +130,7 @@ namespace Enemy
             _attackTimer -= dt;
             if (_attackTimer <= 0f)
             {
-                PerformAttack();
+                DealDamage();
                 _attackTimer = _attackInterval;
             }
         }
@@ -145,16 +138,49 @@ namespace Enemy
         public void Die()
         {
             if (!IsAlive) return;
+            
             IsAlive = false;
             ChangeState(EnemyStates.Death);
         }
 
-        public void PlayIdle() => PlayIdleAnimation();
-        public void PlayMove() => PlayMovementAnimation();
-        public void PlayAttack() => PlayAttackAnimation();
-        public void PlayDeath() => PlayDeathAnimation();
+        public void StartDeath()
+        {
+            StopChase();
+            DisableAgent();
+            PlayDeathAnimation();
+        }
         
-        protected abstract void PerformAttack();
+        private void StopChase()
+        {
+            if (!_navMeshAgent.enabled) return;
+            if (!_navMeshAgent.isOnNavMesh) return;
+            
+            _navMeshAgent.isStopped = true;
+            _navMeshAgent.ResetPath();
+            _navMeshAgent.velocity = Vector3.zero;
+            _navMeshAgent.nextPosition = transform.position;
+            IsRunning = false;
+        }
+        
+        private void ResetRepathTimer()
+        {
+            _repathTimer = 0f;
+        }
+        
+        private void DisableAgent()
+        {
+            if (!ReferenceEquals(_navMeshAgent, null))
+            {
+                _navMeshAgent.enabled = false;
+            }
+        }
+        
+        private void ResetAttackTimer()
+        {
+            _attackTimer = 0f;
+        }
+        
+        protected abstract void DealDamage();
         protected abstract void PlayAttackAnimation();
         protected abstract void PlayDeathAnimation();
         protected abstract void PlayMovementAnimation();

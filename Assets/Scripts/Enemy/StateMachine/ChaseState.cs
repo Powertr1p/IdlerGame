@@ -4,9 +4,7 @@
     {
         void IEnemyState.Enter(EnemyBase enemy)
         {
-            enemy.PlayMove();
-            enemy.ResetRepathTimer();
-            enemy.TryRepathToTarget();
+            enemy.StartChase();
         }
 
         void IEnemyState.Tick(EnemyBase enemy, float deltaTime)
@@ -40,7 +38,6 @@
 
         void IEnemyState.Exit(EnemyBase enemy)
         {
-            enemy.StopMoving();
         }
     }
 }

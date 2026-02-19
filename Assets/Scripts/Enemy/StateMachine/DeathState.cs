@@ -4,9 +4,7 @@
     {
         void IEnemyState.Enter(EnemyBase enemy)
         {
-            enemy.StopMoving();
-            enemy.DisableAgent();
-            enemy.PlayDeath();
+            enemy.StartDeath();
         }
 
         void IEnemyState.Tick(EnemyBase enemy, float deltaTime) {}

@@ -6,16 +6,19 @@ namespace Enemy.Zombie
     {
         [SerializeField] private Animator _animator;
         
-        private static readonly int IsRunning = Animator.StringToHash("isRunning");
-        private static readonly int Attack = Animator.StringToHash("attack");
-        private static readonly int Death = Animator.StringToHash("death");
+        private static readonly int RunningAnimation = Animator.StringToHash("isRunning");
+        private static readonly int AttackAnimation = Animator.StringToHash("attack");
+        private static readonly int DeathAnimation = Animator.StringToHash("death");
         
-        protected override void PerformAttack()
+        protected override void DealDamage()
         {
+            //todo: deal damage
         }
 
         protected override void PlayAttackAnimation()
         {
+            _animator.SetBool(RunningAnimation, IsRunning);
+            _animator.SetTrigger(AttackAnimation);
         }
 
         protected override void PlayDeathAnimation()
@@ -24,12 +27,12 @@ namespace Enemy.Zombie
 
         protected override void PlayMovementAnimation()
         {
-            _animator.SetBool(IsRunning, true);
+            _animator.SetBool(RunningAnimation, IsRunning);
         }
 
         protected override void PlayIdleAnimation()
         {
-            _animator.SetBool(IsRunning, false);
+            _animator.SetBool(RunningAnimation, IsRunning);
         }
     }
 }

@@ -6,22 +6,23 @@ namespace ShareComponents
    public class Health : MonoBehaviour
    {
       [SerializeField] private int _maxHealth;
-      private int _currentHealth;
-
+      
       public event Action OnDie;
       public event Action OnTakeDamage;
-
+      
+      public  int CurrentHealth { get; private set; }
+      
       private void Start()
       {
-         _currentHealth = _maxHealth;
+         CurrentHealth = _maxHealth;
       }
 
-      public void DealDamage(int damage)
+      public void ApplyDamage(int damage)
       {
-         _currentHealth = Mathf.Min(0, _currentHealth - damage);
+         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
          OnTakeDamage?.Invoke();
 
-         if (_currentHealth == 0)
+         if (CurrentHealth == 0)
          {
             Die();
          }

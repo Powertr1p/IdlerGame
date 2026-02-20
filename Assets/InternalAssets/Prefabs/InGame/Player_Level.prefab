@@ -78,6 +78,8 @@ GameObject:
   - component: {fileID: 8461823230182863989}
   - component: {fileID: 1372939683748778631}
   - component: {fileID: 4417108761699410591}
+  - component: {fileID: 9152951553533310068}
+  - component: {fileID: 5432285809688661991}
   m_Layer: 0
   m_Name: Player_Level
   m_TagString: Untagged
@@ -198,6 +200,31 @@ MonoBehaviour:
   _rotationSpeed: 4
   _playerGathering: {fileID: 5950777457307517004}
   _joystick: {fileID: 0}
+--- !u!114 &9152951553533310068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066120688882072039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 640a1888af5edb24d8bf4ac3880bb474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShareComponents.Health
+  _maxHealth: 100
+--- !u!114 &5432285809688661991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066120688882072039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24246f0b4ac24772b21d331fcf07b5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShareComponents.DamageReceiver
 --- !u!1 &9093996198377288532
 GameObject:
   m_ObjectHideFlags: 0

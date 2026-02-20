@@ -845,6 +845,10 @@ PrefabInstance:
       value: ZombieMesh
       objectReference: {fileID: 0}
     - target: {fileID: 3751156705322999346, guid: 1dbdb6bc09bb98f41826d5eee15af888, type: 3}
+      propertyPath: Target
+      value: 
+      objectReference: {fileID: 651039703}
+    - target: {fileID: 3751156705322999346, guid: 1dbdb6bc09bb98f41826d5eee15af888, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 651039703}

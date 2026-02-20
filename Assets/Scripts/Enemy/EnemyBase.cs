@@ -1,6 +1,7 @@
 using Enemy.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Enemy
 {
@@ -8,7 +9,7 @@ namespace Enemy
     public abstract class EnemyBase : MonoBehaviour
     {
         //todo: no player reference, monsterSystem will pass player
-        [SerializeField] private Transform _player;
+        [SerializeField] private Transform Target;
         
         [Header("Ranges")]
         [SerializeField] private float _aggroRange;
@@ -22,8 +23,9 @@ namespace Enemy
         [SerializeField] private float _attackInterval = 1f;
 
         public bool IsAlive { get; private set; } = true;
-        public bool HasTarget => !ReferenceEquals(_player, null);
-        
+        public bool HasTarget => !ReferenceEquals(Target, null);
+        public Transform GetTarget => Target;
+
         protected bool IsRunning {get; private set;}
         
         private NavMeshAgent _navMeshAgent;
@@ -38,7 +40,7 @@ namespace Enemy
             {
                 if (!HasTarget) return float.PositiveInfinity;
                 
-                Vector3 delta = _player.position - transform.position;
+                Vector3 delta = Target.position - transform.position;
                 return delta.sqrMagnitude;
             }
         }
@@ -66,7 +68,7 @@ namespace Enemy
 
         public void SetTarget(Transform target)
         {
-            _player = target;
+            this.Target = target;
         }
 
         public bool IsInAggroRange()
@@ -91,7 +93,7 @@ namespace Enemy
             if (!_navMeshAgent.isOnNavMesh) return;
 
             _navMeshAgent.isStopped = false;
-            _navMeshAgent.SetDestination(_player.position);
+            _navMeshAgent.SetDestination(Target.position);
         }
         
         public void StartChase()

@@ -1,3 +1,4 @@
+using ShareComponents;
 using UnityEngine;
 
 namespace Enemy.Zombie
@@ -12,7 +13,11 @@ namespace Enemy.Zombie
         
         protected override void DealDamage()
         {
-            //todo: deal damage
+            if (GetTarget.TryGetComponent(out IDamageable damageable))
+            {
+                //todo: damage to scriptable setting
+                damageable.TakeDamage(1);
+            }
         }
 
         protected override void PlayAttackAnimation()

@@ -7,6 +7,7 @@ namespace ResourceItems.Core
     public class DropResource : MonoBehaviour, IAttractable
     {
         [SerializeField] private Collider _collider;
+        [SerializeField] private ParticleSystem _vfx;
         
         [Header("Spawn Animation")]
         [SerializeField] private float _jumpPower = 2f;
@@ -81,6 +82,9 @@ namespace ResourceItems.Core
         
         private void OnJumpComplete()
         {
+            _vfx.transform.rotation = Quaternion.identity;
+            _vfx.Play();
+            
             _collider.enabled = true;
         }
 

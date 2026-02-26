@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: aaeb32cf0a92ffa40a0abed3c82f7982, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5061398
+      value: -0.82
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aaeb32cf0a92ffa40a0abed3c82f7982, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.04162121
+      value: -0.21658
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aaeb32cf0a92ffa40a0abed3c82f7982, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.772497
+      value: 11.57
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aaeb32cf0a92ffa40a0abed3c82f7982, type: 3}
       propertyPath: m_LocalRotation.w
@@ -55,6 +55,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: aaeb32cf0a92ffa40a0abed3c82f7982, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aaeb32cf0a92ffa40a0abed3c82f7982, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: aaeb32cf0a92ffa40a0abed3c82f7982, type: 3}
       propertyPath: m_Controller
@@ -111,6 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy.Zombie.EnemyZombie
   Target: {fileID: 0}
+  _health: {fileID: 0}
   _aggroRange: 5
   _unAggroRange: 10
   _attackRange: 0.5

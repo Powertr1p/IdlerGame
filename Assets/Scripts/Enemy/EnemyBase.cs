@@ -1,4 +1,5 @@
 using Enemy.StateMachine;
+using ShareComponents;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -6,10 +7,11 @@ using UnityEngine.Serialization;
 namespace Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyBase : MonoBehaviour
+    public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         //todo: no player reference, monsterSystem will pass player
         [SerializeField] private Transform Target;
+        [SerializeField] private Health _health;
         
         [Header("Ranges")]
         [SerializeField] private float _aggroRange;
@@ -196,6 +198,12 @@ namespace Enemy
             if (_attackRange > _aggroRange) _attackRange = _aggroRange;
             if (_repathInterval < 0.02f) _repathInterval = 0.02f;
             if (_attackInterval < 0.02f) _attackInterval = 0.02f;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Debug.Log($"Enemy {name} took {damage} damage");
+            _health.ApplyDamage(damage);
         }
     }
 }

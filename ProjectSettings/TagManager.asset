@@ -7,6 +7,7 @@ TagManager:
   - IgnoreTheme
   - Button
   - WeaponContainer
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - Ground
   - NavMeshObstacle
   - Pickable
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 

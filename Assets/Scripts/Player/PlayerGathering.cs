@@ -2,6 +2,7 @@
 using GameItems;
 using Inventory;
 using Inventory.RaidInventory;
+using ResourceItems.Core;
 using UnityEngine;
 using Zenject;
 
@@ -32,7 +33,7 @@ public class PlayerGathering : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (!other.TryGetComponent<IGatherable>(out var resourceNode)) return;
-        if (!resourceNode.CanGather(_loadout.GetToolType())) return;
+        //if (!resourceNode.IsRightTool(_loadout.GetToolType())) return;
             
         if (_playerMovement.IsRunning)
         {

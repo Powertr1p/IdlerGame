@@ -3,6 +3,7 @@ using Inventory.Core;
 using Inventory.EquipmentItems;
 using Inventory.ResourceItems;
 using JetBrains.Annotations;
+using ResourceItems.Core;
 using Scriptable;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,6 +25,9 @@ namespace GameItems
         
         private int _currentHits;
         private int _spawnedCount;
+        private int _hitsToGather;
+        private int _hitsToDeplete;
+        private bool _isInitialized;
         
         private void Awake()
         {
@@ -34,20 +38,16 @@ namespace GameItems
 
         public bool TryGather(ToolType toolType, Transform attractor)
         {
-            //todo: хуета
-            if (!CanGather(toolType)) return false;
-
             _droppedItemsAttractor = attractor;
             _animation.AnimateOnHit();
 
             _currentHits++;
 
-            if (_currentHits < _resourceData.HitsToGather) return false;
+            if (_currentHits % GetNeededHitsToGather(toolType) != 0) return false;
             
-            _currentHits = 0;
             SpawnDropItem();
             
-            if (!IsRemain())
+            if (!IsRemain(toolType))
             {
                 Depleted?.Invoke();
                 Destroy(gameObject);
@@ -56,14 +56,14 @@ namespace GameItems
             return true;
         }
 
-        public bool CanGather(ToolType toolType)
+        public bool IsRightTool(ToolType toolType)
         {
-            return toolType == _resourceData.ToolType && IsRemain();
+            return toolType == _resourceData.ToolType && IsRemain(toolType);
         }
 
-        private bool IsRemain()
+        private bool IsRemain(ToolType tool)
         {
-            return _spawnedCount < _resourceData.MaxQuantity;
+            return _currentHits < GetNeededHitsToDeplete(tool);
         }
 
         private void SpawnDropItem()
@@ -86,6 +86,16 @@ namespace GameItems
         {
             _droppedItemsAttractor = null;
             _animation.KillSequence();
+        }
+
+        private int GetNeededHitsToGather(ToolType toolType)
+        {
+            return toolType == _resourceData.ToolType ? _resourceData.HitsToGather : _resourceData.HitsToGather * 2;
+        }
+        
+        private int GetNeededHitsToDeplete(ToolType toolType)
+        {
+            return toolType == _resourceData.ToolType ? _resourceData.HitsToDeplete : _resourceData.HitsToDeplete * 2;
         }
     }
 }

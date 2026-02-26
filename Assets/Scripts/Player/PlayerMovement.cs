@@ -1,5 +1,6 @@
 using DefaultNamespace;
 using GameItems;
+using ResourceItems.Core;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerGathering))]

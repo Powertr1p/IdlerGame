@@ -17,5 +17,5 @@ MonoBehaviour:
   _resourceType: 1
   _resourcePrefab: {fileID: 4876921085164410669, guid: fdd25e1fc536f1747bf7dc2c6b49e6f3, type: 3}
   _maxQuantity: 10
-  _hitsToGather: 2
+  _hitsToDeplete: 5
   _toolType: 1

@@ -2,6 +2,7 @@
 using Inventory.Core;
 using Inventory.EquipmentItems;
 using Inventory.ResourceItems;
+using ResourceItems.Core;
 using UnityEngine;
 
 namespace Scriptable

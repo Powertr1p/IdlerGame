@@ -16,8 +16,6 @@ namespace GameItems
         [SerializeField] private float _spreadRadius = 3f;
         [SerializeField] private ResourceNodeAnimationBase _animation;
         
-        [CanBeNull] private Transform _droppedItemsAttractor = null;
-        
         public event Action Depleted;
         
         public Transform Transform { get; private set; }
@@ -36,9 +34,8 @@ namespace GameItems
             Transform = transform;
         }
 
-        public bool TryGather(ToolType toolType, Transform attractor)
+        public bool TryGather(ToolType toolType)
         {
-            _droppedItemsAttractor = attractor;
             _animation.AnimateOnHit();
 
             _currentHits++;
@@ -49,6 +46,7 @@ namespace GameItems
             
             if (!IsRemain(toolType))
             {
+                DropRemainItems();
                 Depleted?.Invoke();
                 Destroy(gameObject);
             }
@@ -59,6 +57,11 @@ namespace GameItems
         public bool IsRightTool(ToolType toolType)
         {
             return toolType == _resourceData.ToolType && IsRemain(toolType);
+        }
+        
+        public void StopGather()
+        {
+            _animation.KillSequence();
         }
 
         private bool IsRemain(ToolType tool)
@@ -77,15 +80,19 @@ namespace GameItems
             Vector3 targetPosition = new Vector3(x, 0f, z);
 
             DropResource dropItem = Instantiate(_resourceData.ResourcePrefab, startPosition, Quaternion.identity);
-            dropItem.Initialize(_droppedItemsAttractor, startPosition, targetPosition);
+            dropItem.Initialize(startPosition, targetPosition, Type);
 
             _spawnedCount++;
         }
-        
-        public void StopGather()
+
+        private void DropRemainItems()
         {
-            _droppedItemsAttractor = null;
-            _animation.KillSequence();
+            int remainCount = _resourceData.MaxQuantity - _spawnedCount;
+            
+            for (int i = 0; i < remainCount; i++)
+            {
+                SpawnDropItem();
+            }
         }
 
         private int GetNeededHitsToGather(ToolType toolType)

@@ -3,7 +3,6 @@ using GameItems;
 using ResourceItems.Core;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerGathering))]
 public class PlayerMovement : MonoBehaviour, IExitable
 {
     [SerializeField] private float _moveSpeed;

@@ -10,7 +10,6 @@ public class PlayerGathering : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private PlayerAnimator _playerAnimator;
-    [SerializeField] private Transform _attractor;
         
     [SerializeField] private RaidInventory _raidInventory;
         
@@ -29,25 +28,25 @@ public class PlayerGathering : MonoBehaviour
     {
         _playerAnimator.OnAnimationHit -= HandleHit;
     }
-        
+
     private void OnTriggerStay(Collider other)
     {
-        if (!other.TryGetComponent<IGatherable>(out var resourceNode)) return;
-        //if (!resourceNode.IsRightTool(_loadout.GetToolType())) return;
-            
-        if (_playerMovement.IsRunning)
+        if (other.TryGetComponent<IGatherable>(out var resourceNode))
         {
-            if (IsBound(resourceNode))
+            if (_playerMovement.IsRunning)
             {
-                UnbindResourceNode();
-            }
+                if (IsBound(resourceNode))
+                {
+                    UnbindResourceNode();
+                }
                 
-            return;
-        }
+                return;
+            }
             
-        TryBindResourceNode(resourceNode);
-        _playerAnimator.PlayGatheringAnimationByType(resourceNode.Type);
-        CollidedWithResource?.Invoke(resourceNode);
+            TryBindResourceNode(resourceNode);
+            _playerAnimator.PlayGatheringAnimationByType(resourceNode.Type);
+            CollidedWithResource?.Invoke(resourceNode);
+        }
     }
         
     private void HandleHit()
@@ -62,10 +61,10 @@ public class PlayerGathering : MonoBehaviour
 
         var resourceType = node.Type;
 
-        if (node.TryGather(_loadout.GetToolType(), _attractor))
-        {
-            _raidInventory.Add(resourceType);
-        }
+        node.TryGather(_loadout.GetToolType());
+
+        // _raidInventory.Add(resourceType);
+
     }
 
     private void TryBindResourceNode(IGatherable resourceNode)

@@ -1,11 +1,13 @@
 using DG.Tweening;
-using Inventory.Core;
+using Inventory.ResourceItems;
 using UnityEngine;
 
-namespace GameItems
+namespace ResourceItems.Core
 {
-    public class DropResource : MonoBehaviour
+    public class DropResource : MonoBehaviour, IAttractable
     {
+        [SerializeField] private Collider _collider;
+        
         [Header("Spawn Animation")]
         [SerializeField] private float _jumpPower = 2f;
         [SerializeField] private float _jumpDuration = 1f;
@@ -14,9 +16,13 @@ namespace GameItems
         [Header("Attraction Animation")]
         [SerializeField] private float _attractionStartDelay = 0.1f;
         
+        public ResourceType Type => _resourceType;
+        
         private Transform _attractor;
         private Sequence _attractionSequence;
         private Transform _cachedTransform;
+        private Sequence _jumpSequence;
+        private ResourceType _resourceType;
         
         private bool _isAttracting;
         private bool _moveActive;
@@ -27,6 +33,7 @@ namespace GameItems
 
         private void Awake()
         {
+            _collider.enabled = false;
             _cachedTransform = transform;
         }
         
@@ -45,36 +52,36 @@ namespace GameItems
             }
         }
         
-        public void Initialize(Transform attractor, Vector3 startPosition, Vector3 targetPosition)
+        public void Initialize(Vector3 startPosition, Vector3 targetPosition, ResourceType resourceType)
         {
-            _attractor = attractor;
+            _resourceType = resourceType;
             _startPosition = startPosition;
             _targetPosition = targetPosition;
             
-            
             StartFlying();
+        }
+        
+        public void Attract(Transform attractor)
+        {
+            _attractor = attractor;
+            StartAttraction();
         }
 
         private void StartFlying()
         {
-            Sequence jumpSequence = ConstructJumpSequence();
-            float attractionStartTime = _jumpDuration - _attractionStartDelay;
-            
-            if (attractionStartTime > 0)
-            {
-                jumpSequence.InsertCallback(attractionStartTime, StartAttraction);
-            }
-            else
-            {
-                jumpSequence.OnComplete(StartAttraction);
-            }
+            _jumpSequence = ConstructJumpSequence();
+            _jumpSequence.OnComplete(OnJumpComplete);
         }
         
         private void StartAttraction()
         {
-            if (_isAttracting || ReferenceEquals(_attractor, null)) return;
-            
             _isAttracting = true;
+            _jumpSequence?.Kill();
+        }
+        
+        private void OnJumpComplete()
+        {
+            _collider.enabled = true;
         }
 
         private Sequence ConstructJumpSequence()
@@ -94,6 +101,7 @@ namespace GameItems
 
         private void OnDestroy()
         {
+            _jumpSequence?.Kill();
             _attractionSequence?.Kill();
         }
     }

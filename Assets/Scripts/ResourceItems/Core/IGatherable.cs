@@ -11,7 +11,7 @@ namespace ResourceItems.Core
         Transform Transform { get; }
         ResourceType Type { get; }
         bool IsRightTool(ToolType toolType);
-        bool TryGather(ToolType toolType, Transform attractor);
+        bool TryGather(ToolType toolType);
         void StopGather();
     }
 }

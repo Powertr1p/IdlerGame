@@ -169,7 +169,6 @@ namespace PlayerWeapon
                 projectile.transform.rotation = rotation;
                 projectile.OnProjectileFinished += HandleProjectileFinished;
                 projectile.Initialize(target, _damage, _projectileSpeed, _projectileRotationSpeed);
-
             }
             
             TrySetNextTarget();

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4815529226571902720}
   - component: {fileID: 4586129994754831294}
-  - component: {fileID: 5942881985964096192}
   m_Layer: 0
   m_Name: FireballProjectile
   m_TagString: Untagged
@@ -48,27 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeapon.Projectile
   _projectile: {fileID: 3363586917167864085}
   _hitEffectPrefab: {fileID: 4021103657954561960, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
---- !u!135 &5942881985964096192
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4502277747533262081}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &6392330677544590737
 PrefabInstance:
   m_ObjectHideFlags: 0

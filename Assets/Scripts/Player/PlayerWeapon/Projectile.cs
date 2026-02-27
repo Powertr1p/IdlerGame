@@ -8,12 +8,13 @@ namespace PlayerWeapon
         [SerializeField] private ParticleSystem _projectile;
         [SerializeField] private ParticleSystem _hitEffectPrefab;
 
-        private Transform _target;
+        private Target _target;
         private int _damage;
         private float _speed;
         private float _rotationSpeed;
         private bool _hasHit;
-        
+        private Transform _targetTransform;
+
         private void Update()
         {
             if (_hasHit) return;
@@ -28,7 +29,7 @@ namespace PlayerWeapon
             CheckDistance();
         }
         
-        public void Initialize(Transform target, int damage, float speed, float rotationSpeed)
+        public void Initialize(Target target, int damage, float speed, float rotationSpeed)
         {
             _target = target;
             _damage = damage;
@@ -43,29 +44,16 @@ namespace PlayerWeapon
         
         private void TrackAndMoveToTarget()
         {
-            Vector3 direction = (_target.position - transform.position).normalized;
-            
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-            
-            transform.position += transform.forward * _speed * Time.deltaTime;
+            Vector3 targetPosition = _target.AttackPoint.position;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+            transform.LookAt(targetPosition);
         }
         
         private void CheckDistance()
         {
-            float distance = Vector3.Distance(transform.position, _target.position);
+            float distance = Vector3.Distance(transform.position, _target.AttackPoint.position);
             
             if (distance < 0.5f)
-            {
-                HitTarget();
-            }
-        }
-        
-        private void OnTriggerEnter(Collider other)
-        {
-            if (_hasHit) return;
-
-            if (other.transform == _target)
             {
                 HitTarget();
             }
@@ -76,12 +64,8 @@ namespace PlayerWeapon
             if (_hasHit) return;
     
             _hasHit = true;
-
-            if (_target.TryGetComponent(out IDamageable damageable))
-            {
-                damageable.TakeDamage(_damage);
-            }
-    
+            _target.Damageable.TakeDamage(_damage);
+            
             if (!ReferenceEquals(_projectile, null))
             {
                 _projectile.Stop();

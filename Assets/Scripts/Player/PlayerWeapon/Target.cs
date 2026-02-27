@@ -6,16 +6,16 @@ namespace PlayerWeapon
     public class Target
     {
         public readonly IMortal Mortal;
-        private readonly IDamageable _damageable;
+        public readonly IDamageable Damageable;
         public System.Action OnDeathHandler { get; set; }
     
         public Target(IMortal mortal, IDamageable damageable)
         {
             Mortal = mortal;
-            _damageable = damageable;
+            Damageable = damageable;
         }
     
-        public Transform AttackPoint => _damageable.GetAttackPoint;
+        public Transform AttackPoint => Damageable.GetAttackPoint;
         public bool IsValid => Mortal.IsAlive;
     }
 }

@@ -9,7 +9,7 @@ namespace Enemy.Zombie
         
         private static readonly int RunningAnimation = Animator.StringToHash("isRunning");
         private static readonly int AttackAnimation = Animator.StringToHash("attack");
-        private static readonly int DeathAnimation = Animator.StringToHash("death");
+        private static readonly int DeathAnimation = Animator.StringToHash("die");
         
         protected override void DealDamage()
         {
@@ -28,6 +28,7 @@ namespace Enemy.Zombie
 
         protected override void PlayDeathAnimation()
         {
+            _animator.SetTrigger(DeathAnimation);
         }
 
         protected override void PlayMovementAnimation()

@@ -14343,13 +14343,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clearBehavior: 2
   cameraShake:
-    enabled: 0
+    enabled: 1
     useMainCamera: 1
     cameras: []
     delay: 0
-    duration: 1
+    duration: 0.5
     shakeSpace: 0
-    shakeStrength: {x: 0.1, y: 0.1, z: 0.1}
+    shakeStrength: {x: 0.05, y: 0.05, z: 0.05}
     shakeCurve:
       serializedVersion: 2
       m_Curve:
@@ -19315,8 +19315,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 0.654902, g: 0, b: 0, a: 1}
-  m_Intensity: 0
+  m_Color: {r: 1, g: 0.5464289, b: 0, a: 1}
+  m_Intensity: 10.045575
   m_Range: 6
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

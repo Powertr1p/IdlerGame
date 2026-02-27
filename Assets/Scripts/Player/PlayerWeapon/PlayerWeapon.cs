@@ -156,7 +156,7 @@ namespace PlayerWeapon
                 Quaternion rotation = Quaternion.LookRotation(direction);
                 
                 Projectile projectile = Instantiate(_projectilePrefab, _weaponPivot.position, rotation);
-                projectile.Initialize(attackPoint, _damage, _projectileSpeed, _projectileRotationSpeed);
+                projectile.Initialize(target, _damage, _projectileSpeed, _projectileRotationSpeed);
             }
             
             TrySetNextTarget();

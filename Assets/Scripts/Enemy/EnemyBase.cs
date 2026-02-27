@@ -2,7 +2,6 @@ using Enemy.StateMachine;
 using ShareComponents;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Enemy
 {
@@ -24,7 +23,7 @@ namespace Enemy
         [Header("Combat")] 
         [SerializeField] private float _attackInterval = 1f;
 
-        public bool IsAlive { get; private set; } = true;
+        public bool IsAlive => _damageReceiver.IsAlive;
         public bool HasTarget => !ReferenceEquals(Target, null);
         public Transform GetTarget => Target;
 
@@ -52,7 +51,17 @@ namespace Enemy
             _navMeshAgent = GetComponent<NavMeshAgent>();
             ChangeState(EnemyStates.Idle);
         }
-        
+
+        private void OnEnable()
+        {
+            _damageReceiver.OnDeath += Die;
+        }
+
+        private void OnDisable()
+        {
+            _damageReceiver.OnDeath -= Die;
+        }
+
         protected virtual void Update()
         {
             if (_state == null) return;
@@ -141,9 +150,6 @@ namespace Enemy
 
         public void Die()
         {
-            if (!IsAlive) return;
-            
-            IsAlive = false;
             ChangeState(EnemyStates.Death);
         }
 

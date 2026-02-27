@@ -1,4 +1,5 @@
-﻿using ShareComponents;
+﻿using System;
+using ShareComponents;
 using UnityEngine;
 
 namespace PlayerWeapon
@@ -8,6 +9,8 @@ namespace PlayerWeapon
         [SerializeField] private ParticleSystem _projectile;
         [SerializeField] private ParticleSystem _hitEffectPrefab;
 
+        public event Action<Projectile> OnProjectileFinished;
+        
         private Target _target;
         private int _damage;
         private float _speed;
@@ -21,7 +24,7 @@ namespace PlayerWeapon
 
             if (ReferenceEquals(_target, null))
             {
-                Destroy(gameObject);
+                OnProjectileFinished?.Invoke(this);
                 return;
             }
 
@@ -40,6 +43,15 @@ namespace PlayerWeapon
             {
                 _projectile.Play();
             }
+        }
+        
+        public void ResetState()
+        {
+            _hasHit = false;
+            _target = null;
+            _damage = 0;
+            _speed = 0;
+            _rotationSpeed = 0;
         }
         
         private void TrackAndMoveToTarget()
@@ -76,7 +88,7 @@ namespace PlayerWeapon
                 Instantiate(_hitEffectPrefab, transform.position, Quaternion.identity);
             }
     
-            Destroy(gameObject, 0.1f);
+            OnProjectileFinished?.Invoke(this);
         }
     }
 }

@@ -18,11 +18,20 @@ namespace PlayerWeapon
         [Header("Projectile")]
         [SerializeField] private Projectile _projectilePrefab;
         
+        [Header("Pooling")]
+        [SerializeField] private int _projectilePoolSize = 10;
+        
+        private ObjectPool<Projectile> _projectilePool;
         private List<Target> _activeTargets;
         private List<Target> _targetsQueue;
         
         private float _attackTimer;
 
+        private void Awake()
+        {
+            _projectilePool = new ObjectPool<Projectile>(_projectilePoolSize, _projectilePrefab, transform);
+        }
+        
         private void Start()
         {
             _activeTargets = new List<Target>(_maxSimultaneousTargets);
@@ -155,11 +164,22 @@ namespace PlayerWeapon
                 Vector3 direction = (attackPoint.position - _weaponPivot.position).normalized;
                 Quaternion rotation = Quaternion.LookRotation(direction);
                 
-                Projectile projectile = Instantiate(_projectilePrefab, _weaponPivot.position, rotation);
+                Projectile projectile = _projectilePool.Get();
+                projectile.transform.position = _weaponPivot.position;
+                projectile.transform.rotation = rotation;
+                projectile.OnProjectileFinished += HandleProjectileFinished;
                 projectile.Initialize(target, _damage, _projectileSpeed, _projectileRotationSpeed);
+
             }
             
             TrySetNextTarget();
+        }
+        
+        private void HandleProjectileFinished(Projectile projectile)
+        {
+            projectile.OnProjectileFinished -= HandleProjectileFinished;
+            projectile.ResetState();
+            _projectilePool.Return(projectile);
         }
     }
 }

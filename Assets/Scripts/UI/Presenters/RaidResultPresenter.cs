@@ -35,15 +35,15 @@ namespace UI.Presenters
 
         protected override void OnViewCreated()
         {
-            View.OnCloseClicked += HandleCloseClick;
+            View.OnExitClicked += HandleExitClick;
         }
 
         protected override void OnViewDestroy()
         {
-            View.OnCloseClicked -= HandleCloseClick;
+            View.OnExitClicked -= HandleExitClick;
         }
         
-        private void HandleCloseClick()
+        private void HandleExitClick()
         {
             OnCloseClicked?.Invoke();
         }

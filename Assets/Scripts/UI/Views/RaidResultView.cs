@@ -11,21 +11,25 @@ namespace UI.Views
     {
         [SerializeField] private Transform _content;
         [SerializeField] private InventorySlot _itemSlotPrefab;
-        [SerializeField] private Button _closeButton;
+        [SerializeField] private Button _exitButton;
+        [SerializeField] private Button _continueRaidButton;
         
-        public event Action OnCloseClicked;
+        public event Action OnExitClicked;
+        public event Action OnContinueRaidClicked;
         
         private ObjectPool<InventorySlot> _pool;
         private DisplayItemSlotList _list;
 
         private void OnEnable()
         {
-            _closeButton.onClick.AddListener(HandleCloseClick);
+            _exitButton.onClick.AddListener(HandleExitClick);
+            _continueRaidButton.onClick.AddListener(HandleContinueRaidClick);
         }
         
         private void OnDisable()
         {
-            _closeButton.onClick.RemoveListener(HandleCloseClick);
+            _exitButton.onClick.RemoveListener(HandleExitClick);
+            _continueRaidButton.onClick.RemoveListener(HandleContinueRaidClick);
         }
 
         public void BindLoot(IEnumerable<InventoryItemDisplay> item)
@@ -39,9 +43,14 @@ namespace UI.Views
             }
         }
         
-        private void HandleCloseClick()
+        private void HandleExitClick()
         {
-            OnCloseClicked?.Invoke();
+            OnExitClicked?.Invoke();
+        }
+        
+        private void HandleContinueRaidClick()
+        {
+            OnContinueRaidClicked?.Invoke();
         }
     }
 }

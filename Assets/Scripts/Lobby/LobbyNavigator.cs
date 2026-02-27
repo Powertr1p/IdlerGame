@@ -11,6 +11,7 @@ namespace Lobby
     public class LobbyNavigator : MonoBehaviour, INavigationService
     {
         [SerializeField] private GameObject _lobbyBackground;
+        [SerializeField] private Camera _lobbyUICamera;
         
         private const string GAME_SCENE_NAME = "GameScene";
         
@@ -60,12 +61,14 @@ namespace Lobby
         private void ShowLobby()
         {
             _inventoryPresenter.Hide();
+            _lobbyUICamera.enabled = true;
         }
         
         private async UniTaskVoid HandleStartRaid()
         {
             await _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
             _lobbyBackground.SetActive(false);
+            _lobbyUICamera.enabled = false;
         }
 
         private void OnSceneWasLoaded()

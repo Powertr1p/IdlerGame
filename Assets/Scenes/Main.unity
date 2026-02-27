@@ -1458,6 +1458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lobbyBackground: {fileID: 994083814}
+  _lobbyUICamera: {fileID: 1812830013}
 --- !u!1 &2093144394
 GameObject:
   m_ObjectHideFlags: 0

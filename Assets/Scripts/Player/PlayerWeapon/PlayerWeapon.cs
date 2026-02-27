@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
 using ShareComponents;
 using UnityEngine;
 
@@ -13,55 +13,153 @@ namespace PlayerWeapon
         [SerializeField] private float _attackInterval = 0.5f;
         [SerializeField] private float _projectileSpeed = 15f;
         [SerializeField] private float _projectileRotationSpeed = 10f;
+        [SerializeField] private int _maxSimultaneousTargets = 1;
         
         [Header("Projectile")]
         [SerializeField] private Projectile _projectilePrefab;
-
-        [CanBeNull] private Transform _target;
+        
+        private List<Target> _activeTargets;
+        private List<Target> _targetsQueue;
         
         private float _attackTimer;
+
+        private void Start()
+        {
+            _activeTargets = new List<Target>(_maxSimultaneousTargets);
+            _targetsQueue = new List<Target>();
+        }
         
         private void Update()
         {
-            if (ReferenceEquals(_target, null)) return;
+            if (_activeTargets.Count == 0) return;
 
             _attackTimer -= Time.deltaTime;
             if (_attackTimer <= 0f)
             {
-                LaunchProjectile();
+                LaunchProjectiles();
                 _attackTimer = _attackInterval;
             }
+        }
+
+        private void OnDisable()
+        {
+            ClearAllActiveTargets();
         }
         
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Player weapon hit collider {other.name}");
-            
-            if (other.TryGetComponent(out IDamageable damageable))
+            if (!other.TryGetComponent(out IDamageable damageable)) return;
+            if (!other.TryGetComponent(out IMortal mortal)) return;
+            if (!mortal.IsAlive) return;
+
+            var target = new Target(mortal, damageable);
+
+            if (_activeTargets.Count < _maxSimultaneousTargets)
             {
-                _target = damageable.GetAttackPoint;
-                _attackTimer = 0f;
+                AddActiveTarget(target);
+            }
+            else
+            {
+                _targetsQueue.Add(target);
             }
         }
         
         private void OnTriggerExit(Collider other)
         {
-            if (!ReferenceEquals(_target, null) && other.transform == _target)
+           if (!other.TryGetComponent(out IDamageable damageable)) return;
+
+           if (RemoveActiveTarget(damageable.GetAttackPoint))
+           {
+               TrySetNextTarget();
+           }
+           else
+           {
+               RemoveFromTargetQueue(damageable.GetAttackPoint);
+           }
+        }
+        
+        private void AddActiveTarget(Target target)
+        {
+            if (_activeTargets.Count >= _maxSimultaneousTargets) return;
+            
+            _activeTargets.Add(target);
+            _attackTimer = 0f;
+            
+            target.OnDeathHandler = () => OnTargetDeath(target);
+            target.Mortal.OnDeath += target.OnDeathHandler;
+        }
+        
+        private bool RemoveActiveTarget(Transform attackPoint)
+        {
+            for (int i = _activeTargets.Count - 1; i >= 0; i--)
             {
-                _target = null;
+                if (_activeTargets[i].AttackPoint == attackPoint)
+                {
+                    _activeTargets[i].Mortal.OnDeath -= _activeTargets[i].OnDeathHandler;
+                    _activeTargets.RemoveAt(i);
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        private void ClearAllActiveTargets()
+        {
+            foreach (var target in _activeTargets)
+            {
+                target.Mortal.OnDeath -= target.OnDeathHandler;
+            }
+            
+            _activeTargets.Clear();
+        }
+        
+        private void OnTargetDeath(Target deadTarget)
+        {
+            _activeTargets.Remove(deadTarget);
+            TrySetNextTarget();
+        }
+        
+        private void TrySetNextTarget()
+        {
+            while (_targetsQueue.Count > 0 && _activeTargets.Count < _maxSimultaneousTargets)
+            {
+                var target = _targetsQueue[0];
+                _targetsQueue.RemoveAt(0);
+                
+                if (target.IsValid)
+                {
+                    AddActiveTarget(target);
+                }
             }
         }
         
-
-        private void LaunchProjectile()
+        private void RemoveFromTargetQueue(Transform attackPoint)
         {
-            if (ReferenceEquals(_target, null)) return;
+           _targetsQueue.RemoveAll(target => target.AttackPoint == attackPoint);
+        }
 
-            Vector3 direction = (_target.position - _weaponPivot.position).normalized;
-            Quaternion rotation = Quaternion.LookRotation(direction);
+        private void LaunchProjectiles()
+        {
+            for (int i = _activeTargets.Count - 1; i >= 0; i--)
+            {
+                var target = _activeTargets[i];
+                
+                if (!target.IsValid)
+                {
+                    _activeTargets.RemoveAt(i);
+                    continue;
+                }
+
+                Transform attackPoint = target.AttackPoint;
+                Vector3 direction = (attackPoint.position - _weaponPivot.position).normalized;
+                Quaternion rotation = Quaternion.LookRotation(direction);
+                
+                Projectile projectile = Instantiate(_projectilePrefab, _weaponPivot.position, rotation);
+                projectile.Initialize(attackPoint, _damage, _projectileSpeed, _projectileRotationSpeed);
+            }
             
-            Projectile projectile = Instantiate(_projectilePrefab, _weaponPivot.position, rotation);
-            projectile.Initialize(_target, _damage, _projectileSpeed, _projectileRotationSpeed);
+            TrySetNextTarget();
         }
     }
 }

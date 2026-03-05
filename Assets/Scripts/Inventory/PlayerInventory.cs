@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace;
 using Inventory.Core;
 using Inventory.EquipmentItems;
 using Inventory.ResourceItems;
 using ItemRepository;
-using Scriptable;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Utilities;
 using Utilities.SaveSystem;
 using Zenject;
 
@@ -22,29 +18,31 @@ namespace Inventory
         public event Action OnInventoryChanged;
         
         private IPlayerLoadout _loadout;
-        private ItemsRepository _itemRepository;
         
         private List<IInventoryItem> _items = new();
         
         private PlayerInventorySaveBox _saveBox;
         
-        private void Start()
+        private async void Start()
         {
             _saveBox = new PlayerInventorySaveBox();
+
+            await ItemRegistry.PreloadLobbyItemsAsync();
+            
             LoadInventory();
 
             if (_items.Count == 0)
             {
                 Add(new EquipmentItem(InventorySlotType.Tool, 0, false));
                 Add(new EquipmentItem(InventorySlotType.Tool, 1, false));
+                Add(new EquipmentItem(InventorySlotType.Backpack, 0, false));
             }
         }
         
         [Inject]
-        public void Construct(IPlayerLoadout loadout, ItemsRepository itemsRepository)
+        public void Construct(IPlayerLoadout loadout)
         {
             _loadout = loadout;
-            _itemRepository = itemsRepository;
         }
         
         public int GetResourceAmount(ResourceType type)
@@ -163,7 +161,7 @@ namespace Inventory
 
                     if (dto.IsEquipped && item is EquipmentItem eqItem)
                     {
-                        var itemData = _itemRepository.GetItem(eqItem.SlotType, eqItem.Id);
+                        var itemData = ItemRegistry.GetCached(eqItem.SlotType, eqItem.Id);
                         if (itemData is IEquippable equippable)
                         {
                             _loadout.Equip(equippable);
@@ -181,7 +179,7 @@ namespace Inventory
                     return new ResourceItem((ResourceType)dto.Id, dto.Amount);
         
                 case InventorySlotType.Tool:
-                case InventorySlotType.Helmet:
+                case InventorySlotType.Backpack:
                     return new EquipmentItem(dto.SlotType, dto.Id, dto.IsEquipped);
         
                 default:

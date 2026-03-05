@@ -15,26 +15,14 @@ MonoBehaviour:
   m_GroupName: Tools
   m_GUID: 9e9548b82ae3d914a9e479c89f3d3b40
   m_SerializeEntries:
-  - m_GUID: 049f43f2dd144e34e8e651e547fb134b
-    m_Address: Assets/InternalAssets/Prefabs/InGame/Tools/Axe_Level.prefab
+  - m_GUID: 09e6959e991d26f49ae1ea8c64156b37
+    m_Address: Assets/InternalAssets/Data/Tools/Axe.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Tools
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 42ac2a24f3ee58448916f745ce79c5ee
-    m_Address: Assets/InternalAssets/Prefabs/Lobby/Axe_Lobby.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Tools
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6d73ff6cdd9d3f44d8e828b78538c2e2
-    m_Address: Assets/InternalAssets/Prefabs/InGame/Tools/Pickaxe_Level.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Tools
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ffa24daf7a65cd648be416f4252b317e
-    m_Address: Assets/InternalAssets/Prefabs/Lobby/Pickaxe_Lobby.prefab
+  - m_GUID: 6406e7c6f98fde84185bb1fb23f7ff8e
+    m_Address: Assets/InternalAssets/Data/Tools/Pickaxe.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Tools

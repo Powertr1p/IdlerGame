@@ -4,6 +4,6 @@
     {
         Resource,
         Tool,
-        Helmet,
+        Backpack,
     }
 }

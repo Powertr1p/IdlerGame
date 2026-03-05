@@ -19,8 +19,8 @@ namespace Inventory
                 case ToolData tool:
                     LoadoutData.ToolData = tool;
                     break;
-                case HelmetData helmet:
-                    LoadoutData.HelmetData = helmet;
+                case BackpackData backpack:
+                    LoadoutData.BackpackData = backpack;
                     break;
             }
             
@@ -31,8 +31,8 @@ namespace Inventory
         {
             switch (type)
             {
-                case InventorySlotType.Helmet:
-                    LoadoutData.HelmetData = null;
+                case InventorySlotType.Backpack:
+                    LoadoutData.BackpackData = null;
                     break;
                 case InventorySlotType.Tool:
                      LoadoutData.ToolData = null;
@@ -42,17 +42,12 @@ namespace Inventory
         
         public IReadOnlyList<IEquippable> GetEquippedItems()
         {
-            return new List<IEquippable> { LoadoutData.ToolData, LoadoutData.HelmetData };
+            return new List<IEquippable> { LoadoutData.ToolData, LoadoutData.BackpackData };
         }
 
-        public ToolType GetToolType()
+        public int GetBackpackCapacity()
         {
-            return LoadoutData.ToolData.ToolType;
-        }
-        
-        public ToolData GetToolData()
-        {
-            return LoadoutData.ToolData;
+            return LoadoutData.BackpackData?.Capacity ?? 0;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Inventory.Core;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -9,7 +10,7 @@ namespace Scriptable
         [SerializeField] private AssetReferenceGameObject _prefabLevel;
         [SerializeField] private AssetReferenceGameObject _prefabLobby;
         
-        public AssetReferenceGameObject ToolLevelPrefab => _prefabLevel;
-        public AssetReferenceGameObject ToolLobbyPrefab => _prefabLobby;
+        public AssetReferenceGameObject LevelPrefab => _prefabLevel;
+        public AssetReferenceGameObject LobbyPrefab => _prefabLobby;
     }
 }

@@ -11,7 +11,6 @@ namespace UI.ResourceDisplay
 {
     public class ResourceDisplayer : MonoBehaviour
     {
-        [Inject] private ItemsRepository _itemRepository;
         [SerializeField] private ResourceElementDisplayer _resourceElementPrefab;
         [SerializeField] private RaidInventory _raidInventory;
 
@@ -39,7 +38,7 @@ namespace UI.ResourceDisplay
 
         private void InstantiateElement(ResourceType resource, int amount)
         {
-            var data = _itemRepository.GetItem(InventorySlotType.Resource, (int)resource);
+            var data = ItemRegistry.GetCached(InventorySlotType.Resource, (int)resource);
             ResourceElementDisplayer instance = Instantiate(_resourceElementPrefab, transform);
             
             instance.SetAmount(amount);

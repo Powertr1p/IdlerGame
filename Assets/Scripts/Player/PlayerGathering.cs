@@ -61,10 +61,8 @@ public class PlayerGathering : MonoBehaviour
 
         var resourceType = node.Type;
 
-        node.TryGather(_loadout.GetToolType());
-
+        node.TryGather(_loadout.LoadoutData.ToolData.Type);
         // _raidInventory.Add(resourceType);
-
     }
 
     private void TryBindResourceNode(IGatherable resourceNode)

@@ -7,6 +7,6 @@ namespace Inventory
     public class PlayerLoadoutData
     {
        public ToolData ToolData;
-       public HelmetData HelmetData;
+       public BackpackData BackpackData;
     }
 }

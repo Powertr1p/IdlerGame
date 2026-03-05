@@ -31,6 +31,7 @@ namespace UI.Presenters
         {
             _model.OnInventoryChanged -= HandleInventoryChanged;
             View.SlotClicked -= HandleSlotClicked;
+            
             _model.Dispose();
             View.Dispose();
         }

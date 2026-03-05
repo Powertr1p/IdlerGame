@@ -100,6 +100,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.ItemsPickaper
   _attractor: {fileID: 68637708585529777}
   _raidInventory: {fileID: 1372939683748778631}
+--- !u!1 &3364583355926055297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4491054918221055732}
+  m_Layer: 0
+  m_Name: backpackContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4491054918221055732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364583355926055297}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.004, y: -0.099, z: -0.263}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 129625886946779224}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3886471105179731528
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +177,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c574671bc9d4407590d50d73f01a1e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeapon.PlayerWeapon
-  _weaponTransform: {fileID: 4754552085113444592}
+  _weaponPivot: {fileID: 4754552085113444592}
+  _damage: 1
+  _attackInterval: 0.5
+  _projectileSpeed: 15
+  _projectileRotationSpeed: 10
+  _maxSimultaneousTargets: 1
+  _projectilePrefab: {fileID: 4586129994754831294, guid: 7383d4e07b53c15428fa9b0c63258ac1, type: 3}
+  _projectilePoolSize: 10
 --- !u!135 &7123020817610088802
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -160,13 +198,13 @@ SphereCollider:
     m_Bits: 4096
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4087
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.86
+  m_Radius: 3.37
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7269167507345892723
 GameObject:
@@ -178,7 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4754552085113444592}
   m_Layer: 11
-  m_Name: MissilePivot
+  m_Name: ProjectilePivot
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -347,6 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24246f0b4ac24772b21d331fcf07b5e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShareComponents.DamageReceiver
+  _attackPoint: {fileID: 4754552085113444592}
 --- !u!114 &1611398982571626374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,11 +662,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9089446016884013658, guid: aeb9d68eb2e1fb44f9691848c515a472, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4491054918221055732}
     - targetCorrespondingSourceObject: {fileID: 5949045966770276291, guid: aeb9d68eb2e1fb44f9691848c515a472, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5661321520127112158}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aeb9d68eb2e1fb44f9691848c515a472, type: 3}
+--- !u!4 &129625886946779224 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9089446016884013658, guid: aeb9d68eb2e1fb44f9691848c515a472, type: 3}
+  m_PrefabInstance: {fileID: 9216815580841875970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3271853282448743873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5949045966770276291, guid: aeb9d68eb2e1fb44f9691848c515a472, type: 3}

@@ -14,7 +14,6 @@ namespace UI.Model
     public class InventoryModel : IDisposable
     {
         [Inject] private PlayerInventory _playerInventory;
-        [Inject] private ItemsRepository _itemRepository;
         [Inject] private IPlayerLoadout _playerLoadout;
 
         public event Action OnInventoryChanged;
@@ -34,7 +33,7 @@ namespace UI.Model
         
         public Sprite GetSprite(InventorySlotType slotType, int id)
         {
-            return _itemRepository.GetItem(slotType, id).Sprite;
+            return ItemRegistry.GetCached(slotType, id).Sprite;
         }
         
         public int GetQty(ResourceType type)
@@ -51,8 +50,12 @@ namespace UI.Model
             {
                 if (item is EquipmentItem { IsEquipped: true }) continue;
                 
-                var itemData = _itemRepository.GetItem(item.SlotType, item.Id);
-                displayItems.Add(new InventoryItemDisplay(itemData, item.Amount));
+                var itemData = ItemRegistry.GetCached(item.SlotType, item.Id);
+
+                if (!ReferenceEquals(itemData, null))
+                {
+                    displayItems.Add(new InventoryItemDisplay(itemData, item.Amount));
+                }
             }
             
             return displayItems;

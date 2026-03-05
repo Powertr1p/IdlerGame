@@ -12,6 +12,7 @@ namespace Lobby
     {
         [SerializeField] private GameObject _lobbyBackground;
         [SerializeField] private Camera _lobbyUICamera;
+        [SerializeField] private CharacterPreview _characterPreview;
         
         private const string GAME_SCENE_NAME = "GameScene";
         
@@ -79,6 +80,7 @@ namespace Lobby
         {
             _lobbyUICamera.enabled = true;
             _lobbyBackground.SetActive(true);
+            _characterPreview.ResetRotation();
         }
     }
 }

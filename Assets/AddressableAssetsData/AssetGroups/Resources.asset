@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Resources
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Resources
+  m_GUID: 6eb3614a78812cd4fafbdc80bb693d63
+  m_SerializeEntries:
+  - m_GUID: 740b44fd9c1727042a93b83490f9c016
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Rock.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a81c4068ef178794d9ebc4b40581cf46
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Tree.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f0ac5503dba09744d9a5dc529ddb4585, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a07b1a5833479d24686aa72ad20ab03d, type: 2}
+    - {fileID: 11400000, guid: e60322b2fcc8f0a429a3d777acf5d538, type: 2}

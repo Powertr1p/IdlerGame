@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Equipment
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Equipment
+  m_GUID: 336233cdc905fb04aa6bf78b76e70eac
+  m_SerializeEntries:
+  - m_GUID: d4c77743a985d824c8cecc404a455f74
+    m_Address: Assets/InternalAssets/Data/Equipment/Backpack 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Backpacks
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f0ac5503dba09744d9a5dc529ddb4585, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d07bd707c1282db4db772809b4884d43, type: 2}
+    - {fileID: 11400000, guid: 7e5075ed5b967ca4eb3881fd0f8b5e5f, type: 2}

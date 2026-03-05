@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Inventory;
 using Inventory.Core;
 using Inventory.EquipmentItems;
-using Inventory.ResourceItems;
 using ItemRepository;
 using Scriptable;
-using UnityEngine;
 using Zenject;
 
 namespace UI.Model
@@ -34,13 +31,13 @@ namespace UI.Model
 
         public IReadOnlyList<InventoryItemDisplay> GetInventoryItems()
         {
-            var items =  _playerInventory.GetAll();
+            var items = _playerInventory.GetAll();
             var displayItems = new List<InventoryItemDisplay>();
             
             foreach (var item in items)
             {
                 if (item is EquipmentItem { IsEquipped: true }) continue;
-                
+        
                 var itemData = ItemRegistry.GetCached(item.SlotType, item.Id);
 
                 if (!ReferenceEquals(itemData, null))

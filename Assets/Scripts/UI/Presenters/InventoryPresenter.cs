@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Inventory.Core;
 using UI.Model;
 using UI.Views;
@@ -12,6 +13,7 @@ namespace UI.Presenters
         private InventoryModel _model;
         
         private bool _isUpdateNeeded = true;
+        private List<InventoryItemDisplay> _lastInventoryItems = new();
         
         [Inject]
         public InventoryPresenter(
@@ -63,20 +65,11 @@ namespace UI.Presenters
 
         private void UpdateView()
         {
-            View.Clear();
-            
             var items = _model.GetInventoryItems();
-
-            foreach (var item in items)
-            {
-                View.DisplayItem(item);
-            }
-            
             var equippedItems = _model.GetEquippedItems();
-            foreach (var equippedItem in equippedItems)
-            {
-                View.DisplayEquippedItem(equippedItem);
-            }
+            
+            View.UpdateInventorySlots(items);
+            View.UpdateEquipmentSlots(equippedItems);
         }
 
         private void HandleSlotClicked(InventoryItemDisplay item)

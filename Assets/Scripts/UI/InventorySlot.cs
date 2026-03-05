@@ -2,15 +2,15 @@ using System;
 using Inventory.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class InventorySlot : MonoBehaviour, IDisposable
+    public class InventorySlot : MonoBehaviour, IDisposable, IPointerDownHandler
     {
         [SerializeField] private Image _resourceImage;
         [SerializeField] private TextMeshProUGUI _quantityText;
-        [SerializeField] private Button _slotButton;
         
         [SerializeField] private float _iconLeftOffset = 10f;
         [SerializeField] private float _iconRightOffset = -10f;
@@ -30,12 +30,10 @@ namespace UI
             RescaleIconSize();
             
             _quantityText.text = _item.Amount.ToString();
-            _slotButton.onClick.AddListener(SlotClicked);
         }
         
         public void Dispose()
         {
-            _slotButton.onClick.RemoveListener(SlotClicked);
         }
 
         private void RescaleIconSize()
@@ -48,8 +46,9 @@ namespace UI
             rt.offsetMin = new Vector2(_iconLeftOffset, _iconBottomOffset);
             rt.offsetMax = new Vector2(_iconRightOffset, _iconTopOffset);
         }
+        
 
-        private void SlotClicked()
+        public void OnPointerDown(PointerEventData eventData)
         {
             OnSlotClicked?.Invoke(_item);
         }

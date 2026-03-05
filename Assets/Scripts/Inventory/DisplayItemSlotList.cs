@@ -20,8 +20,14 @@ namespace Inventory
         public void Add(InventoryItemDisplay item)
         {
             var instance = _slotPool.Get();
+            var parent = instance.transform.parent;
+    
             instance.Bind(item);
             instance.OnSlotClicked += HandleSlotClicked;
+            
+            instance.transform.SetParent(null);
+            instance.transform.SetParent(parent);
+    
             _activeSlots.Add(instance);
         }
         

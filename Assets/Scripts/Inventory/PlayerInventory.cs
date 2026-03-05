@@ -106,7 +106,7 @@ namespace Inventory
                 _loadout.Equip(eq);
 
                 SaveInventory();
-                OnInventoryChanged?.Invoke();
+                    //OnInventoryChanged?.Invoke();
             }
         }
         
@@ -114,7 +114,7 @@ namespace Inventory
         {
             UnequipSlot(eq.SlotType);
             SaveInventory();
-            OnInventoryChanged?.Invoke();
+            //OnInventoryChanged?.Invoke();
         }
 
         public void AddFromDtoList(IEnumerable<InventoryItemDto> dtos)
@@ -127,10 +127,18 @@ namespace Inventory
         
         private void UnequipSlot(InventorySlotType slotType)
         {
-            var currentEquipped = GetEquippedItem(slotType);
-            if (currentEquipped != null)
+            var eqItem = GetEquippedItem(slotType);
+            if (eqItem != null)
             {
-                currentEquipped.Unequip();
+                eqItem.Unequip();
+                
+                int index = _items.IndexOf(eqItem);
+                if (index != -1)
+                {
+                    _items.RemoveAt(index);
+                    _items.Add(eqItem);
+                }
+                
                 _loadout.Unequip(slotType);
             }
         }

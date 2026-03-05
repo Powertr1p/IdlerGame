@@ -40,6 +40,28 @@ namespace UI.Views
                 slot.UnequipClicked -= HandleUnequip;
             }
         }
+        
+        public void UpdateInventorySlots(IReadOnlyList<InventoryItemDisplay> items)
+        {
+            _inventorySlotList.Clear();
+            foreach (var item in items)
+            {
+                _inventorySlotList.Add(item);
+            }
+        }
+
+        public void UpdateEquipmentSlots(IReadOnlyList<InventoryItemDisplay> items)
+        {
+            foreach (var slot in _equipmentSlots)
+            {
+                slot.Clear();
+            }
+            
+            foreach (var item in items)
+            {
+                DisplayEquippedItem(item);
+            }
+        }
 
         public void CreateInventorySlots()
         {

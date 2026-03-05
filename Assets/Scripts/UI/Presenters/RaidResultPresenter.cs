@@ -8,7 +8,7 @@ namespace UI.Presenters
 {
     public class RaidResultPresenter : BasePresenter<RaidResultView>, IDisposable
     {
-        public event Action OnCloseClicked;
+        public event Action OnExitRaidClicked;
         
         private readonly RaidResultModel _model;
         
@@ -45,7 +45,7 @@ namespace UI.Presenters
         
         private void HandleExitClick()
         {
-            OnCloseClicked?.Invoke();
+            OnExitRaidClicked?.Invoke();
         }
     }
 }

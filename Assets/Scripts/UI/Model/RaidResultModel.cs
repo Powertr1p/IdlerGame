@@ -9,13 +9,11 @@ namespace UI.Model
 {
     public class RaidResultModel
     {
-        private readonly ItemsRepository _itemsRepository;
         private readonly RaidInventory _raidInventory;
         
         [Inject]
-        public RaidResultModel(ItemsRepository itemsRepository, RaidInventory raidInventory)
+        public RaidResultModel(RaidInventory raidInventory)
         {
-            _itemsRepository = itemsRepository;
             _raidInventory = raidInventory;
         }
         
@@ -23,7 +21,7 @@ namespace UI.Model
         {
             var dtos = _raidInventory.GetLootDTO();
             var displays = dtos
-                .Select(dto => new InventoryItemDisplay(_itemsRepository.GetItem(dto.SlotType, dto.Id), dto.Amount))
+                .Select(dto => new InventoryItemDisplay(ItemRegistry.GetCached(dto.SlotType, dto.Id), dto.Amount))
                 .Where(x => x.ItemData != null)
                 .ToList();
             

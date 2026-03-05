@@ -676,7 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI.Views.RaidResultView
   _content: {fileID: 4752191647648808295}
   _itemSlotPrefab: {fileID: 6970769697313258243, guid: a8135dcbe4038d84e9651351b186db93, type: 3}
-  _closeButton: {fileID: 103296411275224804}
+  _exitButton: {fileID: 103296411275224804}
   _continueRaidButton: {fileID: 6084094783106322563}
 --- !u!1 &2114184685853144310
 GameObject:
@@ -907,7 +907,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8788222829254169541}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9990039
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -18,12 +18,6 @@ namespace Extraction
         [Inject]private RaidLootBuffer _raidLootBuffer;
         [Inject] private SceneLoader _sceneLoader;
         
-        // [Inject]
-        // private void Construct(RaidLootBuffer lootBuffer, SceneLoader sceneLoader, RaidResultPresenter raidResultPresenter, ExtractionTimer extractionTimer)
-        // {
-        //     _raidResultPresenter.OnCloseClicked += ProceedToLobby;
-        // }
-        
         private void OnEnable()
         {
             _exitZone.PlayerEntered += _extractionTimer.StartTimer;
@@ -31,7 +25,7 @@ namespace Extraction
             
             _extractionTimer.ExitCompleted += HandleExitCompleted;
             
-            _raidResultPresenter.OnCloseClicked += ProceedToLobby;
+            _raidResultPresenter.OnExitRaidClicked += ProceedToLobby;
         }
         
         private void OnDisable()
@@ -41,7 +35,7 @@ namespace Extraction
             
             _extractionTimer.ExitCompleted -= HandleExitCompleted;
             
-            _raidResultPresenter.OnCloseClicked -= ProceedToLobby;
+            _raidResultPresenter.OnExitRaidClicked -= ProceedToLobby;
         }
         
         private void HandleExitCompleted()

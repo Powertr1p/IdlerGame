@@ -27,14 +27,14 @@ namespace Lobby
         
         private void OnEnable()
         {
-            _sceneLoader.OnSceneLoaded += OnSceneWasLoaded;
-            _sceneLoader.OnSceneUnloaded += OnSceneWasUnloaded;
+            _sceneLoader.OnSceneLoaded += OnRaidSceneWasLoaded;
+            _sceneLoader.OnSceneUnloaded += OnRaidSceneUnloaded;
         }
 
         private void OnDisable()
         {
-            _sceneLoader.OnSceneLoaded -= OnSceneWasLoaded;
-            _sceneLoader.OnSceneUnloaded -= OnSceneWasUnloaded;
+            _sceneLoader.OnSceneLoaded -= OnRaidSceneWasLoaded;
+            _sceneLoader.OnSceneUnloaded -= OnRaidSceneUnloaded;
         }
         
         public void Open(NavbarButtonType type)
@@ -61,7 +61,6 @@ namespace Lobby
         private void ShowLobby()
         {
             _inventoryPresenter.Hide();
-            _lobbyUICamera.enabled = true;
         }
         
         private async UniTaskVoid HandleStartRaid()
@@ -71,13 +70,14 @@ namespace Lobby
             _lobbyUICamera.enabled = false;
         }
 
-        private void OnSceneWasLoaded()
+        private void OnRaidSceneWasLoaded()
         {
             _inventoryPresenter.Hide();
         }
         
-        private void OnSceneWasUnloaded()
+        private void OnRaidSceneUnloaded()
         {
+            _lobbyUICamera.enabled = true;
             _lobbyBackground.SetActive(true);
         }
     }

@@ -11,8 +11,7 @@ namespace Inventory
         public PlayerLoadoutData LoadoutData { get; }
         public void Equip(IEquippable equipment);
         public void Unequip(InventorySlotType type);
-        public ToolType GetToolType();
-        public ToolData GetToolData();
+        public int GetBackpackCapacity();
         public IReadOnlyList<IEquippable> GetEquippedItems();
         public event Action OnLoadoutChanged;
     }

@@ -9,10 +9,15 @@ public class ItemsPickuper : MonoBehaviour
         
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IAttractable attractable))
+        if (other.TryGetComponent(out IAttractable attractable) && HasSlots())
         {
             attractable.Attract(_attractor);
-            _raidInventory.Add(attractable.Type);
+            _raidInventory.TryAdd(attractable.Type);
         }
+    }
+
+    private bool HasSlots()
+    {
+        return _raidInventory.CanAdd();
     }
 }

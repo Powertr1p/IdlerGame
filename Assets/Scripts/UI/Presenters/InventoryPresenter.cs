@@ -1,4 +1,5 @@
-﻿using Inventory.Core;
+﻿using System.Linq;
+using Inventory.Core;
 using UI.Model;
 using UI.Views;
 using UnityEngine;
@@ -25,12 +26,14 @@ namespace UI.Presenters
         {
             _model.OnInventoryChanged += HandleInventoryChanged;
             View.SlotClicked += HandleSlotClicked;
+            View.UnequipRequested += HandleUnequip;
         }
 
         protected override void OnViewDestroy()
         {
             _model.OnInventoryChanged -= HandleInventoryChanged;
             View.SlotClicked -= HandleSlotClicked;
+            View.UnequipRequested -= HandleUnequip;
             
             _model.Dispose();
             View.Dispose();
@@ -78,10 +81,22 @@ namespace UI.Presenters
 
         private void HandleSlotClicked(InventoryItemDisplay item)
         {
+            var slotType = item.ItemData.SlotType;
+            
             if (item.ItemData is IEquippable eq)
             {
                 _model.EquipItem(eq);
                 View.DisplayEquippedItem(item);
+            }
+        }
+
+        private void HandleUnequip(InventorySlotType type)
+        {
+            var clickedItem = _model.GetEquippedItems().FirstOrDefault(x => x.ItemData.SlotType == type);
+    
+            if (clickedItem.ItemData is IEquippable eq)
+            {
+                _model.Unequip(eq);
             }
         }
     }

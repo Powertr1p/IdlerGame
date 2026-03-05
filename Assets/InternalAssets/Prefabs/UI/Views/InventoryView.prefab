@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3136127540865524814}
   - component: {fileID: 4837624464050363461}
   m_Layer: 5
-  m_Name: HelmetSlot
+  m_Name: BackpackSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 987543444224328514}
   - component: {fileID: 9069879726048002103}
   m_Layer: 5
-  m_Name: HelmetSprite
+  m_Name: BackpackSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

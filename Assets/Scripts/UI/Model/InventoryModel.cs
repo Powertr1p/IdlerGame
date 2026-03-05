@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Inventory;
 using Inventory.Core;
 using Inventory.EquipmentItems;
@@ -29,16 +30,6 @@ namespace UI.Model
         {
             _playerInventory.OnInventoryChanged -= InventoryChanged;
             _playerLoadout.OnLoadoutChanged -= InventoryChanged;
-        }
-        
-        public Sprite GetSprite(InventorySlotType slotType, int id)
-        {
-            return ItemRegistry.GetCached(slotType, id).Sprite;
-        }
-        
-        public int GetQty(ResourceType type)
-        {
-            return _playerInventory.GetResourceAmount(type);
         }
 
         public IReadOnlyList<InventoryItemDisplay> GetInventoryItems()
@@ -80,6 +71,11 @@ namespace UI.Model
         public void EquipItem(IEquippable eq)
         {
             _playerInventory.EquipItem(eq);
+        }
+
+        public void Unequip(IEquippable eq)
+        {
+            _playerInventory.UnequipItem(eq);
         }
         
         private void InventoryChanged()

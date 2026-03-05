@@ -4,7 +4,6 @@ using System.Linq;
 using Inventory;
 using Inventory.Core;
 using UnityEngine;
-using Utilities;
 
 namespace UI.Views
 {
@@ -15,6 +14,7 @@ namespace UI.Views
         [SerializeField] private List<EquipmentSlot> _equipmentSlots;
         
         public event Action<InventoryItemDisplay> SlotClicked;
+        public event Action<InventorySlotType> UnequipRequested;
         
         private DisplayItemSlotList _inventorySlotList;
         
@@ -24,7 +24,23 @@ namespace UI.Views
         {
             _slotPool = new ObjectPool<InventorySlot>(10, _inventorySlotPrefab, _inventoryContent);
         }
-        
+
+        private void OnEnable()
+        {
+            foreach (var slot in _equipmentSlots)
+            {
+                slot.UnequipClicked += HandleUnequip;
+            }
+        }
+
+        private void OnDisable()
+        {
+            foreach (var slot in _equipmentSlots)
+            {
+                slot.UnequipClicked -= HandleUnequip;
+            }
+        }
+
         public void CreateInventorySlots()
         {
             if (_inventorySlotList != null) return;
@@ -68,6 +84,11 @@ namespace UI.Views
         private void HandleSlotClicked(InventoryItemDisplay item)
         {
             SlotClicked?.Invoke(item);
+        }
+        
+        private void HandleUnequip(InventorySlotType type)
+        {
+            UnequipRequested?.Invoke(type);
         }
     }
 }

@@ -97,18 +97,24 @@ namespace Inventory
 
         public void EquipItem(IEquippable eq)
         {
-            UnequipItem(eq.SlotType);
-            
+            UnequipSlot(eq.SlotType);
+    
             var eqItem = _items.OfType<EquipmentItem>().FirstOrDefault(i => i.SlotType == eq.SlotType && i.Id == eq.Id);
-            
             if (eqItem != null)
             {
                 eqItem.Equip();
                 _loadout.Equip(eq);
-                
+
                 SaveInventory();
                 OnInventoryChanged?.Invoke();
             }
+        }
+        
+        public void UnequipItem(IEquippable eq)
+        {
+            UnequipSlot(eq.SlotType);
+            SaveInventory();
+            OnInventoryChanged?.Invoke();
         }
 
         public void AddFromDtoList(IEnumerable<InventoryItemDto> dtos)
@@ -116,6 +122,16 @@ namespace Inventory
             foreach (var dto in dtos)
             {
                 AddFromDto(dto);
+            }
+        }
+        
+        private void UnequipSlot(InventorySlotType slotType)
+        {
+            var currentEquipped = GetEquippedItem(slotType);
+            if (currentEquipped != null)
+            {
+                currentEquipped.Unequip();
+                _loadout.Unequip(slotType);
             }
         }
         
@@ -127,9 +143,9 @@ namespace Inventory
             Add(item);
         }
         
-        private void UnequipItem(InventorySlotType slotType)
+        private EquipmentItem GetEquippedItem(InventorySlotType slotType)
         {
-            _items.OfType<EquipmentItem>().FirstOrDefault(i => i.SlotType == slotType && i.IsEquipped)?.Unequip();
+            return _items.OfType<EquipmentItem>().FirstOrDefault(i => i.SlotType == slotType && i.IsEquipped);
         }
 
         public IReadOnlyList<IInventoryItem> GetAll()

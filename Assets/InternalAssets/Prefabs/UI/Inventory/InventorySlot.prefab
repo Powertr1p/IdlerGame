@@ -195,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -304,7 +304,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resourceImage: {fileID: 5147522845926309578}
   _quantityText: {fileID: 6390931646435615934}
-  _slotButton: {fileID: -1965233076637669191}
+  _iconLeftOffset: 10
+  _iconRightOffset: -10
+  _iconTopOffset: -10
+  _iconBottomOffset: 10
 --- !u!114 &-1965233076637669191
 MonoBehaviour:
   m_ObjectHideFlags: 0

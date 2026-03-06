@@ -30,7 +30,7 @@ namespace UI.ResourceDisplay
 
         private void Start()
         {
-            _capacityLabel.text = $"Inventory: {_raidInventory.GetCurrentCount()} / {_raidInventory.GetMaxCapacity()}";
+            _capacityLabel.SetText("Inventory: {0} / {1}",_raidInventory.GetCurrentCount(), _raidInventory.GetMaxCapacity());
         }
         
         private void UpdateView(ResourceType resource, int amount)

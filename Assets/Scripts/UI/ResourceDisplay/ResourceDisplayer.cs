@@ -41,7 +41,7 @@ namespace UI.ResourceDisplay
             }
             
             _displayItems[resource].SetAmount(amount);
-            _capacityLabel.text = $"Inventory: {_raidInventory.GetCurrentCount()} / {_raidInventory.GetMaxCapacity()}";
+            _capacityLabel.SetText("Inventory: {0} / {1}",_raidInventory.GetCurrentCount(), _raidInventory.GetMaxCapacity());
         }
 
         private void InstantiateElement(ResourceType resource, int amount)

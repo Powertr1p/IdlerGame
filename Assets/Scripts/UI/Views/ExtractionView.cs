@@ -10,12 +10,12 @@ namespace UI.Views
         
         public void UpdateTimer(float seconds)
         {
-            _timerLabel.text = Mathf.CeilToInt(seconds).ToString();
+            _timerLabel.SetText("{0}",Mathf.CeilToInt(seconds));
         }
 
         public void Dispose()
         {
-            // TODO release managed resources here
+           
         }
     }
 }

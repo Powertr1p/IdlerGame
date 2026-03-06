@@ -21,7 +21,7 @@ namespace UI
         private float _slotHeight;
         private int _visibleCount;
         private int _firstVisibleIndex;
-        private int _bufferSize = 2;
+        private int _bufferSize = 3;
 
         public VirtualizedInventoryList(ObjectPool<InventorySlot> pool, ScrollRect scrollRect, float slotHeight)
         {
@@ -132,12 +132,15 @@ namespace UI
         {
             float contentY = _content.anchoredPosition.y;
             float viewportHeight = _viewport.rect.height;
-            
+
             firstIndex = Mathf.Max(0, Mathf.FloorToInt(contentY / _slotHeight) - _bufferSize);
             lastIndex = Mathf.Min(
                 _allItems.Count - 1, 
                 Mathf.CeilToInt((contentY + viewportHeight) / _slotHeight) + _bufferSize
             );
+    
+            Debug.Log($"contentY={contentY}, viewport={viewportHeight}, slotHeight={_slotHeight}, " +
+                      $"items={_allItems.Count}, first={firstIndex}, last={lastIndex}");
         }
         
         private void CalculateVisibleCount()

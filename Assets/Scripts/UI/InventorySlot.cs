@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class InventorySlot : MonoBehaviour, IDisposable, IPointerDownHandler
+    public class InventorySlot : MonoBehaviour, IDisposable, IPointerClickHandler
     {
         [SerializeField] private Image _resourceImage;
         [SerializeField] private TextMeshProUGUI _quantityText;
@@ -46,9 +46,8 @@ namespace UI
             rt.offsetMin = new Vector2(_iconLeftOffset, _iconBottomOffset);
             rt.offsetMax = new Vector2(_iconRightOffset, _iconTopOffset);
         }
-        
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData eventData)
         {
             OnSlotClicked?.Invoke(_item);
         }

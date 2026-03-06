@@ -594,6 +594,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 35.699986
       objectReference: {fileID: 0}
+    - target: {fileID: 1759965132455827115, guid: 070add71008581e49986cf2f1d3ff193, type: 3}
+      propertyPath: m_Name
+      value: '[TEMP] Button (1)'
+      objectReference: {fileID: 0}
     - target: {fileID: 1894322910126739464, guid: 070add71008581e49986cf2f1d3ff193, type: 3}
       propertyPath: m_Sprite
       value: 

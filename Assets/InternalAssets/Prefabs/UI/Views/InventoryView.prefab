@@ -273,6 +273,8 @@ MonoBehaviour:
   _equipmentSlots:
   - {fileID: 4837624464050363461}
   - {fileID: 8896013194755266753}
+  _scrollRect: {fileID: 8645121742536296956}
+  _slotHeight: 100
 --- !u!1 &1651338246726406741
 GameObject:
   m_ObjectHideFlags: 0

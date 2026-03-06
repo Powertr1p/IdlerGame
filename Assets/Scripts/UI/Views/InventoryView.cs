@@ -4,6 +4,7 @@ using System.Linq;
 using Inventory;
 using Inventory.Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Views
 {
@@ -12,11 +13,13 @@ namespace UI.Views
         [SerializeField] private InventorySlot _inventorySlotPrefab;
         [SerializeField] private Transform _inventoryContent;
         [SerializeField] private List<EquipmentSlot> _equipmentSlots;
+        [SerializeField] private ScrollRect _scrollRect;
+        [SerializeField] private float _slotHeight = 100f;
+        
+        private VirtualizedInventoryList _virtualizedInventoryList;
         
         public event Action<InventoryItemDisplay> SlotClicked;
         public event Action<InventorySlotType> UnequipRequested;
-        
-        private DisplayItemSlotList _inventorySlotList;
         
         private ObjectPool<InventorySlot> _slotPool;
         
@@ -41,13 +44,21 @@ namespace UI.Views
             }
         }
         
+        public void CreateInventorySlots()
+        {
+            if (_virtualizedInventoryList != null) return;
+            
+            _virtualizedInventoryList = new VirtualizedInventoryList(
+                _slotPool, 
+                _scrollRect,
+                _slotHeight
+            );
+            _virtualizedInventoryList.SlotClicked += HandleSlotClicked;
+        }
+        
         public void UpdateInventorySlots(IReadOnlyList<InventoryItemDisplay> items)
         {
-            _inventorySlotList.Clear();
-            foreach (var item in items)
-            {
-                _inventorySlotList.Add(item);
-            }
+            _virtualizedInventoryList.SetItems(items);
         }
 
         public void UpdateEquipmentSlots(IReadOnlyList<InventoryItemDisplay> items)
@@ -62,19 +73,6 @@ namespace UI.Views
                 DisplayEquippedItem(item);
             }
         }
-
-        public void CreateInventorySlots()
-        {
-            if (_inventorySlotList != null) return;
-            
-            _inventorySlotList = new DisplayItemSlotList(_slotPool);
-            _inventorySlotList.SlotClicked += HandleSlotClicked;
-        }
-        
-        public void DisplayItem(InventoryItemDisplay item)
-        {
-            _inventorySlotList.Add(item);
-        }
         
         public void DisplayEquippedItem(InventoryItemDisplay item)
         {
@@ -83,23 +81,11 @@ namespace UI.Views
 
         public void Dispose()
         {
-            if (_inventorySlotList != null)
+            if (_virtualizedInventoryList != null)
             {
-                _inventorySlotList.SlotClicked -= HandleSlotClicked;
-                _inventorySlotList.Dispose();
-                _inventorySlotList = null;
-            }
-
-            _inventorySlotPrefab?.Dispose();
-        }
-
-        public void Clear()
-        {
-            _inventorySlotList.Clear();
-            
-            foreach (var slot in _equipmentSlots)
-            {
-                slot.Clear();
+                _virtualizedInventoryList.SlotClicked -= HandleSlotClicked;
+                _virtualizedInventoryList.Dispose();
+                _virtualizedInventoryList = null;
             }
         }
         

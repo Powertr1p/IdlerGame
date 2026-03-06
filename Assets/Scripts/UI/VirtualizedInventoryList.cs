@@ -138,9 +138,6 @@ namespace UI
                 _allItems.Count - 1, 
                 Mathf.CeilToInt((contentY + viewportHeight) / _slotHeight) + _bufferSize
             );
-    
-            Debug.Log($"contentY={contentY}, viewport={viewportHeight}, slotHeight={_slotHeight}, " +
-                      $"items={_allItems.Count}, first={firstIndex}, last={lastIndex}");
         }
         
         private void CalculateVisibleCount()

@@ -1,4 +1,5 @@
-﻿using Inventory.ResourceItems;
+﻿using Inventory.Core;
+using Inventory.ResourceItems;
 using UnityEngine;
 
 namespace ResourceItems.Core
@@ -7,5 +8,6 @@ namespace ResourceItems.Core
     {
         void Attract(Transform attractor);
         ResourceType Type { get; }
+        ItemQuality Quality { get; }
     }
 }

@@ -59,9 +59,10 @@ namespace Utilities.SaveSystem
                 for (int i = 0; i < items.Count; i++)
                 {
                     var item = items[i];
-                    
+
+                    var quality = item is ResourceItem r ? r.Quality : ItemQuality.Common;
                     itemDtos.Add(new InventoryItemDto(item.SlotType, item.Id, item.Amount,
-                        item is EquipmentItem eq && eq.IsEquipped));
+                        item is EquipmentItem eq && eq.IsEquipped, quality));
                 }
                 
                 var inventoryData = new InventoryData { Items = itemDtos.ToArray() };

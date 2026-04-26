@@ -74,10 +74,12 @@ namespace Inventory
         {
             if (item.SlotType == InventorySlotType.Resource)
             {
-                var existing = _items.OfType<ResourceItem>().FirstOrDefault(r => r.Id == item.Id);
+                var resource = (ResourceItem)item;
+                var existing = _items.OfType<ResourceItem>()
+                    .FirstOrDefault(r => r.Id == resource.Id && r.Quality == resource.Quality);
                 if (existing != null)
                 {
-                    existing.Add(item.Amount);
+                    existing.Add(resource.Amount);
                 }
                 else
                 {
@@ -88,7 +90,7 @@ namespace Inventory
             {
                 _items.Add(item);
             }
-            
+
             SaveInventory();
             OnInventoryChanged?.Invoke();
         }
@@ -218,7 +220,7 @@ namespace Inventory
             switch (dto.SlotType)
             {
                 case InventorySlotType.Resource:
-                    return new ResourceItem((ResourceType)dto.Id, dto.Amount);
+                    return new ResourceItem((ResourceType)dto.Id, dto.Amount, dto.Quality);
         
                 case InventorySlotType.Tool:
                 case InventorySlotType.Backpack:

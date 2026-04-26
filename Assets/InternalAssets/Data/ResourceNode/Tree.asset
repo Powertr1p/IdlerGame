@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 63af52b5b92b10c4594f1085a1a0ab94, type: 3}
   _displayName: Tree
+  _quality: 0
   _resourceType: 1
   _resourcePrefab: {fileID: 4876921085164410669, guid: fdd25e1fc536f1747bf7dc2c6b49e6f3, type: 3}
   _maxQuantity: 10
   _hitsToDeplete: 5
   _hitsToGather: 1
   _toolType: 1
+  _qualityRollConfig: {fileID: 11400000, guid: 4076f969dee82cf478b5568f497d9f98, type: 2}
+  _qualityColorConfig: {fileID: 11400000, guid: dfa3a53e0b2a2164496f18098774a3be, type: 2}

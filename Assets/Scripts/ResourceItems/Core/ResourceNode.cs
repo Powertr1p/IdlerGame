@@ -8,6 +8,7 @@ using Scriptable;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 namespace GameItems
 {
     public class ResourceNode : MonoBehaviour, IGatherable
@@ -79,8 +80,16 @@ namespace GameItems
 
             Vector3 targetPosition = new Vector3(x, 0f, z);
 
+            ItemQuality quality = ReferenceEquals(_resourceData.QualityRollConfig, null)
+                ? ItemQuality.Common
+                : _resourceData.QualityRollConfig.Roll();
+
+            Color tint = ReferenceEquals(_resourceData.QualityColorConfig, null)
+                ? Color.white
+                : _resourceData.QualityColorConfig.GetColor(quality);
+
             DropResource dropItem = Instantiate(_resourceData.ResourcePrefab, startPosition, Quaternion.identity);
-            dropItem.Initialize(startPosition, targetPosition, Type);
+            dropItem.Initialize(startPosition, targetPosition, Type, quality, tint);
 
             _spawnedCount++;
         }

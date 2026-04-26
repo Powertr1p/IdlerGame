@@ -28,7 +28,7 @@ namespace Inventory
             _saveBox = new PlayerInventorySaveBox();
 
             await ItemRegistry.PreloadLobbyItemsAsync();
-            
+
             LoadInventory();
 
             if (_items.Count == 0)
@@ -36,6 +36,24 @@ namespace Inventory
                 Add(new EquipmentItem(InventorySlotType.Tool, 0, false));
                 Add(new EquipmentItem(InventorySlotType.Tool, 1, false));
                 Add(new EquipmentItem(InventorySlotType.Backpack, 0, false));
+                Add(new EquipmentItem(InventorySlotType.Magic, 0, false));
+                Add(new EquipmentItem(InventorySlotType.Magic, 1, false));
+                EquipDefaultMagic();
+            }
+            else if (!_items.OfType<EquipmentItem>().Any(i => i.SlotType == InventorySlotType.Magic))
+            {
+                Add(new EquipmentItem(InventorySlotType.Magic, 0, false));
+                Add(new EquipmentItem(InventorySlotType.Magic, 1, false));
+                EquipDefaultMagic();
+            }
+        }
+
+        private void EquipDefaultMagic()
+        {
+            var basic = ItemRegistry.GetCached(InventorySlotType.Magic, (int)Inventory.EquipmentItems.MagicType.Basic) as IEquippable;
+            if (!ReferenceEquals(basic, null))
+            {
+                EquipItem(basic);
             }
         }
         
@@ -56,10 +74,12 @@ namespace Inventory
         {
             if (item.SlotType == InventorySlotType.Resource)
             {
-                var existing = _items.OfType<ResourceItem>().FirstOrDefault(r => r.Id == item.Id);
+                var resource = (ResourceItem)item;
+                var existing = _items.OfType<ResourceItem>()
+                    .FirstOrDefault(r => r.Id == resource.Id && r.Quality == resource.Quality);
                 if (existing != null)
                 {
-                    existing.Add(item.Amount);
+                    existing.Add(resource.Amount);
                 }
                 else
                 {
@@ -70,7 +90,7 @@ namespace Inventory
             {
                 _items.Add(item);
             }
-            
+
             SaveInventory();
             OnInventoryChanged?.Invoke();
         }
@@ -200,10 +220,11 @@ namespace Inventory
             switch (dto.SlotType)
             {
                 case InventorySlotType.Resource:
-                    return new ResourceItem((ResourceType)dto.Id, dto.Amount);
+                    return new ResourceItem((ResourceType)dto.Id, dto.Amount, dto.Quality);
         
                 case InventorySlotType.Tool:
                 case InventorySlotType.Backpack:
+                case InventorySlotType.Magic:
                     return new EquipmentItem(dto.SlotType, dto.Id, dto.IsEquipped);
         
                 default:

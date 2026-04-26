@@ -11,6 +11,7 @@ public class EquipmentChanger : MonoBehaviour
 {
     [SerializeField] private Transform _toolLobbyContainer;
     [SerializeField] private Transform _backpackContainer;
+    [SerializeField] private Transform _magicLobbyContainer;
     
     private readonly Dictionary<InventorySlotType, EquipmentSlot> _equipmentSlots = new();
     
@@ -42,10 +43,15 @@ public class EquipmentChanger : MonoBehaviour
         {
             Container = _toolLobbyContainer
         };
-        
+
         _equipmentSlots[InventorySlotType.Backpack] = new EquipmentSlot
         {
             Container = _backpackContainer
+        };
+
+        _equipmentSlots[InventorySlotType.Magic] = new EquipmentSlot
+        {
+            Container = _magicLobbyContainer
         };
     }
         
@@ -98,6 +104,7 @@ public class EquipmentChanger : MonoBehaviour
         {
             InventorySlotType.Tool => loadoutData.ToolData,
             InventorySlotType.Backpack => loadoutData.BackpackData,
+            InventorySlotType.Magic => loadoutData.MagicData,
             _ => null
         };
     }

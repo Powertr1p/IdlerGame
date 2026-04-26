@@ -12,8 +12,8 @@ namespace Inventory.RaidInventory
     {
         public event Action<ResourceType, int> OnResourceAdded;
         public event Action OnInventoryFull;
-        
-        private readonly Dictionary<ResourceType, int> _loot = new();
+
+        private readonly Dictionary<(ResourceType type, ItemQuality quality), int> _loot = new();
         private IPlayerLoadout _loadout;
 
         [Inject]
@@ -26,11 +26,11 @@ namespace Inventory.RaidInventory
         {
             int currentCount = _loot.Values.Sum();
             int capacity = _loadout.GetBackpackCapacity();
-            
+
             return currentCount < capacity;
         }
 
-        public bool TryAdd(ResourceType resource)
+        public bool TryAdd(ResourceType resource, ItemQuality quality = ItemQuality.Common)
         {
             if (!CanAdd())
             {
@@ -38,12 +38,13 @@ namespace Inventory.RaidInventory
                 return false;
             }
 
-            if (!_loot.TryAdd(resource, 1))
+            var key = (resource, quality);
+            if (!_loot.TryAdd(key, 1))
             {
-                _loot[resource] += 1;
+                _loot[key] += 1;
             }
-            
-            OnResourceAdded?.Invoke(resource, _loot[resource]);
+
+            OnResourceAdded?.Invoke(resource, GetTotalForType(resource));
             return true;
         }
 
@@ -61,15 +62,26 @@ namespace Inventory.RaidInventory
         {
             _loot.Clear();
         }
-        
+
         public IReadOnlyList<InventoryItemDto> GetLootDTO()
         {
             return _loot.Select(x => new InventoryItemDto(
                 InventorySlotType.Resource,
-                (int)x.Key,
+                (int)x.Key.type,
                 x.Value,
-                false
-                )).ToList();
+                false,
+                x.Key.quality
+            )).ToList();
+        }
+
+        private int GetTotalForType(ResourceType type)
+        {
+            int total = 0;
+            foreach (var pair in _loot)
+            {
+                if (pair.Key.type == type) total += pair.Value;
+            }
+            return total;
         }
     }
 }

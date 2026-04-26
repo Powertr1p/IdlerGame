@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Magics
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Magics
+  m_GUID: 380a153d07dbc78489299535e8cae589
+  m_SerializeEntries:
+  - m_GUID: 044564a3788467341afbb68665285424
+    m_Address: Assets/InternalAssets/Data/Magic/BasicMagic.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Magics
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2093c2efc4abcc498dac85a5548bc83
+    m_Address: Assets/InternalAssets/Data/Magic/SlowMagic.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Magics
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f0ac5503dba09744d9a5dc529ddb4585, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: aa78ebe639a4a354083b70d0733f8061, type: 2}
+    - {fileID: 11400000, guid: 25da1c4a8e2bca044a9421b1481f161b, type: 2}

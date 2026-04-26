@@ -5,5 +5,6 @@
         Resource,
         Tool,
         Backpack,
+        Magic,
     }
 }

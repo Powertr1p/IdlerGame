@@ -9,28 +9,28 @@ namespace AssetLoader
 {
     public class AssetsLoader : IDisposable
     {
-        private AsyncOperationHandle<GameObject> _operationHandle;
-
         public async UniTask<GameObject> InstantiateGameObject(AssetReferenceGameObject reference, CancellationToken cancellationToken = default)
         {
-            _operationHandle = Addressables.InstantiateAsync(reference); 
-            var result = await _operationHandle.ToUniTask(cancellationToken: cancellationToken);
+            if (reference == null || !reference.RuntimeKeyIsValid())
+            {
+                Debug.LogError($"AssetsLoader: invalid reference (guid={(reference != null ? reference.AssetGUID : "(null)")}, valid={reference != null && reference.RuntimeKeyIsValid()})");
+                return null;
+            }
 
-            if (_operationHandle.Status == AsyncOperationStatus.Succeeded)
+            var handle = Addressables.InstantiateAsync(reference);
+            var result = await handle.ToUniTask(cancellationToken: cancellationToken);
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 return result;
             }
-            
-            Debug.LogError($"failed to load gameObject: {_operationHandle.OperationException}");
+
+            Debug.LogError($"AssetsLoader: failed to load (guid={reference.AssetGUID}, status={handle.Status}): {handle.OperationException}");
             return null;
         }
 
         public void Dispose()
         {
-            if (_operationHandle.IsValid())
-            {
-                Addressables.ReleaseInstance(_operationHandle);
-            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Inventory.Core;
 using Inventory.ResourceItems;
 using UnityEngine;
 
@@ -8,22 +9,25 @@ namespace ResourceItems.Core
     {
         [SerializeField] private Collider _collider;
         [SerializeField] private ParticleSystem _vfx;
-        
+
         [Header("Spawn Animation")]
         [SerializeField] private float _jumpPower = 2f;
         [SerializeField] private float _jumpDuration = 1f;
         [SerializeField] private int _numJumps = 1;
-        
+
         [Header("Attraction Animation")]
         [SerializeField] private float _attractionStartDelay = 0.1f;
-        
+
         public ResourceType Type => _resourceType;
-        
+        public ItemQuality Quality => _quality;
+
         private Transform _attractor;
         private Sequence _attractionSequence;
         private Transform _cachedTransform;
         private Sequence _jumpSequence;
         private ResourceType _resourceType;
+        private ItemQuality _quality;
+        private Color _qualityTint = Color.white;
         
         private bool _isAttracting;
         private bool _moveActive;
@@ -53,13 +57,29 @@ namespace ResourceItems.Core
             }
         }
         
-        public void Initialize(Vector3 startPosition, Vector3 targetPosition, ResourceType resourceType)
+        public void Initialize(Vector3 startPosition, Vector3 targetPosition, ResourceType resourceType, ItemQuality quality = ItemQuality.Common, Color tint = default)
         {
             _resourceType = resourceType;
+            _quality = quality;
+            _qualityTint = tint == default ? Color.white : tint;
             _startPosition = startPosition;
             _targetPosition = targetPosition;
-            
+
+            ApplyTint();
+
             StartFlying();
+        }
+
+        private void ApplyTint()
+        {
+            if (ReferenceEquals(_vfx, null)) return;
+
+            var systems = _vfx.GetComponentsInChildren<ParticleSystem>(true);
+            foreach (var ps in systems)
+            {
+                var main = ps.main;
+                main.startColor = _qualityTint;
+            }
         }
         
         public void Attract(Transform attractor)

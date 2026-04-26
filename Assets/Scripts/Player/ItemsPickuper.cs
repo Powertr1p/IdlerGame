@@ -12,7 +12,7 @@ public class ItemsPickuper : MonoBehaviour
         if (other.TryGetComponent(out IAttractable attractable) && HasSlots())
         {
             attractable.Attract(_attractor);
-            _raidInventory.TryAdd(attractable.Type);
+            _raidInventory.TryAdd(attractable.Type, attractable.Quality);
         }
     }
 

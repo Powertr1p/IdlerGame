@@ -9,11 +9,13 @@ namespace Inventory.ResourceItems
         public ResourceType Type { get; }
         public int Id => (int)Type;
         public int Amount { get; private set; }
-        
-        public ResourceItem(ResourceType type, int amount)
+        public ItemQuality Quality { get; }
+
+        public ResourceItem(ResourceType type, int amount, ItemQuality quality = ItemQuality.Common)
         {
             Type = type;
             Amount = amount;
+            Quality = quality;
         }
         
         public void Add(int value)

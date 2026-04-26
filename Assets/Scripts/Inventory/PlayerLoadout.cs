@@ -21,8 +21,11 @@ namespace Inventory
                 case BackpackData backpack:
                     LoadoutData.BackpackData = backpack;
                     break;
+                case MagicData magic:
+                    LoadoutData.MagicData = magic;
+                    break;
             }
-            
+
             OnLoadoutChanged?.Invoke();
         }
 
@@ -36,14 +39,17 @@ namespace Inventory
                 case InventorySlotType.Tool:
                      LoadoutData.ToolData = null;
                     break;
+                case InventorySlotType.Magic:
+                    LoadoutData.MagicData = null;
+                    break;
             }
-            
+
             OnLoadoutChanged?.Invoke();
         }
-        
+
         public IReadOnlyList<IEquippable> GetEquippedItems()
         {
-            return new List<IEquippable> { LoadoutData.ToolData, LoadoutData.BackpackData };
+            return new List<IEquippable> { LoadoutData.ToolData, LoadoutData.BackpackData, LoadoutData.MagicData };
         }
 
         public int GetBackpackCapacity()

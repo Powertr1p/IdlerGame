@@ -28,7 +28,7 @@ namespace Inventory
             _saveBox = new PlayerInventorySaveBox();
 
             await ItemRegistry.PreloadLobbyItemsAsync();
-            
+
             LoadInventory();
 
             if (_items.Count == 0)
@@ -36,6 +36,24 @@ namespace Inventory
                 Add(new EquipmentItem(InventorySlotType.Tool, 0, false));
                 Add(new EquipmentItem(InventorySlotType.Tool, 1, false));
                 Add(new EquipmentItem(InventorySlotType.Backpack, 0, false));
+                Add(new EquipmentItem(InventorySlotType.Magic, 0, false));
+                Add(new EquipmentItem(InventorySlotType.Magic, 1, false));
+                EquipDefaultMagic();
+            }
+            else if (!_items.OfType<EquipmentItem>().Any(i => i.SlotType == InventorySlotType.Magic))
+            {
+                Add(new EquipmentItem(InventorySlotType.Magic, 0, false));
+                Add(new EquipmentItem(InventorySlotType.Magic, 1, false));
+                EquipDefaultMagic();
+            }
+        }
+
+        private void EquipDefaultMagic()
+        {
+            var basic = ItemRegistry.GetCached(InventorySlotType.Magic, (int)Inventory.EquipmentItems.MagicType.Basic) as IEquippable;
+            if (!ReferenceEquals(basic, null))
+            {
+                EquipItem(basic);
             }
         }
         
@@ -204,6 +222,7 @@ namespace Inventory
         
                 case InventorySlotType.Tool:
                 case InventorySlotType.Backpack:
+                case InventorySlotType.Magic:
                     return new EquipmentItem(dto.SlotType, dto.Id, dto.IsEquipped);
         
                 default:

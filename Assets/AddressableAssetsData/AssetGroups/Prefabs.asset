@@ -25,13 +25,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6646c980ff1db1344b2dbc242b7f5f9d
+    m_Address: Assets/InternalAssets/Prefabs/Lobby/Magic_Lobby.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d73ff6cdd9d3f44d8e828b78538c2e2
     m_Address: Assets/InternalAssets/Prefabs/InGame/Tools/Pickaxe_Level.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76930009189c51146a237c6b3e47261a
+    m_Address: Assets/InternalAssets/Prefabs/InGame/Magic/SlowMagic_Level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 880ef18097cd1904ebb2c6ba4aef058e
     m_Address: Assets/InternalAssets/Prefabs/InGame/Equipment/Backpack 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d42f1c7889479fa4a9003fe0812b4bcf
+    m_Address: Assets/InternalAssets/Prefabs/InGame/Magic/BasicMagic_Level.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -8,5 +8,6 @@ namespace Inventory
     {
        public ToolData ToolData;
        public BackpackData BackpackData;
+       public MagicData MagicData;
     }
 }

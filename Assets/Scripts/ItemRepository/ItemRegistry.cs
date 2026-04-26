@@ -43,6 +43,7 @@ namespace ItemRepository
             await UniTask.WhenAll(
                 PreloadAsync(InventorySlotType.Tool),
                 PreloadAsync(InventorySlotType.Backpack),
+                PreloadAsync(InventorySlotType.Magic),
                 PreloadAsync(InventorySlotType.Resource)
             );
         }
@@ -115,6 +116,7 @@ namespace ItemRepository
             {
                 InventorySlotType.Tool => "Tools",
                 InventorySlotType.Backpack => "Backpacks",
+                InventorySlotType.Magic => "Magics",
                 InventorySlotType.Resource => "Resources",
                 _ => "Items"
             };

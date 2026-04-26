@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: c05c333b8417eca4bba7a30f948f0009
   m_currentHash:
     serializedVersion: 2
-    Hash: c502baf33730d538bee2435c3f8c910c
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -61,6 +61,7 @@ MonoBehaviour:
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: 3fbe872de86f77e49882fa5c183cbd74, type: 2}
+  - {fileID: 11400000, guid: 4103f4df0760b2a42ac634991cda4d01, type: 2}
   - {fileID: 11400000, guid: aaa644b03810a7b45a95aa9687d7f987, type: 2}
   - {fileID: 11400000, guid: 360b229b30171624087f6165e74d0099, type: 2}
   - {fileID: 11400000, guid: a7c66da9ae3721e4cb161e877635abf0, type: 2}
@@ -110,6 +111,7 @@ MonoBehaviour:
     - Equipment
     - Backpacks
     - Resources
+    - Magics
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 3cf8f9e52fb63f24499de9bb20923c5a, type: 2}

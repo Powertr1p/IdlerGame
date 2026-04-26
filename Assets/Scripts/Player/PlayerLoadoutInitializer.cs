@@ -8,6 +8,7 @@ public class PlayerLoadoutInitializer : MonoBehaviour
 {
     [SerializeField] private Transform _toolContainer;
     [SerializeField] private Transform _backpackContainer;
+    [SerializeField] private Transform _magicContainer;
 
     private IPlayerLoadout _loadout;
     private AssetsLoader _assetsLoader;
@@ -23,6 +24,7 @@ public class PlayerLoadoutInitializer : MonoBehaviour
     {
         await SpawnTool();
         await SpawnBackpack();
+        await SpawnMagic();
     }
 
     private async UniTask SpawnTool()
@@ -42,6 +44,16 @@ public class PlayerLoadoutInitializer : MonoBehaviour
             var cancellationToken = this.GetCancellationTokenOnDestroy();
             var instance = await _assetsLoader.InstantiateGameObject(_loadout.LoadoutData.BackpackData.LevelPrefab, cancellationToken);
             instance.transform.SetParent(_backpackContainer, false);
+        }
+    }
+
+    private async UniTask SpawnMagic()
+    {
+        if (!ReferenceEquals(_loadout.LoadoutData.MagicData, null))
+        {
+            var cancellationToken = this.GetCancellationTokenOnDestroy();
+            var instance = await _assetsLoader.InstantiateGameObject(_loadout.LoadoutData.MagicData.LevelPrefab, cancellationToken);
+            instance.transform.SetParent(_magicContainer, false);
         }
     }
 }

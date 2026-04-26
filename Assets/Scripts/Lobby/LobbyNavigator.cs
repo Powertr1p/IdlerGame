@@ -12,6 +12,7 @@ namespace Lobby
     {
         [SerializeField] private GameObject _lobbyBackground;
         [SerializeField] private Camera _lobbyUICamera;
+        [SerializeField] private GameObject _lobbyUI;
         [SerializeField] private CharacterPreview _characterPreview;
         
         private const string GAME_SCENE_NAME = "GameScene";
@@ -69,17 +70,19 @@ namespace Lobby
             await _sceneLoader.LoadSceneAsync(GAME_SCENE_NAME);
             _lobbyBackground.SetActive(false);
             _lobbyUICamera.enabled = false;
+            _lobbyUI.SetActive(false);
         }
 
         private void OnRaidSceneWasLoaded()
         {
             _inventoryPresenter.Hide();
         }
-        
+
         private void OnRaidSceneUnloaded()
         {
             _lobbyUICamera.enabled = true;
             _lobbyBackground.SetActive(true);
+            _lobbyUI.SetActive(true);
             _characterPreview.ResetRotation();
         }
     }

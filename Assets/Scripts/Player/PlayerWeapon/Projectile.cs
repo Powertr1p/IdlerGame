@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemy;
 using ShareComponents;
 using UnityEngine;
 
@@ -8,6 +9,10 @@ namespace PlayerWeapon
     {
         [SerializeField] private ParticleSystem _projectile;
         [SerializeField] private ParticleSystem _hitEffectPrefab;
+
+        [Header("Slow Effect (0 = no slow)")]
+        [SerializeField, Range(0f, 1f)] private float _slowMultiplier;
+        [SerializeField] private float _slowDuration;
 
         public event Action<Projectile> OnProjectileFinished;
         
@@ -23,6 +28,12 @@ namespace PlayerWeapon
             if (_hasHit) return;
 
             if (ReferenceEquals(_target, null))
+            {
+                OnProjectileFinished?.Invoke(this);
+                return;
+            }
+
+            if (!_target.IsValid)
             {
                 OnProjectileFinished?.Invoke(this);
                 return;
@@ -74,21 +85,32 @@ namespace PlayerWeapon
         private void HitTarget()
         {
             if (_hasHit) return;
-    
+
             _hasHit = true;
             _target.Damageable.TakeDamage(_damage);
-            
+            TryApplySlow();
+
             if (!ReferenceEquals(_projectile, null))
             {
                 _projectile.Stop();
             }
-    
+
             if (!ReferenceEquals(_hitEffectPrefab, null))
             {
                 Instantiate(_hitEffectPrefab, transform.position, Quaternion.identity);
             }
-    
+
             OnProjectileFinished?.Invoke(this);
+        }
+
+        private void TryApplySlow()
+        {
+            if (_slowMultiplier <= 0f || _slowDuration <= 0f) return;
+
+            ISlowable slowable = _target.AttackPoint.GetComponentInParent<ISlowable>();
+            if (ReferenceEquals(slowable, null)) return;
+
+            slowable.ApplySlow(_slowMultiplier, _slowDuration);
         }
     }
 }

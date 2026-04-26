@@ -165,6 +165,7 @@ namespace PlayerWeapon
                 Quaternion rotation = Quaternion.LookRotation(direction);
                 
                 Projectile projectile = _projectilePool.Get();
+                projectile.transform.SetParent(null);
                 projectile.transform.position = _weaponPivot.position;
                 projectile.transform.rotation = rotation;
                 projectile.OnProjectileFinished += HandleProjectileFinished;
@@ -178,6 +179,7 @@ namespace PlayerWeapon
         {
             projectile.OnProjectileFinished -= HandleProjectileFinished;
             projectile.ResetState();
+            projectile.transform.SetParent(transform);
             _projectilePool.Return(projectile);
         }
     }

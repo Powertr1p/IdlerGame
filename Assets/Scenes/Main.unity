@@ -1507,6 +1507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lobbyBackground: {fileID: 994083814}
   _lobbyUICamera: {fileID: 1812830013}
+  _lobbyUI: {fileID: 1714600543}
   _characterPreview: {fileID: 697160878}
 --- !u!1 &2093144394
 GameObject:

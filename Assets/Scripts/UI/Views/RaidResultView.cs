@@ -36,11 +36,16 @@ namespace UI.Views
         {
             _pool ??= new ObjectPool<InventorySlot>(10, _itemSlotPrefab, _content);
             _list ??= new DisplayItemSlotList(_pool);
-            
+
             foreach (var i in item)
             {
                 _list.Add(i);
             }
+        }
+
+        public void SetContinueAvailable(bool available)
+        {
+            _continueRaidButton.gameObject.SetActive(available);
         }
         
         private void HandleExitClick()

@@ -11,7 +11,8 @@ namespace ShareComponents
       public event Action OnTakeDamage;
       
       public  int CurrentHealth { get; private set; }
-      
+      public int MaxHealth => _maxHealth;
+
       private void Start()
       {
          CurrentHealth = _maxHealth;

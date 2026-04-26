@@ -6,9 +6,13 @@ namespace Extraction
 {
     public class ExtractionZone : MonoBehaviour
     {
+        [SerializeField] private Transform _nextSpawnPoint;
+
+        public Transform NextSpawnPoint => _nextSpawnPoint;
+
         public event Action PlayerEntered;
         public event Action PlayerExited;
-        
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out IExitable _))

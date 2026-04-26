@@ -9,7 +9,8 @@ namespace UI.Presenters
     public class RaidResultPresenter : BasePresenter<RaidResultView>, IDisposable
     {
         public event Action OnExitRaidClicked;
-        
+        public event Action OnContinueRaidClicked;
+
         private readonly RaidResultModel _model;
         
         [Inject]
@@ -28,6 +29,11 @@ namespace UI.Presenters
             View.Show();
         }
 
+        public void SetContinueAvailable(bool available)
+        {
+            View.SetContinueAvailable(available);
+        }
+
         public override void Hide()
         {
             base.Hide();
@@ -36,16 +42,23 @@ namespace UI.Presenters
         protected override void OnViewCreated()
         {
             View.OnExitClicked += HandleExitClick;
+            View.OnContinueRaidClicked += HandleContinueRaidClick;
         }
 
         protected override void OnViewDestroy()
         {
             View.OnExitClicked -= HandleExitClick;
+            View.OnContinueRaidClicked -= HandleContinueRaidClick;
         }
-        
+
         private void HandleExitClick()
         {
             OnExitRaidClicked?.Invoke();
+        }
+
+        private void HandleContinueRaidClick()
+        {
+            OnContinueRaidClicked?.Invoke();
         }
     }
 }

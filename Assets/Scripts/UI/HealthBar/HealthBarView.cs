@@ -26,17 +26,22 @@ namespace UI.HealthBar
             _health.OnDie -= HandleDie;
         }
 
-        private void HandleHealthChanged() => Refresh();
+        private void HandleHealthChanged()
+        {
+            Refresh();
+        }
 
         private void HandleDie()
         {
             if (!_hideOnDeath) return;
+            
             gameObject.SetActive(false);
         }
 
         private void Refresh()
         {
             if (_health.MaxHealth <= 0) return;
+            
             _fillImage.fillAmount = (float)_health.CurrentHealth / _health.MaxHealth;
         }
     }

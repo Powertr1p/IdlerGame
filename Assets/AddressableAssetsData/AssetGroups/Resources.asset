@@ -15,14 +15,62 @@ MonoBehaviour:
   m_GroupName: Resources
   m_GUID: 6eb3614a78812cd4fafbdc80bb693d63
   m_SerializeEntries:
+  - m_GUID: 02e3c78e28ec3584a956ba58a3329f64
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/AncientSeed.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50a2448bd3fa5784fa15b048aac5cd65
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/HeartwoodCore.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 740b44fd9c1727042a93b83490f9c016
     m_Address: Assets/InternalAssets/Data/ResourceNode/Rock.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Resources
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8102b16b158f29f49b5cf5cb0fd0c86e
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/Flint.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0c385040891e1644b2c363fdea18ddd
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/PowerCrystal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0eee996149076143a815099fb23bccf
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/Resin.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a81c4068ef178794d9ebc4b40581cf46
     m_Address: Assets/InternalAssets/Data/ResourceNode/Tree.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2fb0277fb3624442b72c28563043349
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/MountainCore.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0c959d0b5a44334b9aa3933f153c620
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/ForestSpiritEssence.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resources
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb9bf24be12dc3649b1c20ba181117f6
+    m_Address: Assets/InternalAssets/Data/ResourceNode/Drops/Ore.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Resources

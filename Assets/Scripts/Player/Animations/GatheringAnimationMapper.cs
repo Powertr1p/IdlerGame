@@ -19,8 +19,8 @@ namespace DefaultNamespace.Animations
             
             _animationMap = new Dictionary<ResourceType, IAnimationAction>
             {
-                { ResourceType.Rock, new MiningAnimationAction() },
-                { ResourceType.Tree, new ChoppingAnimationAction() },
+                { ResourceType.Stone, new MiningAnimationAction() },
+                { ResourceType.Wood, new ChoppingAnimationAction() },
             };
         }
 

@@ -1,38 +1,40 @@
-﻿using System;
+using System;
 using Inventory.Core;
 using Inventory.EquipmentItems;
 using Inventory.ResourceItems;
-using JetBrains.Annotations;
 using ResourceItems.Core;
 using Scriptable;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 namespace GameItems
 {
     public class ResourceNode : MonoBehaviour, IGatherable
-    { 
-        [SerializeField] private ResourceData _resourceData;
+    {
+        [SerializeField] private ResourceNodeConfig _nodeConfig;
         [SerializeField] private float _spreadRadius = 3f;
         [SerializeField] private ResourceNodeAnimationBase _animation;
-        
+
         public event Action Depleted;
-        
+
         public Transform Transform { get; private set; }
         public ResourceType Type { get; private set; }
-        
+
         private int _currentHits;
         private int _spawnedCount;
-        private int _hitsToGather;
-        private int _hitsToDeplete;
-        private bool _isInitialized;
-        
+
         private void Awake()
         {
-            Type = _resourceData.ResourceType;
-            
             Transform = transform;
+
+            if (ReferenceEquals(_nodeConfig, null))
+            {
+                Debug.LogError($"ResourceNode '{name}' has no _nodeConfig assigned", this);
+                return;
+            }
+
+            ResourceData common = _nodeConfig.GetDrop(ItemQuality.Common);
+            if (!ReferenceEquals(common, null)) Type = common.ResourceType;
         }
 
         public bool TryGather(ToolType toolType)
@@ -42,24 +44,24 @@ namespace GameItems
             _currentHits++;
 
             if (_currentHits % GetNeededHitsToGather(toolType) != 0) return false;
-            
+
             SpawnDropItem();
-            
+
             if (!IsRemain(toolType))
             {
                 DropRemainItems();
                 Depleted?.Invoke();
                 Destroy(gameObject);
             }
-            
+
             return true;
         }
 
         public bool IsRightTool(ToolType toolType)
         {
-            return toolType == _resourceData.ToolType && IsRemain(toolType);
+            return toolType == _nodeConfig.ToolType && IsRemain(toolType);
         }
-        
+
         public void StopGather()
         {
             _animation.KillSequence();
@@ -80,24 +82,27 @@ namespace GameItems
 
             Vector3 targetPosition = new Vector3(x, 0f, z);
 
-            ItemQuality quality = ReferenceEquals(_resourceData.QualityRollConfig, null)
+            ItemQuality quality = ReferenceEquals(_nodeConfig.QualityRollConfig, null)
                 ? ItemQuality.Common
-                : _resourceData.QualityRollConfig.Roll();
+                : _nodeConfig.QualityRollConfig.Roll();
 
-            Color tint = ReferenceEquals(_resourceData.QualityColorConfig, null)
+            Color tint = ReferenceEquals(_nodeConfig.QualityColorConfig, null)
                 ? Color.white
-                : _resourceData.QualityColorConfig.GetColor(quality);
+                : _nodeConfig.QualityColorConfig.GetColor(quality);
 
-            DropResource dropItem = Instantiate(_resourceData.ResourcePrefab, startPosition, Quaternion.identity);
-            dropItem.Initialize(startPosition, targetPosition, Type, quality, tint);
+            ResourceData drop = _nodeConfig.GetDrop(quality);
+            if (ReferenceEquals(drop, null)) return;
+
+            DropResource dropItem = Instantiate(_nodeConfig.DropPrefab, startPosition, Quaternion.identity);
+            dropItem.Initialize(startPosition, targetPosition, drop.ResourceType, quality, tint);
 
             _spawnedCount++;
         }
 
         private void DropRemainItems()
         {
-            int remainCount = _resourceData.MaxQuantity - _spawnedCount;
-            
+            int remainCount = _nodeConfig.MaxQuantity - _spawnedCount;
+
             for (int i = 0; i < remainCount; i++)
             {
                 SpawnDropItem();
@@ -106,12 +111,12 @@ namespace GameItems
 
         private int GetNeededHitsToGather(ToolType toolType)
         {
-            return toolType == _resourceData.ToolType ? _resourceData.HitsToGather : _resourceData.HitsToGather * 2;
+            return toolType == _nodeConfig.ToolType ? _nodeConfig.HitsToGather : _nodeConfig.HitsToGather * 2;
         }
-        
+
         private int GetNeededHitsToDeplete(ToolType toolType)
         {
-            return toolType == _resourceData.ToolType ? _resourceData.HitsToDeplete : _resourceData.HitsToDeplete * 2;
+            return toolType == _nodeConfig.ToolType ? _nodeConfig.HitsToDeplete : _nodeConfig.HitsToDeplete * 2;
         }
     }
 }

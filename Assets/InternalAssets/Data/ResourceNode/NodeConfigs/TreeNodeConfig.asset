@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a467dac0476e3469206eb1a32c5892, type: 3}
+  m_Name: TreeNodeConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Scriptable.ResourceNodeConfig
+  _dropPrefab: {fileID: 4876921085164410669, guid: fdd25e1fc536f1747bf7dc2c6b49e6f3, type: 3}
+  _toolType: 1
+  _maxQuantity: 10
+  _hitsToDeplete: 5
+  _hitsToGather: 1
+  _qualityRollConfig: {fileID: 11400000, guid: 4076f969dee82cf478b5568f497d9f98, type: 2}
+  _qualityColorConfig: {fileID: 11400000, guid: dfa3a53e0b2a2164496f18098774a3be, type: 2}
+  _drops:
+  - Item: {fileID: 11400000, guid: a81c4068ef178794d9ebc4b40581cf46, type: 2}
+  - Item: {fileID: 11400000, guid: a0eee996149076143a815099fb23bccf, type: 2}
+  - Item: {fileID: 11400000, guid: 50a2448bd3fa5784fa15b048aac5cd65, type: 2}
+  - Item: {fileID: 11400000, guid: e0c959d0b5a44334b9aa3933f153c620, type: 2}
+  - Item: {fileID: 11400000, guid: 02e3c78e28ec3584a956ba58a3329f64, type: 2}

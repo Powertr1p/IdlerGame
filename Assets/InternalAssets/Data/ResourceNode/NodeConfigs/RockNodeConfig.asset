@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a467dac0476e3469206eb1a32c5892, type: 3}
+  m_Name: RockNodeConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Scriptable.ResourceNodeConfig
+  _dropPrefab: {fileID: 3830553122932442759, guid: 4dc5c9fbe538f384f8645d1c72a044b9, type: 3}
+  _toolType: 0
+  _maxQuantity: 10
+  _hitsToDeplete: 5
+  _hitsToGather: 1
+  _qualityRollConfig: {fileID: 11400000, guid: 4076f969dee82cf478b5568f497d9f98, type: 2}
+  _qualityColorConfig: {fileID: 11400000, guid: dfa3a53e0b2a2164496f18098774a3be, type: 2}
+  _drops:
+  - Item: {fileID: 11400000, guid: 740b44fd9c1727042a93b83490f9c016, type: 2}
+  - Item: {fileID: 11400000, guid: 8102b16b158f29f49b5cf5cb0fd0c86e, type: 2}
+  - Item: {fileID: 11400000, guid: fb9bf24be12dc3649b1c20ba181117f6, type: 2}
+  - Item: {fileID: 11400000, guid: a0c385040891e1644b2c363fdea18ddd, type: 2}
+  - Item: {fileID: 11400000, guid: c2fb0277fb3624442b72c28563043349, type: 2}

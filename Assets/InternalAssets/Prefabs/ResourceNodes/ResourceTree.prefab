@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12027a20c38745bdb6da3ead92e33631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _resourceData: {fileID: 11400000, guid: a81c4068ef178794d9ebc4b40581cf46, type: 2}
+  _nodeConfig: {fileID: 11400000, guid: 4f091c8d8ee8d3543b1500064f9e602d, type: 2}
   _spreadRadius: 3
   _animation: {fileID: 1115164780052271218}
 --- !u!114 &1115164780052271218

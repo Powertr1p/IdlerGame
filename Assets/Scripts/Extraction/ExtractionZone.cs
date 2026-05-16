@@ -9,6 +9,7 @@ namespace Extraction
         [SerializeField] private Transform _nextSpawnPoint;
 
         public Transform NextSpawnPoint => _nextSpawnPoint;
+        public bool HasNextIsland => !ReferenceEquals(_nextSpawnPoint, null);
 
         public event Action<ExtractionZone> PlayerEntered;
         public event Action<ExtractionZone> PlayerExited;

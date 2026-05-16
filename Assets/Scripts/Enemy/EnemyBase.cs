@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(SlowReceiver))]
+    [RequireComponent(typeof(SlowDebuffHandler))]
     public abstract class EnemyBase : MonoBehaviour
     {
         //todo: no player reference, monsterSystem will pass player

@@ -61,7 +61,7 @@ namespace Extraction
 
         private void HandleExitCompleted()
         {
-            bool canContinue = !ReferenceEquals(_currentZone.NextSpawnPoint, null);
+            bool canContinue = _currentZone.HasNextIsland;
             _raidResultPresenter.Show();
             _raidResultPresenter.SetContinueAvailable(canContinue);
         }

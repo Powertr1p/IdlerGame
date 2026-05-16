@@ -76,6 +76,7 @@ namespace Extraction
         {
             _player.position = _currentZone.NextSpawnPoint.position;
             _raidResultPresenter.Hide();
+            Debug.Log("ASDASDASDSAD");
         }
 
         private void StoreLootToBuffer()

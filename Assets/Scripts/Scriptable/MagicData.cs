@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scriptable
 {
-    [CreateAssetMenu(fileName = "Magic", menuName = "Create Magic Data", order = 0)]
+    [CreateAssetMenu(fileName = "Magic", menuName = "Data/MagicData")]
     public class MagicData : EquipmentData
     {
         [SerializeField] private MagicType _type;

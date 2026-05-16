@@ -10,14 +10,14 @@ namespace Extraction
 
         public Transform NextSpawnPoint => _nextSpawnPoint;
 
-        public event Action PlayerEntered;
-        public event Action PlayerExited;
+        public event Action<ExtractionZone> PlayerEntered;
+        public event Action<ExtractionZone> PlayerExited;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out IExitable _))
             {
-                PlayerEntered?.Invoke();
+                PlayerEntered?.Invoke(this);
             }
         }
 
@@ -25,7 +25,7 @@ namespace Extraction
         {
             if (other.TryGetComponent(out IExitable _))
             {
-                PlayerExited?.Invoke();
+                PlayerExited?.Invoke(this);
             }
         }
     }

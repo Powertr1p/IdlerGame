@@ -11,9 +11,9 @@ namespace AssetLoader
     {
         public async UniTask<GameObject> InstantiateGameObject(AssetReferenceGameObject reference, CancellationToken cancellationToken = default)
         {
-            if (reference == null || !reference.RuntimeKeyIsValid())
+            if (ReferenceEquals(reference, null) || !reference.RuntimeKeyIsValid())
             {
-                Debug.LogError($"AssetsLoader: invalid reference (guid={(reference != null ? reference.AssetGUID : "(null)")}, valid={reference != null && reference.RuntimeKeyIsValid()})");
+                Debug.LogError($"AssetsLoader: invalid reference (guid={(!ReferenceEquals(reference, null) ? reference.AssetGUID : "(null)")}, valid={!ReferenceEquals(reference, null) && reference.RuntimeKeyIsValid()})");
                 return null;
             }
 

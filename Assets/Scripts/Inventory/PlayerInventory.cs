@@ -50,7 +50,7 @@ namespace Inventory
 
         private void EquipDefaultMagic()
         {
-            var basic = ItemRegistry.GetCached(InventorySlotType.Magic, (int)Inventory.EquipmentItems.MagicType.Basic) as IEquippable;
+            var basic = ItemRegistry.GetCached(InventorySlotType.Magic, (int)MagicType.Basic) as IEquippable;
             if (!ReferenceEquals(basic, null))
             {
                 EquipItem(basic);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scriptable
 {
-    [CreateAssetMenu(fileName = "QualityRollConfig", menuName = "Create Quality Roll Config", order = 0)]
+    [CreateAssetMenu(fileName = "QualityRollConfig", menuName = "Data/QualityRollConfig")]
     public class QualityRollConfig : ScriptableObject
     {
         [SerializeField] private QualityWeight[] _weights;

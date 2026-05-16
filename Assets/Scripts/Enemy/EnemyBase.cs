@@ -2,14 +2,17 @@ using Enemy.StateMachine;
 using ShareComponents;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyBase : MonoBehaviour, ISlowable
+    [RequireComponent(typeof(SlowReceiver))]
+    public abstract class EnemyBase : MonoBehaviour
     {
         //todo: no player reference, monsterSystem will pass player
-        [SerializeField] private Transform Target;
+        [FormerlySerializedAs("Target")]
+        [SerializeField] private Transform _target;
         [SerializeField] private DamageReceiver _damageReceiver;
         
         [Header("Ranges")]
@@ -24,8 +27,8 @@ namespace Enemy
         [SerializeField] private float _attackInterval = 1f;
 
         public bool IsAlive => _damageReceiver.IsAlive;
-        public bool HasTarget => !ReferenceEquals(Target, null);
-        public Transform GetTarget => Target;
+        public bool HasTarget => !ReferenceEquals(_target, null);
+        public Transform GetTarget => _target;
 
         protected bool IsRunning {get; private set;}
         
@@ -35,17 +38,13 @@ namespace Enemy
         private float _repathTimer;
         private float _attackTimer;
 
-        private float _baseSpeed;
-        private float _slowEndTime;
-        private bool _isSlowed;
-
         private float SqrDistanceToTarget
         {
             get
             {
                 if (!HasTarget) return float.PositiveInfinity;
                 
-                Vector3 delta = Target.position - transform.position;
+                Vector3 delta = _target.position - transform.position;
                 return delta.sqrMagnitude;
             }
         }
@@ -53,7 +52,6 @@ namespace Enemy
         protected virtual void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _baseSpeed = _navMeshAgent.speed;
             ChangeState(EnemyStates.Idle);
         }
 
@@ -71,28 +69,6 @@ namespace Enemy
         {
             if (_state == null) return;
             _state.Tick(this, Time.deltaTime);
-
-            TickSlow();
-        }
-
-        public void ApplySlow(float multiplier, float duration)
-        {
-            if (!_isSlowed)
-            {
-                _navMeshAgent.speed = _baseSpeed * multiplier;
-                _isSlowed = true;
-            }
-
-            _slowEndTime = Time.time + duration;
-        }
-
-        private void TickSlow()
-        {
-            if (!_isSlowed) return;
-            if (Time.time < _slowEndTime) return;
-
-            _navMeshAgent.speed = _baseSpeed;
-            _isSlowed = false;
         }
 
         public void ChangeState(IEnemyState next)
@@ -106,7 +82,7 @@ namespace Enemy
 
         public void SetTarget(Transform target)
         {
-            this.Target = target;
+            _target = target;
         }
 
         public bool IsInAggroRange()
@@ -131,7 +107,7 @@ namespace Enemy
             if (!_navMeshAgent.isOnNavMesh) return;
 
             _navMeshAgent.isStopped = false;
-            _navMeshAgent.SetDestination(Target.position);
+            _navMeshAgent.SetDestination(_target.position);
         }
         
         public void StartChase()

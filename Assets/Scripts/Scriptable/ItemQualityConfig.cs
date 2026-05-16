@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scriptable
 {
-    [CreateAssetMenu(fileName = "ItemQualityConfig", menuName = "Create Item Quality Config", order = 0)]
+    [CreateAssetMenu(fileName = "ItemQualityConfig", menuName = "Data/ItemQualityConfig")]
     public class ItemQualityConfig : ScriptableObject
     {
         [SerializeField] private QualityColor[] _qualities;

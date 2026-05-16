@@ -4,17 +4,16 @@ using UnityEngine.AI;
 namespace Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class SlowReceiver : MonoBehaviour, ISlowable
+    public class SlowDebuffHandler : MonoBehaviour, ISlowable
     {
         private NavMeshAgent _navMeshAgent;
-        private float _baseSpeed;
+        private float _activeMultiplier = 1f;
         private float _slowEndTime;
         private bool _isSlowed;
 
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _baseSpeed = _navMeshAgent.speed;
         }
 
         private void Update()
@@ -22,7 +21,8 @@ namespace Enemy
             if (!_isSlowed) return;
             if (Time.time < _slowEndTime) return;
 
-            _navMeshAgent.speed = _baseSpeed;
+            _navMeshAgent.speed /= _activeMultiplier;
+            _activeMultiplier = 1f;
             _isSlowed = false;
         }
 
@@ -30,7 +30,8 @@ namespace Enemy
         {
             if (!_isSlowed)
             {
-                _navMeshAgent.speed = _baseSpeed * multiplier;
+                _activeMultiplier = multiplier;
+                _navMeshAgent.speed *= multiplier;
                 _isSlowed = true;
             }
 

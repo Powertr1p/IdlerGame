@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 811f5e7de7724a789a3014803e0728d2, type: 3}
-  m_Name: Wood
+  m_Name: Stone
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 63af52b5b92b10c4594f1085a1a0ab94, type: 3}
-  _displayName: Wood
+  _sprite: {fileID: 21300000, guid: ae950ddd044c6164e890f70e0015101c, type: 3}
+  _displayName: Stone
   _quality: 0
-  _resourceType: 1
+  _resourceType: 0

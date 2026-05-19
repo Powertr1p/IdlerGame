@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 811f5e7de7724a789a3014803e0728d2, type: 3}
-  m_Name: ForestSpiritEssence
+  m_Name: HeartwoodCore
   m_EditorClassIdentifier: Assembly-CSharp::Scriptable.ResourceData
-  _sprite: {fileID: 21300000, guid: 610710a49d44499409366b8ac7e26a95, type: 3}
-  _displayName: ForestSpiritEssence
-  _quality: 3
-  _resourceType: 4
+  _sprite: {fileID: 21300000, guid: ed911c61f9c2b0c4bb421a62d96cccc3, type: 3}
+  _displayName: HeartwoodCore
+  _quality: 2
+  _resourceType: 3

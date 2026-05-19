@@ -3,7 +3,12 @@
     "allow": [
       "Bash(git ls-tree *)",
       "mcp__unity-mcp__Unity_GetConsoleLogs",
-      "mcp__unity-mcp__Unity_ManageGameObject"
+      "mcp__unity-mcp__Unity_ManageGameObject",
+      "mcp__unity-mcp__Unity_ManageScene",
+      "mcp__unity-mcp__Unity_RunCommand",
+      "Bash(Select-Object FullName -First 20)",
+      "PowerShell($files = @\\('PlayerMovement', 'PlayerGathering', 'PlayerAnimator', 'PlayerInventory', 'ItemsPickuper', 'GravityHandler', 'PlayerWeapon', 'EquipmentChanger', 'PlayerLoadoutInitializer'\\); foreach \\($f in $files\\) { $metaPath = \\(Get-ChildItem -Path 'D:\\\\Develop\\\\IdlerGame\\\\Assets\\\\Scripts' -Recurse -Filter \"$f.cs.meta\" -ErrorAction SilentlyContinue | Select-Object -First 1\\).FullName; if \\($metaPath\\) { $guid = \\(Get-Content -Path $metaPath | Where-Object { $_ -match 'guid:' } | Select-Object -First 1\\); Write-Host \"$f -> $guid \\(file: $metaPath\\)\" } })",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\('D:\\\\Develop\\\\IdlerGame\\\\Assets\\\\Scenes\\\\GameScene.unity'\\); Write-Host \"First 16 bytes: $\\($bytes[0..15] -join ' '\\)\"; Write-Host \"ASCII: $\\([System.Text.Encoding]::ASCII.GetString\\($bytes[0..50]\\)\\)\")"
     ]
   }
 }

@@ -15,9 +15,6 @@ namespace ResourceItems.Core
         [SerializeField] private float _jumpDuration = 1f;
         [SerializeField] private int _numJumps = 1;
 
-        [Header("Attraction Animation")]
-        [SerializeField] private float _attractionStartDelay = 0.1f;
-
         public ResourceType Type => _resourceType;
         public ItemQuality Quality => _quality;
 

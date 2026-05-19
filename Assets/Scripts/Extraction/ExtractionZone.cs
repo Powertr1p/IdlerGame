@@ -1,6 +1,6 @@
-using System;
 using DefaultNamespace;
 using UnityEngine;
+using Zenject;
 
 namespace Extraction
 {
@@ -8,17 +8,16 @@ namespace Extraction
     {
         [SerializeField] private Transform _nextSpawnPoint;
 
+        [Inject] private SignalBus _signalBus;
+
         public Transform NextSpawnPoint => _nextSpawnPoint;
         public bool HasNextIsland => !ReferenceEquals(_nextSpawnPoint, null);
-
-        public event Action<ExtractionZone> PlayerEntered;
-        public event Action<ExtractionZone> PlayerExited;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out IExitable _))
             {
-                PlayerEntered?.Invoke(this);
+                _signalBus.Fire(new ZoneEntered { Zone = this });
             }
         }
 
@@ -26,7 +25,7 @@ namespace Extraction
         {
             if (other.TryGetComponent(out IExitable _))
             {
-                PlayerExited?.Invoke(this);
+                _signalBus.Fire(new ZoneExited { Zone = this });
             }
         }
     }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 811f5e7de7724a789a3014803e0728d2, type: 3}
-  m_Name: HeartwoodCore
+  m_Name: AncientSeed
   m_EditorClassIdentifier: Assembly-CSharp::Scriptable.ResourceData
-  _sprite: {fileID: 21300000, guid: bba76034a1b7d2b4aa5fd3586bcf3d09, type: 3}
-  _displayName: HeartwoodCore
-  _quality: 2
-  _resourceType: 3
+  _sprite: {fileID: 21300000, guid: 8b3ec4a13bb5898439b80902e7718201, type: 3}
+  _displayName: AncientSeed
+  _quality: 4
+  _resourceType: 5

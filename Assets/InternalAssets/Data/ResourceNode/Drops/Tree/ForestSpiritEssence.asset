@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 811f5e7de7724a789a3014803e0728d2, type: 3}
-  m_Name: AncientSeed
+  m_Name: ForestSpiritEssence
   m_EditorClassIdentifier: Assembly-CSharp::Scriptable.ResourceData
-  _sprite: {fileID: 21300000, guid: 93e79aa814a0a584382e980c659a9052, type: 3}
-  _displayName: AncientSeed
-  _quality: 4
-  _resourceType: 5
+  _sprite: {fileID: 21300000, guid: 6a59eb1370c6f7641aa7a7b17c722640, type: 3}
+  _displayName: ForestSpiritEssence
+  _quality: 3
+  _resourceType: 4

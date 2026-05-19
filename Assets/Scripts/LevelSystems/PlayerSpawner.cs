@@ -1,22 +1,20 @@
-using AssetLoader;
 using UnityEngine;
+using Zenject;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform _player;
     [SerializeField] private Transform _spawnPoint;
-    
-    private AssetsLoader _assetsLoader;
-    private AssetsConfig _assetsConfig;
+
+    [Inject] private PlayerMovement _player;
 
     private void Start()
     {
         SpawnPlayer();
     }
-    
+
     private void SpawnPlayer()
     {
-        _player.transform.position = _spawnPoint.position;
         _player.gameObject.SetActive(true);
+        _player.TeleportTo(_spawnPoint.position);
     }
 }

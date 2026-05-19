@@ -2,13 +2,15 @@ using DefaultNamespace;
 using GameItems;
 using ResourceItems.Core;
 using UnityEngine;
+using Zenject;
 
 public class PlayerMovement : MonoBehaviour, IExitable
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private PlayerGathering _playerGathering;
-    [SerializeField] private FloatingJoystick _joystick;
+
+    [Inject] private FloatingJoystick _joystick;
     
     public bool IsRunning => _joystick.Horizontal != 0 || _joystick.Vertical != 0;
 

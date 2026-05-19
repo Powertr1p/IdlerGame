@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 811f5e7de7724a789a3014803e0728d2, type: 3}
-  m_Name: Resin
-  m_EditorClassIdentifier: Assembly-CSharp::Scriptable.ResourceData
-  _sprite: {fileID: 21300000, guid: 854affe4df54d7c42b40e165e5ab0f72, type: 3}
-  _displayName: Resin
-  _quality: 1
-  _resourceType: 2
+  m_Name: Wood
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: f54b21d0c70076749ae0315f58b10ee4, type: 3}
+  _displayName: Wood
+  _quality: 0
+  _resourceType: 1

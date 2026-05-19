@@ -2,6 +2,7 @@ using DefaultNamespace;
 using Enemy;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace LevelSystems
 {
@@ -10,10 +11,11 @@ namespace LevelSystems
     {
         [SerializeField] private EnemyConfig _enemyConfig;
         [SerializeField] private EnemyType _enemyType = EnemyType.Zombie;
-        [SerializeField] private Transform _player;
         [SerializeField] private int _minEnemies = 3;
         [SerializeField] private int _maxEnemies = 5;
         [SerializeField] private float _spawnRadius = 3f;
+
+        [Inject] private PlayerMovement _player;
 
         private EnemyFactory _factory;
         private bool _spawned;
@@ -38,7 +40,7 @@ namespace LevelSystems
                 if (ReferenceEquals(enemy, null)) continue;
                 if (ReferenceEquals(_player, null)) continue;
 
-                enemy.SetTarget(_player);
+                enemy.SetTarget(_player.transform);
             }
 
             _spawned = true;

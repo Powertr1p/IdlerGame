@@ -9,9 +9,9 @@ namespace Extraction
 {
     public class ExtractionSystem : MonoBehaviour
     {
-        [SerializeField] private RaidInventory _raidInventory;
-        [SerializeField] private ExtractionZone[] _exitZones;
-        [SerializeField] private PlayerMovement _player;
+        [Inject] private RaidInventory _raidInventory;
+        [Inject] private PlayerMovement _player;
+        [Inject] private SignalBus _signalBus;
 
         [Inject] private RaidResultPresenter _raidResultPresenter;
         [Inject] private ExtractionTimer _extractionTimer;
@@ -22,11 +22,8 @@ namespace Extraction
 
         private void OnEnable()
         {
-            foreach (var zone in _exitZones)
-            {
-                zone.PlayerEntered += HandlePlayerEntered;
-                zone.PlayerExited += HandlePlayerExited;
-            }
+            _signalBus.Subscribe<ZoneEntered>(HandleZoneEntered);
+            _signalBus.Subscribe<ZoneExited>(HandleZoneExited);
 
             _extractionTimer.ExitCompleted += HandleExitCompleted;
 
@@ -36,11 +33,8 @@ namespace Extraction
 
         private void OnDisable()
         {
-            foreach (var zone in _exitZones)
-            {
-                zone.PlayerEntered -= HandlePlayerEntered;
-                zone.PlayerExited -= HandlePlayerExited;
-            }
+            _signalBus.Unsubscribe<ZoneEntered>(HandleZoneEntered);
+            _signalBus.Unsubscribe<ZoneExited>(HandleZoneExited);
 
             _extractionTimer.ExitCompleted -= HandleExitCompleted;
 
@@ -48,13 +42,13 @@ namespace Extraction
             _raidResultPresenter.OnContinueRaidClicked -= ProceedToNextIsland;
         }
 
-        private void HandlePlayerEntered(ExtractionZone zone)
+        private void HandleZoneEntered(ZoneEntered signal)
         {
-            _currentZone = zone;
+            _currentZone = signal.Zone;
             _extractionTimer.StartTimer();
         }
 
-        private void HandlePlayerExited(ExtractionZone zone)
+        private void HandleZoneExited(ZoneExited signal)
         {
             _extractionTimer.Cancel();
         }

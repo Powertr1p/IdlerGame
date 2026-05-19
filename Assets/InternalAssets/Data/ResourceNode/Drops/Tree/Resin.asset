@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 811f5e7de7724a789a3014803e0728d2, type: 3}
-  m_Name: Stone
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 583675a75bcb2a941ac555b9ccd513a9, type: 3}
-  _displayName: Stone
-  _quality: 0
-  _resourceType: 0
+  m_Name: Resin
+  m_EditorClassIdentifier: Assembly-CSharp::Scriptable.ResourceData
+  _sprite: {fileID: 21300000, guid: 639ecaaf041f57a418c8287426273b94, type: 3}
+  _displayName: Resin
+  _quality: 1
+  _resourceType: 2

@@ -51,4 +51,11 @@ public class PlayerMovement : MonoBehaviour, IExitable
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
     }
+
+    public void TeleportTo(Vector3 position)
+    {
+        _characterController.enabled = false;
+        transform.position = position;
+        _characterController.enabled = true;
+    }
 }

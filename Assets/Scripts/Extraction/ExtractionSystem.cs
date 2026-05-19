@@ -11,7 +11,7 @@ namespace Extraction
     {
         [SerializeField] private RaidInventory _raidInventory;
         [SerializeField] private ExtractionZone[] _exitZones;
-        [SerializeField] private Transform _player;
+        [SerializeField] private PlayerMovement _player;
 
         [Inject] private RaidResultPresenter _raidResultPresenter;
         [Inject] private ExtractionTimer _extractionTimer;
@@ -74,9 +74,8 @@ namespace Extraction
 
         private void ProceedToNextIsland()
         {
-            _player.position = _currentZone.NextSpawnPoint.position;
+            _player.TeleportTo(_currentZone.NextSpawnPoint.position);
             _raidResultPresenter.Hide();
-            Debug.Log("ASDASDASDSAD");
         }
 
         private void StoreLootToBuffer()

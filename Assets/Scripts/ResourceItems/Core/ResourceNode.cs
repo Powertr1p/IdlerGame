@@ -14,6 +14,7 @@ namespace GameItems
         [SerializeField] private ResourceNodeConfig _nodeConfig;
         [SerializeField] private float _spreadRadius = 3f;
         [SerializeField] private ResourceNodeAnimationBase _animation;
+        [SerializeField] private Transform _dropSpawnPoint;
 
         public event Action Depleted;
 
@@ -74,7 +75,9 @@ namespace GameItems
 
         private void SpawnDropItem()
         {
-            Vector3 startPosition = transform.position;
+            Vector3 startPosition = ReferenceEquals(_dropSpawnPoint, null)
+                ? transform.position
+                : _dropSpawnPoint.position;
             Vector2 randomDirection = Random.insideUnitCircle.normalized;
 
             float x = startPosition.x + randomDirection.x * _spreadRadius;

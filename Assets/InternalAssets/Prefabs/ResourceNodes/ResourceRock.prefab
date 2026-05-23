@@ -53,6 +53,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.4653442
   m_Center: {x: -0.1020993, y: 0.03584683, z: 0.08352536}
+--- !u!1 &4791407904214196117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2463515545480477371}
+  m_Layer: 0
+  m_Name: DropSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2463515545480477371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4791407904214196117}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7779114702451019009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5028213378151203559
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +119,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7226131848461165911}
+  - {fileID: 2463515545480477371}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -16.973, z: 0}
 --- !u!33 &4741027730395555774
@@ -161,6 +193,7 @@ MonoBehaviour:
   _nodeConfig: {fileID: 11400000, guid: 7c48c9a13b6136f4d9ee6db08af93e9e, type: 2}
   _spreadRadius: 3
   _animation: {fileID: 5526057084506588494}
+  _dropSpawnPoint: {fileID: 2463515545480477371}
 --- !u!114 &5526057084506588494
 MonoBehaviour:
   m_ObjectHideFlags: 0

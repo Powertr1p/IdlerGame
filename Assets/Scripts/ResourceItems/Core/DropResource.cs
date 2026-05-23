@@ -12,9 +12,10 @@ namespace ResourceItems.Core
         [SerializeField] private GameObject _landingVfxPrefab;
 
         [Header("Spawn Animation")]
-        [SerializeField] private float _jumpPower = 2f;
-        [SerializeField] private float _jumpDuration = 1f;
-        [SerializeField] private int _numJumps = 1;
+        [SerializeField] private float _jumpPower = 1f;
+        [SerializeField] private float _fallDuration = 0.3f;
+        [SerializeField] private float _popDuration = 0.15f;
+        [SerializeField, Range(0f, 1f)] private float _popStartScale = 0.4f;
 
         public ResourceType Type => _resourceType;
         public ItemQuality Quality => _quality;
@@ -76,6 +77,7 @@ namespace ResourceItems.Core
             _targetPosition = targetPosition;
 
             ApplyTint();
+            _flightVfx?.Simulate(0.15f, true, true, true);
             _flightVfx?.Play();
 
             StartFlying();
@@ -106,8 +108,15 @@ namespace ResourceItems.Core
 
         private void StartFlying()
         {
+            PlaySpawnPop();
             _jumpSequence = ConstructJumpSequence();
             _jumpSequence.OnComplete(OnJumpComplete);
+        }
+
+        private void PlaySpawnPop()
+        {
+            _cachedTransform.localScale = Vector3.one * _popStartScale;
+            _cachedTransform.DOScale(Vector3.one, _popDuration).SetEase(Ease.OutBack);
         }
         
         private void StartAttraction()
@@ -127,8 +136,8 @@ namespace ResourceItems.Core
             Sequence jumpSequence = DOTween.Sequence();
 
             jumpSequence.Append(_cachedTransform
-                .DOJump(_targetPosition, _jumpPower, _numJumps, _jumpDuration)
-                .SetEase(Ease.OutQuint));
+                .DOJump(_targetPosition, _jumpPower, 1, _fallDuration)
+                .SetEase(Ease.InQuad));
 
             return jumpSequence;
         }

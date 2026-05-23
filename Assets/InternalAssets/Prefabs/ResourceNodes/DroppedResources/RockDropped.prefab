@@ -69,6 +69,8 @@ MonoBehaviour:
   _collider: {fileID: 1474305321153887360}
   _flightVfxPrefab: {fileID: 3166220370275162925, guid: f35bbee58423c6b4e81f2075f48c1219, type: 3}
   _landingVfxPrefab: {fileID: 2488126725830823327, guid: 76d19dbe44a12e143b9ffb46e00e8fcb, type: 3}
-  _jumpPower: 2
-  _jumpDuration: 1
+  _jumpPower: 3
+  _jumpDuration: 0.3
   _numJumps: 1
+  _popDuration: 0.15
+  _popStartScale: 0.4

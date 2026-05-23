@@ -8,7 +8,8 @@ namespace ResourceItems.Core
     public class DropResource : MonoBehaviour, IAttractable
     {
         [SerializeField] private Collider _collider;
-        [SerializeField] private ParticleSystem _vfx;
+        [SerializeField] private GameObject _flightVfxPrefab;
+        [SerializeField] private GameObject _landingVfxPrefab;
 
         [Header("Spawn Animation")]
         [SerializeField] private float _jumpPower = 2f;
@@ -25,11 +26,13 @@ namespace ResourceItems.Core
         private ResourceType _resourceType;
         private ItemQuality _quality;
         private Color _qualityTint = Color.white;
-        
+        private ParticleSystem _flightVfx;
+        private ParticleSystem _landingVfx;
+
         private bool _isAttracting;
         private bool _moveActive;
         private float _attractionSpeed;
-        
+
         private Vector3 _startPosition;
         private Vector3 _targetPosition;
 
@@ -37,8 +40,18 @@ namespace ResourceItems.Core
         {
             _collider.enabled = false;
             _cachedTransform = transform;
+
+            _flightVfx = SpawnVfx(_flightVfxPrefab);
+            _landingVfx = SpawnVfx(_landingVfxPrefab);
         }
-        
+
+        private ParticleSystem SpawnVfx(GameObject prefab)
+        {
+            if (ReferenceEquals(prefab, null)) return null;
+            var instance = Instantiate(prefab, transform);
+            return instance.GetComponentInChildren<ParticleSystem>(true);
+        }
+
         private void Update()
         {
             if (!_isAttracting) return;
@@ -63,15 +76,21 @@ namespace ResourceItems.Core
             _targetPosition = targetPosition;
 
             ApplyTint();
+            _flightVfx?.Play();
 
             StartFlying();
         }
 
         private void ApplyTint()
         {
-            if (ReferenceEquals(_vfx, null)) return;
+            ApplyTintTo(_flightVfx);
+            ApplyTintTo(_landingVfx);
+        }
 
-            var systems = _vfx.GetComponentsInChildren<ParticleSystem>(true);
+        private void ApplyTintTo(ParticleSystem root)
+        {
+            if (ReferenceEquals(root, null)) return;
+            var systems = root.GetComponentsInChildren<ParticleSystem>(true);
             foreach (var ps in systems)
             {
                 var main = ps.main;
@@ -99,24 +118,18 @@ namespace ResourceItems.Core
         
         private void OnJumpComplete()
         {
-            _vfx.transform.rotation = Quaternion.identity;
-            _vfx.Play();
-            
             _collider.enabled = true;
+            _landingVfx?.Play();
         }
 
         private Sequence ConstructJumpSequence()
         {
             Sequence jumpSequence = DOTween.Sequence();
-            
-            jumpSequence
-                .Append(_cachedTransform
-                    .DOJump(_targetPosition, _jumpPower, _numJumps, _jumpDuration)
-                    .SetEase(Ease.OutQuint))
-                .Join(_cachedTransform
-                    .DORotate(new Vector3(Random.Range(180f, 360f), Random.Range(180f, 360f), 0), _jumpDuration, RotateMode.FastBeyond360)
-                    .SetEase(Ease.OutQuad));
-            
+
+            jumpSequence.Append(_cachedTransform
+                .DOJump(_targetPosition, _jumpPower, _numJumps, _jumpDuration)
+                .SetEase(Ease.OutQuint));
+
             return jumpSequence;
         }
 
